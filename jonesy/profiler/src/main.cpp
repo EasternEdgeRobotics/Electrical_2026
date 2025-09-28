@@ -11,12 +11,12 @@
 //https://www.ti.com/lit/ds/symlink/drv8231a.pdf page 11 for dc
 #define IN1PIN 14
 #define IN2PIN 25
-#define BOTTOMPIN 27
-#define TOPPIN 26 //TODO: needs to be set
+#define SYRINGE_MAX 27
+#define SYRINGE_MIN 26
 #define TIMEOUT 19000
 
-#define CHANNEL_IN1 0
-#define CHANNEL_IN2 1
+#define SYRINGE_PULL 0
+#define SYRINGE_PUSH 1
 #define PWM_FREQ 1000
 #define PWM_RES 8
 
@@ -113,10 +113,12 @@ void profile(void * parameter) {
   strcpy(message.text, "Profile commencing!");
   esp_now_send(broadcastAddress, (uint8_t *) &message, sizeof(message));
 
-  while (digitalRead(BOTTOMPIN) == HIGH) {
-    ledcWrite(CHANNEL_IN1, 255);
-    ledcWrite(CHANNEL_IN2, 0);
+  // sink to the bottom
+  while (digitalRead(SYRINGE_MAX) == HIGH) {
+    ledcWrite(SYRINGE_PULL, 255);
+    ledcWrite(SYRINGE_PUSH, 0);
   }
+
 
   while (timeInRegion < 45) {
     // Serial.println(analogRead(POT_PIN));
@@ -124,15 +126,15 @@ void profile(void * parameter) {
     float depth_val = sensor.depth();
     int pwm = max(min((int) abs((2.5 - depth_val) * 150), 255), 175);
 
-    if (depth_val < 2.5 && digitalRead(BOTTOMPIN) == HIGH && analogRead(POT_PIN) > 1200) {
-      ledcWrite(CHANNEL_IN1, 255);
-      ledcWrite(CHANNEL_IN2, 0);
-    } else if (depth_val > 2.5 && digitalRead(TOPPIN) == HIGH && analogRead(POT_PIN) < 2350) {
-      ledcWrite(CHANNEL_IN1, 0);
-      ledcWrite(CHANNEL_IN2, 255);
+    if (depth_val < 2.5 && digitalRead(SYRINGE_MAX) == HIGH && analogRead(POT_PIN) > 1200) {
+      ledcWrite(SYRINGE_PULL, 255);
+      ledcWrite(SYRINGE_PUSH, 0);
+    } else if (depth_val > 2.5 && digitalRead(SYRINGE_MIN) == HIGH && analogRead(POT_PIN) < 2350) {
+      ledcWrite(SYRINGE_PULL, 0);
+      ledcWrite(SYRINGE_PUSH, 255);
     } else {
-      ledcWrite(CHANNEL_IN1, 255);
-      ledcWrite(CHANNEL_IN2, 255);
+      ledcWrite(SYRINGE_PULL, 255);
+      ledcWrite(SYRINGE_PUSH, 255);
     }
 
     vTaskDelay(100 * portTICK_RATE_MS);
@@ -141,15 +143,15 @@ void profile(void * parameter) {
   // You are done. Attempt to go back up
 
   // To speed up going up, go to max buoyancy
-  while (digitalRead(TOPPIN) == HIGH) {
-    ledcWrite(CHANNEL_IN1, 0);
-    ledcWrite(CHANNEL_IN2, 255); // Full power up
+  while (digitalRead(SYRINGE_MIN) == HIGH) {
+    ledcWrite(SYRINGE_PULL, 0);
+    ledcWrite(SYRINGE_PUSH, 255); // Full power up
     vTaskDelay(100 * portTICK_PERIOD_MS);
   }
 
   // You're at max buoyancy, stop the motor
-  ledcWrite(CHANNEL_IN1, 0);
-  ledcWrite(CHANNEL_IN2, 0);
+  ledcWrite(SYRINGE_PULL, 0);
+  ledcWrite(SYRINGE_PUSH, 0);
 
   vTaskDelay(10000 * portTICK_PERIOD_MS);
 
@@ -166,12 +168,12 @@ void prime(void * parameter) {
   strcpy(message.text, "Priming Profiler!");
   esp_now_send(broadcastAddress, (uint8_t *) &message, sizeof(message));
 
-  ledcWrite(CHANNEL_IN1, 0);
-  ledcWrite(CHANNEL_IN2, 255); // Full power expand
+  ledcWrite(SYRINGE_PULL, 0);
+  ledcWrite(SYRINGE_PUSH, 255); // Full power expand
   TickType_t startTick = xTaskGetTickCount();
   // Achieve minimum buoyancy state
-  while (digitalRead(TOPPIN) == 1) vTaskDelay(10 * portTICK_PERIOD_MS);
-  ledcWrite(CHANNEL_IN2, 0);
+  while (digitalRead(SYRINGE_MIN) == 1) vTaskDelay(10 * portTICK_PERIOD_MS);
+  ledcWrite(SYRINGE_PUSH, 0);
 
   priming = false;
   message.time = millis();
@@ -225,14 +227,14 @@ void setup() {
   }
 
   pinMode(POT_PIN, INPUT);
-  pinMode(BOTTOMPIN, INPUT);
-  pinMode(TOPPIN, INPUT);
+  pinMode(SYRINGE_MAX, INPUT);
+  pinMode(SYRINGE_MIN, INPUT);
 
-  ledcSetup(CHANNEL_IN1, PWM_FREQ, PWM_RES);
-  ledcAttachPin(IN1PIN, CHANNEL_IN1);
+  ledcSetup(SYRINGE_PULL, PWM_FREQ, PWM_RES);
+  ledcAttachPin(IN1PIN, SYRINGE_PULL);
   
-  ledcSetup(CHANNEL_IN2, PWM_FREQ, PWM_RES);
-  ledcAttachPin(IN2PIN, CHANNEL_IN2);
+  ledcSetup(SYRINGE_PUSH, PWM_FREQ, PWM_RES);
+  ledcAttachPin(IN2PIN, SYRINGE_PUSH);
 
   memcpy(peerInfo.peer_addr, broadcastAddress, 6);
   peerInfo.channel = 0;
