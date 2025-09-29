@@ -107,6 +107,82 @@ void sendDepthData(void * parameter) {
   }
 }
 
+/**
+ * @brief PID controller
+ * 
+ * @param target        the depth to hold in meters
+ * @param margin        the plus-minus to the target that forms the range in meters
+ * @param timer         how long to hold at @p target in seconds
+ * @param failsafeTimer maximum time to try to hold position at target in seconds
+ * @return              True if the objective was achieved, false if @p failsaveTimer was reached
+ * 
+ */
+bool pid(float target, float margin, long timer, long failsafeTimer) {
+  long startTime = millis();
+  long time = startTime;
+  long current = startTime;
+  short dt = 2000;
+  long pidTimer = 0;
+  
+  float previousError = 0;
+  float integral = 0;
+  float Kp = 0.1; // TODO fix the ratios
+  float Ki = 0.1;
+  float Kd = 0.1;
+
+  float potTarget = analogRead(POT_PIN);
+  float positionErrorMargin = margin*4/4095;// TODO auto calibrate the scale.  4 is max depth and 4095 is max POT Value, assumed to be at 4m deep
+
+  // loop until too much time has pass
+  while (current - startTime < failsafeTimer*1000)
+  {
+    current = millis();
+    // only update the output every dt milliseconds
+    if (current-pidTimer >= dt)
+    {
+      // PID based on pseudocode from Wikipedia https://en.wikipedia.org/wiki/Proportional%E2%80%93integral%E2%80%93derivative_controller#Pseudocode
+      float error = target - sensor.depth();
+      float proportional = error;
+      integral = integral + error * 1000/dt;
+      float derivative = (error - previousError) / (1000/dt);
+      float output = Kp*proportional + Ki*integral + Kd*derivative;
+      previousError = error;
+
+      potTarget += output/4*4095; 
+    }
+    
+    float potPosition = analogRead(POT_PIN);
+
+    // too deep
+    if (potPosition > potTarget+positionErrorMargin)
+    {
+      ledcWrite(SYRINGE_PULL, 0);
+      ledcWrite(SYRINGE_PUSH, 255);
+      time = current;
+      continue;
+    }
+
+    // too shallow
+    if (potPosition < potTarget-positionErrorMargin)
+    {
+      ledcWrite(SYRINGE_PULL, 255);
+      ledcWrite(SYRINGE_PUSH, 0);
+      time = current;
+      continue;
+    }
+
+    // within range
+    ledcWrite(SYRINGE_PULL, 0);
+    ledcWrite(SYRINGE_PUSH, 0);
+    
+    if (current - time >= timer*1000)
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
 void profile(void * parameter) {
   profiling = true;
   message.time = millis();
