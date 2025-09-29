@@ -114,11 +114,14 @@ void profile(void * parameter) {
   esp_now_send(broadcastAddress, (uint8_t *) &message, sizeof(message));
 
   // sink to the bottom
-  while (digitalRead(SYRINGE_MAX) == HIGH) {
+  float depth = sensor.depth();
+  while (digitalRead(SYRINGE_MAX) == HIGH || depth < 3) {
     ledcWrite(SYRINGE_PULL, 255);
     ledcWrite(SYRINGE_PUSH, 0);
-  }
 
+    vTaskDelay(100 * portTICK_RATE_MS);
+    depth = sensor.depth();
+  }
 
   while (timeInRegion < 45) {
     // Serial.println(analogRead(POT_PIN));
