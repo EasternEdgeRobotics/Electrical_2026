@@ -199,25 +199,8 @@ void profile(void * parameter) {
     depth = sensor.depth();
   }
 
-  while (timeInRegion < 45) {
-    // Serial.println(analogRead(POT_PIN));
-
-    float depth_val = sensor.depth();
-    int pwm = max(min((int) abs((2.5 - depth_val) * 150), 255), 175);
-
-    if (depth_val < 2.5 && digitalRead(SYRINGE_MAX) == HIGH && analogRead(POT_PIN) > 1200) {
-      ledcWrite(SYRINGE_PULL, 255);
-      ledcWrite(SYRINGE_PUSH, 0);
-    } else if (depth_val > 2.5 && digitalRead(SYRINGE_MIN) == HIGH && analogRead(POT_PIN) < 2350) {
-      ledcWrite(SYRINGE_PULL, 0);
-      ledcWrite(SYRINGE_PUSH, 255);
-    } else {
-      ledcWrite(SYRINGE_PULL, 255);
-      ledcWrite(SYRINGE_PUSH, 255);
-    }
-
-    vTaskDelay(100 * portTICK_RATE_MS);
-  }
+  // perform the dive
+  pid(2.5, 0.75, 45, 5*60);
   
   // You are done. Attempt to go back up
 
