@@ -63,6 +63,11 @@ bool priming = false;
 
 bool recieverAvailable = false;
 
+void print(char* data) {
+    message.time = millis();
+    strcpy(message.text, data);
+    esp_now_send(broadcastAddress, (uint8_t *) &message, sizeof(message));
+}
 
 void conCheck(void * parameter) {
   for(;;) {
@@ -190,13 +195,9 @@ void profile(void * parameter) {
   esp_now_send(broadcastAddress, (uint8_t *) &message, sizeof(message));
 
   // sink to the bottom
-  float depth = sensor.depth();
-  while (digitalRead(SYRINGE_MAX) == HIGH || depth < 3) {
+  while (digitalRead(SYRINGE_MAX) == HIGH) {
     ledcWrite(SYRINGE_PULL, 255);
     ledcWrite(SYRINGE_PUSH, 0);
-
-    vTaskDelay(100 * portTICK_RATE_MS);
-    depth = sensor.depth();
   }
 
   // perform the dive
