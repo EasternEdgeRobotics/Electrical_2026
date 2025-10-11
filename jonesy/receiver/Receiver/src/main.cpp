@@ -58,7 +58,7 @@ void onReceive(const uint8_t * mac, const uint8_t *incomingData, int len) {
   switch(mod) {
     case(1):
       memcpy(&message, incomingData, sizeof(message));
-      sprintf(tmp, "[%s] - %s - %s\n", millisToTimeStr(message.time), message.companyNumber, message.text);
+      sprintf(tmp, "[%s FLT] - %s - %s\n", millisToTimeStr(message.time), message.companyNumber, message.text);
       ws.textAll(tmp);
       // if (String(message.text) == "Profiler ready for deployment!" || String(message.text) == "Profile commencing!") dataPoints.clear();
       break;
@@ -91,6 +91,18 @@ void setup() {
   }
   if (esp_now_init() != ESP_OK) {
     Serial.println("Failed to start ESP-NOW!");
+    return;
+  }
+
+  esp_now_register_recv_cb(onReceive);
+  esp_now_register_send_cb(onSend);
+
+  memcpy(peerInfo.peer_addr, broadcastAddress, 6);
+  peerInfo.channel = 0;
+  peerInfo.encrypt = false;
+
+  if (esp_now_add_peer(&peerInfo) != ESP_OK) {
+    Serial.println("Unable to add peer!");
     return;
   }
 
