@@ -56,8 +56,6 @@ esp_now_peer_info_t peerInfo;
 
 MS5837 sensor;
 
-// AsyncWebServer server(80);
-
 bool profiling = false;
 bool priming = false;
 
@@ -123,69 +121,85 @@ void sendDepthData(void * parameter) {
  * 
  */
 bool pid(float target, float margin, long timer, long failsafeTimer) {
-  long startTime = millis();
-  long time = startTime;
-  long current = startTime;
-  short dt = 2000;
-  long pidTimer = 0;
-  
+  unsigned long startTime = millis();
+  unsigned long in_range_time = startTime;
+  unsigned long current = startTime;
+  unsigned long pidPreviousTime = startTime;
+
   float previousError = 0;
   float integral = 0;
-  float Kp = 0.1; // TODO fix the ratios
-  float Ki = 0.1;
-  float Kd = 0.1;
 
-  float potTarget = analogRead(POT_PIN);
-  float positionErrorMargin = margin*4/4095;// TODO auto calibrate the scale.  4 is max depth and 4095 is max POT Value, assumed to be at 4m deep
+  float Kp = 50.0; // TODO: set the values
+  float Ki = 0.5;
+  float Kd = 5.0;
 
-  // loop until too much time has pass
-  while (current - startTime < failsafeTimer*1000)
-  {
+  while (current - startTime < failsafeTimer * 1000) {
+    vTaskDelay(100 * portTICK_PERIOD_MS);
     current = millis();
-    // only update the output every dt milliseconds
-    if (current-pidTimer >= dt)
-    {
-      // PID based on pseudocode from Wikipedia https://en.wikipedia.org/wiki/Proportional%E2%80%93integral%E2%80%93derivative_controller#Pseudocode
-      float error = target - sensor.depth();
-      float proportional = error;
-      integral = integral + error * 1000/dt;
-      float derivative = (error - previousError) / (1000/dt);
-      float output = Kp*proportional + Ki*integral + Kd*derivative;
-      previousError = error;
 
-      potTarget += output/4*4095; 
-    }
-    
-    float potPosition = analogRead(POT_PIN);
+    // compute dt in seconds
+    float dt = (current - pidPreviousTime) / 1000.0;
+    if (dt <= 0) dt = 0.001; // avoid div by zero
+    pidPreviousTime = current;
 
-    // too deep
-    if (potPosition > potTarget+positionErrorMargin)
-    {
-      ledcWrite(SYRINGE_PULL, 0);
-      ledcWrite(SYRINGE_PUSH, 255);
-      time = current;
-      continue;
-    }
+    // calculate error
+    float error = target - sensor.depth();
 
-    // too shallow
-    if (potPosition < potTarget-positionErrorMargin)
-    {
-      ledcWrite(SYRINGE_PULL, 255);
+    // PID terms
+    float proportional = error;
+    integral += error * dt;
+
+    // anti-windup
+    if (integral > 100) integral = 100;
+    if (integral < -100) integral = -100;
+
+    float derivative = (error - previousError) / dt;
+    previousError = error;
+
+    float output = Kp * proportional + Ki * integral + Kd * derivative;
+
+    // clamp output to PWM range
+    if (output > 255) output = 255;
+    if (output < -255) output = -255;
+
+    // --- Control logic ---
+    if (fabs(error) <= margin) {
+      // within tolerance band
       ledcWrite(SYRINGE_PUSH, 0);
-      time = current;
-      continue;
-    }
+      ledcWrite(SYRINGE_PULL, 0);
+      print("good");
 
-    // within range
-    ledcWrite(SYRINGE_PULL, 0);
-    ledcWrite(SYRINGE_PUSH, 0);
-    
-    if (current - time >= timer*1000)
-    {
-      return true;
+      if (current - in_range_time >= timer * 1000) {
+        return true;
+      }
+    }
+    else if (output > 0) {
+      // too shallow → push deeper
+      if (digitalRead(SYRINGE_MIN) == HIGH) {
+        ledcWrite(SYRINGE_PUSH, (int)output);
+        ledcWrite(SYRINGE_PULL, 0);
+      } else {
+        ledcWrite(SYRINGE_PUSH, 0);
+        ledcWrite(SYRINGE_PULL, 0);
+      }
+      print("push");
+      in_range_time = current;
+    }
+    else { // output < 0
+      // too deep → pull shallower
+      if (digitalRead(SYRINGE_MAX) == HIGH) {
+        ledcWrite(SYRINGE_PULL, (int)(-output));
+        ledcWrite(SYRINGE_PUSH, 0);
+      } else {
+        ledcWrite(SYRINGE_PUSH, 0);
+        ledcWrite(SYRINGE_PULL, 0);
+      }
+      print("pull");
+      in_range_time = current;
     }
   }
-  return false;
+
+  return false; // failsafe timeout
 }
 
 void profile(void * parameter) {
@@ -199,9 +213,16 @@ void profile(void * parameter) {
     ledcWrite(SYRINGE_PULL, 255);
     ledcWrite(SYRINGE_PUSH, 0);
   }
+  ledcWrite(SYRINGE_PULL, 0);
 
-  // perform the dive
-  pid(2.5, 0.75, 45, 5*60);
+  // // perform the dive
+  if (pid(2.5, 0.3, 30, 5*60))
+  {
+    print("true");
+  }
+  else {
+    print("false");
+  }
   
   // You are done. Attempt to go back up
 
