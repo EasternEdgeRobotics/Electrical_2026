@@ -5,6 +5,8 @@
 #include <MS5837.h>
 #include <Array.h>
 
+#include "pid.h"
+
 #define SDAPIN 22
 #define SCLPIN 21
 
@@ -111,94 +113,77 @@ void sendDepthData(void * parameter) {
 }
 
 /**
- * @brief PID controller
+ * @brief dive controller
  * 
- * @param target        the depth to hold in meters
- * @param margin        the plus-minus to the target that forms the range in meters
- * @param timer         how long to hold at @p target in seconds
- * @param failsafeTimer maximum time to try to hold position at target in seconds
+ * @param setpoint        the depth to hold in meters
+ * @param margin        the plus-minus to the setpoint that forms the range in meters
+ * @param timer         how long to hold at @p setpoint in seconds
+ * @param failsafeTimer maximum time to try to hold position at setpoint in seconds
  * @return              True if the objective was achieved, false if @p failsaveTimer was reached
  * 
  */
-bool pid(float target, float margin, long timer, long failsafeTimer) {
+bool dive(float setpoint, float margin, long timer, long failsafeTimer) {
   unsigned long startTime = millis();
   unsigned long in_range_time = startTime;
-  unsigned long current = startTime;
-  unsigned long pidPreviousTime = startTime;
-
-  float previousError = 0;
-  float integral = 0;
 
   float Kp = 50.0; // TODO: set the values
-  float Ki = 0.5;
-  float Kd = 5.0;
+  float Ki = 0;
+  float Kd = 0;
 
-  while (current - startTime < failsafeTimer * 1000) {
-    vTaskDelay(100 * portTICK_PERIOD_MS);
-    current = millis();
+  float tau = 0.02;
 
-    // compute dt in seconds
-    float dt = (current - pidPreviousTime) / 1000.0;
-    if (dt <= 0) dt = 0.001; // avoid div by zero
-    pidPreviousTime = current;
+  float outputLimitMin = -255;
+  float outputLimitMax = 255;
 
-    // calculate error
-    float error = target - sensor.depth();
+  float integralMin = -100;
+  float integralMax = 100;
 
-    // PID terms
-    float proportional = error;
-    integral += error * dt;
+  float dt = 100 * portTICK_PERIOD_MS;
 
-    // anti-windup
-    if (integral > 100) integral = 100;
-    if (integral < -100) integral = -100;
+  PIDController pid = {Kp, Ki, Kd, tau, outputLimitMin, outputLimitMax, integralMin, integralMax, dt};
+  PIDController_Init(&pid);
 
-    float derivative = (error - previousError) / dt;
-    previousError = error;
+  for (unsigned long currentTime = startTime; currentTime < startTime+failsafeTimer*1000; currentTime = millis())
+  {
+    // TODO: when this code is executed, the profiler only goes down and I don't know why
 
-    float output = Kp * proportional + Ki * integral + Kd * derivative;
+    float measurement = sensor.depth();
+    float output = PIDController_Update(&pid, setpoint, measurement);
 
-    // clamp output to PWM range
-    if (output > 255) output = 255;
-    if (output < -255) output = -255;
-
-    // --- Control logic ---
-    if (fabs(error) <= margin) {
-      // within tolerance band
-      ledcWrite(SYRINGE_PUSH, 0);
-      ledcWrite(SYRINGE_PULL, 0);
-      print("good");
-
-      if (current - in_range_time >= timer * 1000) {
+    if (currentTime - in_range_time >= timer * 1000) {
         return true;
-      }
     }
-    else if (output > 0) {
-      // too shallow → push deeper
+
+    if (output < 0) { // need to go up
       if (digitalRead(SYRINGE_MIN) == HIGH) {
-        ledcWrite(SYRINGE_PUSH, (int)output);
+        ledcWrite(SYRINGE_PUSH, (int)ceil(-output));
         ledcWrite(SYRINGE_PULL, 0);
       } else {
         ledcWrite(SYRINGE_PUSH, 0);
         ledcWrite(SYRINGE_PULL, 0);
       }
       print("push");
-      in_range_time = current;
     }
-    else { // output < 0
-      // too deep → pull shallower
+    else if (output > 0) // need to go down
+    {
       if (digitalRead(SYRINGE_MAX) == HIGH) {
-        ledcWrite(SYRINGE_PULL, (int)(-output));
         ledcWrite(SYRINGE_PUSH, 0);
+        ledcWrite(SYRINGE_PULL, (int)ceil(output));
       } else {
         ledcWrite(SYRINGE_PUSH, 0);
         ledcWrite(SYRINGE_PULL, 0);
       }
       print("pull");
-      in_range_time = current;
     }
+    
+    if (!((setpoint-margin < measurement) && (measurement < setpoint+margin)))
+    {
+      in_range_time = currentTime;
+    }
+    
+    vTaskDelay(dt);
   }
-
+  
   return false; // failsafe timeout
 }
 
@@ -216,7 +201,7 @@ void profile(void * parameter) {
   ledcWrite(SYRINGE_PULL, 0);
 
   // // perform the dive
-  if (pid(2.5, 0.3, 30, 5*60))
+  if (dive(2.5, 0.3, 30, 5*60))
   {
     print("true");
   }
