@@ -64,7 +64,7 @@ float PIDController_Update(PIDController *pid, float setpoint, float measurement
     }
 
     // derivative (band-limited differentiator)
-    pid->differentiator = -(2.0f * pid->Kp * (measurement - pid->prevMeasurement) // note: derivative on measurement, therefore minus sign in fromt of equation
+    pid->differentiator = -(2.0f * pid->Kd * (measurement - pid->prevMeasurement) // note: derivative on measurement, therefore minus sign in fromt of equation
                             + (2.0f * pid->tau - pid->T) * pid->differentiator)
                             / (2.0f * pid->tau + pid->T);
     
