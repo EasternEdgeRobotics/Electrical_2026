@@ -127,26 +127,24 @@ bool dive(float setpoint, float margin, long timer, long failsafeTimer) {
   unsigned long in_range_time = startTime;
 
   float Kp = 50.0; // TODO: set the values
-  float Ki = 0;
-  float Kd = 0;
+  float Ki = 0.5;
+  float Kd = 0.25;
 
   float tau = 0.02;
 
   float outputLimitMin = -255;
   float outputLimitMax = 255;
 
-  float integralMin = -100;
-  float integralMax = 100;
+  float integralMin = -50;
+  float integralMax = 50;
 
   float dt = 100 * portTICK_PERIOD_MS;
 
-  PIDController pid = {Kp, Ki, Kd, tau, outputLimitMin, outputLimitMax, integralMin, integralMax, dt};
+  PIDController pid = {Kp, Ki, Kd, tau, outputLimitMin, outputLimitMax, integralMin, integralMax, (dt/1000)};
   PIDController_Init(&pid);
 
   for (unsigned long currentTime = startTime; currentTime < startTime+failsafeTimer*1000; currentTime = millis())
   {
-    // TODO: when this code is executed, the profiler only goes down and I don't know why
-
     float measurement = sensor.depth();
     float output = PIDController_Update(&pid, setpoint, measurement);
 
