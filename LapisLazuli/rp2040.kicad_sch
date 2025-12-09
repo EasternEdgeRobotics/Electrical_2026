@@ -6333,16 +6333,6 @@
 		)
 		(uuid "0575583a-9a40-4602-ad1c-ee3edac87254")
 	)
-	(label "ESC2"
-		(at 227.33 109.22 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "0877fbf3-ab0c-45bf-98d9-caefbd586e86")
-	)
 	(label "SWCLK"
 		(at 148.59 168.91 0)
 		(effects
@@ -6363,26 +6353,6 @@
 		)
 		(uuid "2bf92a37-d25c-4b6e-994e-b1267f3255dc")
 	)
-	(label "MOTOR3_DIR"
-		(at 227.33 180.34 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "308a96b3-0b55-4bce-8952-c9cd7e3da61d")
-	)
-	(label "ESC1"
-		(at 227.33 106.68 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "30b68fa6-8a7c-445c-9bce-4e6c40d7e122")
-	)
 	(label "USB_D-"
 		(at 259.08 96.52 180)
 		(effects
@@ -6402,16 +6372,6 @@
 			(justify left bottom)
 		)
 		(uuid "33050cfd-d33d-4cd1-8c2d-3a5ace8540a4")
-	)
-	(label "SERVO0"
-		(at 227.33 119.38 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "34b0b9aa-d414-4bd8-892c-fc35372a6052")
 	)
 	(label "QSPI_SCLK"
 		(at 67.31 120.65 0)
@@ -6463,46 +6423,6 @@
 		)
 		(uuid "49dfab33-d0e8-4ea0-ad3a-3be46e54c826")
 	)
-	(label "I2C_MUX_RESET'"
-		(at 227.33 160.02 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "5041df53-9fda-4d12-84ba-56c9a6607283")
-	)
-	(label "ESC4"
-		(at 227.33 114.3 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "508bae31-d629-4679-8d30-2ba4210f965f")
-	)
-	(label "MOTOR0_DIR"
-		(at 227.33 172.72 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "591c5fb4-a501-42b7-9c1f-3ec5d46c2b37")
-	)
-	(label "ESC3"
-		(at 227.33 111.76 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "6685e8f8-92fc-453d-85c8-7e8f3feeb556")
-	)
 	(label "QSPI_SS"
 		(at 148.59 105.41 0)
 		(effects
@@ -6522,36 +6442,6 @@
 			(justify left bottom)
 		)
 		(uuid "68c262d3-03d1-4e6d-853b-ff7bd33fbf91")
-	)
-	(label "MOTOR0_PWM"
-		(at 227.33 129.54 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "691b462a-bcae-4c7d-bc94-5ee48e2b16fd")
-	)
-	(label "ESC5"
-		(at 227.33 116.84 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "6f025184-8291-4f7c-922d-7a77f45c1f1e")
-	)
-	(label "RS485_RX"
-		(at 227.33 147.32 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "71ac157b-dbaf-479f-8ef9-eb8047671423")
 	)
 	(label "SWD"
 		(at 148.59 171.45 0)
@@ -6573,36 +6463,6 @@
 		)
 		(uuid "7f63deaa-7878-4d6d-892c-95d1b40416da")
 	)
-	(label "I2C_SCL"
-		(at 227.33 157.48 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "82ed9aaf-2170-4ffa-a4a0-941479030148")
-	)
-	(label "ESC0"
-		(at 227.33 104.14 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "8574a817-1712-4375-8b23-094f98635eb5")
-	)
-	(label "RS485_SEND"
-		(at 227.33 149.86 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "910981b9-2030-4dfc-bafe-cc427df6843d")
-	)
 	(label "USB_D-"
 		(at 46.99 60.96 0)
 		(effects
@@ -6612,16 +6472,6 @@
 			(justify left bottom)
 		)
 		(uuid "929b50ff-d362-40dc-9a40-6168cdd65dcd")
-	)
-	(label "RS485_TX"
-		(at 227.33 144.78 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "983dc823-4b70-494e-b160-3e8710bfefb3")
 	)
 	(label "USB_D+"
 		(at 46.99 63.5 0)
@@ -6633,26 +6483,6 @@
 		)
 		(uuid "98e166ef-223c-4e53-a73a-e2791e542c29")
 	)
-	(label "SERVO2"
-		(at 227.33 124.46 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9d7ba495-d60b-48f3-8114-dee6179d0bb4")
-	)
-	(label "LED0"
-		(at 227.33 139.7 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9e4a06fd-4607-40f0-ae1d-7239121dba30")
-	)
 	(label "QSPI_SD3"
 		(at 67.31 130.81 0)
 		(effects
@@ -6663,16 +6493,6 @@
 		)
 		(uuid "a2653a63-ef56-4cf2-b486-d2bf70080860")
 	)
-	(label "MOTOR1_PWM"
-		(at 227.33 132.08 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "ac6d27fd-d012-46e3-a866-4a85cd73e224")
-	)
 	(label "XOUT"
 		(at 94.615 218.44 180)
 		(effects
@@ -6682,16 +6502,6 @@
 			(justify right bottom)
 		)
 		(uuid "b1ec30ed-cef3-4bac-a1dd-1a37c2e548a2")
-	)
-	(label "LED1"
-		(at 227.33 142.24 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "b3bc0bfb-0b04-4b65-81fd-652ef99e4ec6")
 	)
 	(label "RUN"
 		(at 69.215 161.29 180)
@@ -6713,36 +6523,6 @@
 		)
 		(uuid "c0b67429-60d5-4e18-8d75-c132c1d11d37")
 	)
-	(label "I2C_SDA"
-		(at 227.33 154.94 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c1050e28-4de9-44f0-8b39-e316fe555db4")
-	)
-	(label "MOTOR2_DIR"
-		(at 227.33 177.8 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c2c1ce18-8e98-44bb-b8b5-4fc2589245ec")
-	)
-	(label "MOTOR1_DIR"
-		(at 227.33 175.26 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c36d69a7-c521-46fa-9e59-19ee8685ac3b")
-	)
 	(label "QSPI_SS"
 		(at 67.31 118.11 0)
 		(effects
@@ -6753,26 +6533,6 @@
 		)
 		(uuid "c5dbc928-4321-46df-9030-f9259b73d861")
 	)
-	(label "MOTOR3_PWM"
-		(at 227.33 137.16 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c6969056-4b72-47f1-9a30-bb3dff584fdd")
-	)
-	(label "SERVO1"
-		(at 227.33 121.92 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "cf05d045-99fc-46d7-8200-c1ecd7f42575")
-	)
 	(label "XIN"
 		(at 148.59 139.7 0)
 		(effects
@@ -6782,26 +6542,6 @@
 			(justify left bottom)
 		)
 		(uuid "d51de4c1-0b1b-425c-8bb5-a7287f28d29e")
-	)
-	(label "SERVO3"
-		(at 227.33 127 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "de066e50-61c2-4dbe-8340-fb18677f1e41")
-	)
-	(label "MOTOR2_PWM"
-		(at 227.33 134.62 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "e7aec120-588b-4621-a531-35324cee5e9f")
 	)
 	(label "XIN"
 		(at 94.615 208.28 180)
@@ -6832,6 +6572,292 @@
 			(justify left bottom)
 		)
 		(uuid "f7d8a34e-1c29-40e7-8f29-e3d2036504d3")
+	)
+	(hierarchical_label "LED1"
+		(shape output)
+		(at 227.33 142.24 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "02ceeb56-c02c-4eff-a404-e33db01942d2")
+	)
+	(hierarchical_label "MOTOR2_PWM"
+		(shape output)
+		(at 227.33 134.62 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "04cb1df3-7ae6-4923-9b94-b1701914aebe")
+	)
+	(hierarchical_label "I2C_SCL"
+		(shape bidirectional)
+		(at 227.33 157.48 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "1b76c27e-0cf4-445b-abef-43c5a0a143d1")
+	)
+	(hierarchical_label "SERVO3"
+		(shape output)
+		(at 227.33 127 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "1ba7e7d5-7147-4028-b8e4-0a9d76ddf8c1")
+	)
+	(hierarchical_label "RS485_TX"
+		(shape bidirectional)
+		(at 227.33 144.78 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "1defc500-8072-4031-aa87-4b697219c78a")
+	)
+	(hierarchical_label "I2C_MUX_RESET'"
+		(shape output)
+		(at 227.33 160.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3adbaf5f-9da8-4373-a9c0-14316c86135f")
+	)
+	(hierarchical_label "SERVO0"
+		(shape output)
+		(at 227.33 119.38 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3ef18d5d-564b-45cb-917d-11956b16c5f0")
+	)
+	(hierarchical_label "ESC5"
+		(shape output)
+		(at 227.33 116.84 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "46a8b040-e922-40b6-85c1-cf06e19e20a9")
+	)
+	(hierarchical_label "MOTOR2_DIR"
+		(shape output)
+		(at 227.33 177.8 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "4e762721-2d4b-4cd6-96c5-9113495d57ff")
+	)
+	(hierarchical_label "MOTOR1_PWM"
+		(shape output)
+		(at 227.33 132.08 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "594b645f-234e-48b2-9cd4-2946a5b969bc")
+	)
+	(hierarchical_label "ESC0"
+		(shape output)
+		(at 227.33 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "635f4a36-f231-4637-ac12-a9b96c03d64f")
+	)
+	(hierarchical_label "ESC1"
+		(shape output)
+		(at 227.33 106.68 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6d8b84ce-4c2c-4d09-9d5a-0ddbeb4fb93a")
+	)
+	(hierarchical_label "LED0"
+		(shape output)
+		(at 227.33 139.7 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7007b781-a3d8-4ddb-be41-913558ae1edd")
+	)
+	(hierarchical_label "MOTOR1_DIR"
+		(shape output)
+		(at 227.33 175.26 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7798d5fb-d075-4173-b6d7-7914357e8e44")
+	)
+	(hierarchical_label "ESC3"
+		(shape output)
+		(at 227.33 111.76 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7baaf304-35e8-4300-bcaa-c88d07df495e")
+	)
+	(hierarchical_label "RS485_SEND"
+		(shape output)
+		(at 227.33 149.86 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "82472d76-838f-4d3e-b3e1-2af8ef484ea0")
+	)
+	(hierarchical_label "RS485_RX"
+		(shape bidirectional)
+		(at 227.33 147.32 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "886cf809-529f-4a52-b6c1-02c4dc002aaa")
+	)
+	(hierarchical_label "I2C_SDA"
+		(shape bidirectional)
+		(at 227.33 154.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9132ba9e-7d34-4613-bee9-86b10ee1a480")
+	)
+	(hierarchical_label "MOTOR0_PWM"
+		(shape output)
+		(at 227.33 129.54 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "91c1b839-949c-40c9-a8b4-5397d364c1e5")
+	)
+	(hierarchical_label "MOTOR0_DIR"
+		(shape output)
+		(at 227.33 172.72 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "92cc7486-d79f-4433-b03b-adbe946ea773")
+	)
+	(hierarchical_label "SERVO1"
+		(shape output)
+		(at 227.33 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a9628fc2-b35d-43ea-aa66-6047a6f5a2b1")
+	)
+	(hierarchical_label "MOTOR3_PWM"
+		(shape output)
+		(at 227.33 137.16 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "bdd14f94-911a-4e0a-9837-f87d30e1517e")
+	)
+	(hierarchical_label "MOTOR3_DIR"
+		(shape output)
+		(at 227.33 180.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c81752b8-8d97-48cd-95e3-4f77f8068498")
+	)
+	(hierarchical_label "SERVO2"
+		(shape output)
+		(at 227.33 124.46 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "ce71f65b-76b0-40ed-8f53-6b390e2acb45")
+	)
+	(hierarchical_label "ESC2"
+		(shape output)
+		(at 227.33 109.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f262edec-eff4-4391-aadf-c138286841e9")
+	)
+	(hierarchical_label "ESC4"
+		(shape output)
+		(at 227.33 114.3 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "fbd48c9e-477c-4d13-b5eb-443ba6658389")
 	)
 	(symbol
 		(lib_id "Device:C")

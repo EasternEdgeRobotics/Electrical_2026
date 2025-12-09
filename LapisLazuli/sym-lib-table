@@ -8,4 +8,6 @@
   (lib (name "2025-11-21_17-29-47")(type "KiCad")(uri "${KIPRJMOD}/2025-11-21_17-29-47.kicad_sym")(options "")(descr ""))
   (lib (name "2025-11-21_17-52-57")(type "KiCad")(uri "${KIPRJMOD}/2025-11-21_17-52-57.kicad_sym")(options "")(descr ""))
   (lib (name "TCA9546APWR")(type "KiCad")(uri "${KIPRJMOD}/TCA9546APWR.kicad_sym")(options "")(descr ""))
+  (lib (name "WE-PPTI_1512")(type "KiCad")(uri "${KIPRJMOD}/WE-PPTI_1512.kicad_sym")(options "")(descr ""))
+  (lib (name "2025-12-09_17-00-03")(type "KiCad")(uri "${KIPRJMOD}/2025-12-09_17-00-03.kicad_sym")(options "")(descr ""))
 )
