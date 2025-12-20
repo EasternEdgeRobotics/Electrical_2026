@@ -8,6 +8,81 @@
   <script src="dygraph.min.js"></script>
   <script src="jquery.min.js"></script>
   <script>
+
+    function addToProfile(name) {
+      const li = document.createElement("li");
+      switch (name) {
+        case "dive": {
+          li.textContent = name + ": 0.0 , 0.0 , 00.00 , 00.00";
+          li.title = "setpoint(meters), margin(meters), timer(seconds), failsafe(seconds)";
+          break;
+        }
+        default: {
+          li.textContent = name;
+          break;
+        }
+      }
+
+      li.contentEditable = "true";
+      li.addEventListener("dblclick", () => {
+        li.remove();
+      });
+      document.getElementById("profile").appendChild(li);
+    }
+
+    function getProfile() {
+      document.getElementById("profileFileInput").click();
+    }
+
+    function readFile(input) {
+      const file = input.files[0];
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        try {
+          const profile = JSON.parse(event.target.result);
+          
+          document.getElementById("kP").value = profile.kP;
+          document.getElementById("kD").value = profile.kD;
+          document.getElementById("kI").value = profile.kI;
+          
+          profile.profile.forEach(element => {
+            addToProfile(element);
+          });
+        }
+        catch (err) {
+          console.error("Invalid JSON file", err);
+        }
+      }
+
+      reader.readAsText(file);
+    }
+
+    function saveProfile() {
+      profile = {};
+      profile.kP = document.getElementById("kP").value;
+      profile.kD = document.getElementById("kD").value;
+      profile.kI = document.getElementById("kI").value;
+
+      profile.profile = Array.from(document.querySelectorAll("#profile li")).map(li => li.textContent.trim());
+
+      const jsonProfile = JSON.stringify(profile);
+
+      const blob = new Blob([jsonProfile], {type: "application/json"});
+
+      const url = URL.createObjectURL(blob);
+      const tmpLink = document.createElement("a");
+
+      tmpLink.href = url;
+      tmpLink.download = "profile.json";
+      tmpLink.click();
+
+      URL.revokeObjectURL(url);
+    }
+
     $(document).ready(function () {
       let data = [];
       let launchIndex = 0;
@@ -85,9 +160,44 @@
   </script>
 </head>
 <body class="bg-[#323232] text-white font-mono p-1">
-  <h1 class="mt-0 text-2xl text-center mb-2">Jonesy Mk.2 Control Panel</h1>
+  <h1 class="mt-0 text-2xl text-center mb-2">Jonesy Mk.3 Control Panel</h1>
   <div class="grid grid-cols-2 grid-rows-1 gap-4">
     <div>
+      <button onclick="getProfile()" class="text-xl font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 w-half">Get Profile</button>
+      <input onchange="readFile(this)" type="file" id="profileFileInput" accept=".json" style="display:none;">
+
+      <button onclick="saveProfile()" class="text-xl font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 w-half">Save Profile</button>
+
+      <div class="input-row">
+        <label class="text-m " for="kP">kP: </label>
+        <input type="number" class="form-input text-m" id="kP" step="0.01">
+
+        <label class="text-m" for="kD">kD: </label>
+        <input type="number" class="form-input text-m" id="kD" step="0.01">
+
+        <label class="text-m" for="kI">kI: </label>
+        <input type="number" class="form-input text-m" id="kI" step="0.01">
+      </div>
+      
+      <br>
+      
+      <div class="grid grid-cols-2 grid-rows-1 gap-4">
+        <div>
+          <button onclick="addToProfile('sink')" class="text-m font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">sink</button>
+          <button onclick="addToProfile('surface')" class="text-m font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">surface</button>
+          <button onclick="addToProfile('dive')" class="text-m font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">dive</button>
+        </div>
+
+        <div>
+          <label class="text-center text-xl">Profile:</label>
+          <ul id="profile" class="text-m">
+            <!-- profile components will be dynamicaly added here-->
+          </ul>
+        </div>
+
+      </div>
+      
+      
       <button
         onclick="launch()"
         class="text-2xl font-bold rounded-lg px-6 py-4 bg-red-600 text-white w-full active:bg-red-700"
