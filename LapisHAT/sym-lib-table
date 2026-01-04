@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Lapis")(type "KiCad")(uri "${KIPRJMOD}/Lapis.kicad_sym")(options "")(descr ""))
+)
