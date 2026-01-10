@@ -2778,8 +2778,16 @@
 		(uuid "1371f79e-6605-44d5-8179-4425244cffc1")
 	)
 	(no_connect
+		(at 186.69 48.26)
+		(uuid "1c0045cc-10f4-4d86-b357-7e045f0d799a")
+	)
+	(no_connect
 		(at 186.69 58.42)
 		(uuid "1d184c08-e5e4-4334-a7c0-23ac2d6c5c09")
+	)
+	(no_connect
+		(at 173.99 50.8)
+		(uuid "2341870c-eb8a-42ed-8ac7-a933d74eb732")
 	)
 	(no_connect
 		(at 186.69 71.12)
@@ -2823,7 +2831,7 @@
 	)
 	(no_connect
 		(at 119.38 81.28)
-		(uuid "4e716953-f2a9-4bcc-9b34-df7d5a0f0b84")
+		(uuid "500c9985-6401-4e79-9c33-a3d63921cd76")
 	)
 	(no_connect
 		(at 186.69 78.74)
@@ -2939,16 +2947,6 @@
 	)
 	(wire
 		(pts
-			(xy 119.38 76.2) (xy 142.24 76.2)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0763a04e-d370-47d1-bb52-2354c12af437")
-	)
-	(wire
-		(pts
 			(xy 91.44 39.37) (xy 91.44 40.64)
 		)
 		(stroke
@@ -3019,16 +3017,6 @@
 	)
 	(wire
 		(pts
-			(xy 119.38 78.74) (xy 142.24 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3d02d8ed-a2aa-430d-912a-df1579117b2f")
-	)
-	(wire
-		(pts
 			(xy 72.39 91.44) (xy 73.66 91.44)
 		)
 		(stroke
@@ -3076,6 +3064,16 @@
 			(type default)
 		)
 		(uuid "528a64bf-643d-4aca-9fd9-b8e2a494b267")
+	)
+	(wire
+		(pts
+			(xy 119.38 76.2) (xy 142.24 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "64cb8d7d-6fb1-47b0-981d-1ab136a65e91")
 	)
 	(wire
 		(pts
@@ -3289,6 +3287,16 @@
 	)
 	(wire
 		(pts
+			(xy 119.38 78.74) (xy 142.24 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e01665e4-43e8-4e01-9fa5-0e039fd8c81a")
+	)
+	(wire
+		(pts
 			(xy 72.39 93.98) (xy 73.66 93.98)
 		)
 		(stroke
@@ -3317,15 +3325,15 @@
 		)
 		(uuid "fb94ec29-1a4d-45e0-b3da-cb1b4b1ee557")
 	)
-	(label "PI_SDA"
-		(at 142.24 76.2 180)
+	(label "PI_SCL"
+		(at 142.24 78.74 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "45fc99e2-9102-4dd8-98c8-7a77c62aa9fe")
+		(uuid "68721350-3db4-494d-9c11-86d5758a2483")
 	)
 	(label "PI_SDA"
 		(at 195.58 50.8 180)
@@ -3347,15 +3355,15 @@
 		)
 		(uuid "a20bf748-56dc-4b74-a78b-946fa094d8a5")
 	)
-	(label "PI_SCL"
-		(at 142.24 78.74 180)
+	(label "PI_SDA"
+		(at 142.24 76.2 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "f8630a83-3565-40d9-b0e8-379bff58babc")
+		(uuid "b215f664-34df-465f-80a5-2405311822c0")
 	)
 	(hierarchical_label "ENCODER_SDA"
 		(shape bidirectional)
@@ -3368,95 +3376,7 @@
 		)
 		(uuid "0570844e-36ff-44a4-90c6-31b97dbcf078")
 	)
-	(hierarchical_label "SERVO0"
-		(shape output)
-		(at 72.39 88.9 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "0c60b0f5-a9db-4d11-a15f-7f3cb2999f40")
-	)
-	(hierarchical_label "SERVO2"
-		(shape output)
-		(at 72.39 93.98 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "153c288c-9cae-4f70-98b9-ab9ea0fe4c85")
-	)
-	(hierarchical_label "LED0"
-		(shape output)
-		(at 72.39 99.06 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "16926a6d-d026-4840-9f11-d1694f9d37ed")
-	)
 	(hierarchical_label "MOTOR0_PWM"
-		(shape output)
-		(at 72.39 63.5 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "31f9f58f-eb27-4453-b9e2-272c185c24a1")
-	)
-	(hierarchical_label "ESC5"
-		(shape output)
-		(at 72.39 86.36 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "355a4a99-65cd-43e6-a62b-2f256dc3df60")
-	)
-	(hierarchical_label "MOTOR2_DIR"
-		(shape output)
-		(at 120.65 66.04 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "38c9aa90-d6c9-46c0-8bee-b1166d4dd555")
-	)
-	(hierarchical_label "MOTOR0_DIR"
-		(shape output)
-		(at 72.39 66.04 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "44fbb891-4508-4fc9-af71-4b39bb2e7198")
-	)
-	(hierarchical_label "SERVO3"
-		(shape output)
-		(at 72.39 96.52 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "45b6dce9-c2f9-4df7-8a6f-3d5e57fdbeed")
-	)
-	(hierarchical_label "ESC0"
 		(shape output)
 		(at 72.39 73.66 180)
 		(effects
@@ -3465,53 +3385,31 @@
 			)
 			(justify right)
 		)
-		(uuid "4f8c6b83-1796-4ca6-bd67-96bc7941b5a1")
+		(uuid "1b126d20-11b5-474a-a2fb-8b42cf6008f7")
 	)
-	(hierarchical_label "MOTOR1_DIR"
+	(hierarchical_label "MOTOR0_DIR"
 		(shape output)
-		(at 120.65 73.66 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "60ac098a-f7a1-4c46-bcd3-d06f42821851")
-	)
-	(hierarchical_label "MOTOR3_DIR"
-		(shape output)
-		(at 72.39 68.58 180)
+		(at 72.39 63.5 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "65d7e96a-2268-431a-8cf6-6f87c86a61eb")
+		(uuid "1f52168f-229c-44db-a7de-5fc0e66966f8")
 	)
 	(hierarchical_label "ESC3"
 		(shape output)
-		(at 72.39 81.28 180)
+		(at 72.39 96.52 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "69b8b3ae-0c6c-4b60-b5e4-562744f97ab9")
+		(uuid "22c81f78-9b2d-4e18-badf-7d3d36d30b3b")
 	)
-	(hierarchical_label "MOTOR2_PWM"
-		(shape output)
-		(at 120.65 68.58 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "739872fc-d31c-4bff-8e10-9cdd7f4b8de3")
-	)
-	(hierarchical_label "MOTOR1_PWM"
+	(hierarchical_label "SERVO2"
 		(shape output)
 		(at 120.65 71.12 0)
 		(effects
@@ -3520,7 +3418,117 @@
 			)
 			(justify left)
 		)
-		(uuid "934a8f42-af5d-4ad2-96f1-150e05214b5f")
+		(uuid "239bf054-a919-49eb-8c7d-fb0662828290")
+	)
+	(hierarchical_label "SERVO1"
+		(shape output)
+		(at 120.65 68.58 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2edb910e-96b7-4763-9198-684bb49159a4")
+	)
+	(hierarchical_label "ESC1"
+		(shape output)
+		(at 72.39 91.44 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3246e467-622c-4d4b-85b9-6090c21719f8")
+	)
+	(hierarchical_label "SERVO0"
+		(shape output)
+		(at 120.65 66.04 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3bb7ab90-fe01-40d9-8fa4-69e9da8181cb")
+	)
+	(hierarchical_label "MOTOR1_DIR"
+		(shape output)
+		(at 72.39 66.04 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "42cb2174-65f6-457a-8d1a-8565ae78a1c0")
+	)
+	(hierarchical_label "LED0"
+		(shape output)
+		(at 72.39 83.82 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "601d2c4e-8a0f-49a2-ba09-73c58ddf36ac")
+	)
+	(hierarchical_label "ESC2"
+		(shape output)
+		(at 72.39 93.98 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "62d1bcaf-6bf3-48ac-a82a-3f8908501f46")
+	)
+	(hierarchical_label "ESC0"
+		(shape output)
+		(at 72.39 88.9 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "65ebf65c-8e1b-4329-bdcc-bdea774dda04")
+	)
+	(hierarchical_label "MOTOR3_DIR"
+		(shape output)
+		(at 72.39 71.12 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6ff49304-eaa0-419d-8b84-8e4051121a44")
+	)
+	(hierarchical_label "LED1"
+		(shape output)
+		(at 72.39 86.36 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "78540c5c-ab50-4527-a4ff-38086bb054ca")
+	)
+	(hierarchical_label "SERVO3"
+		(shape output)
+		(at 120.65 73.66 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "99d90630-1cc3-4f94-b8ef-6da14c3d43a2")
 	)
 	(hierarchical_label "~{I2C_MUX_RESET}"
 		(shape output)
@@ -3533,40 +3541,7 @@
 		)
 		(uuid "9d8c398e-2acc-42a9-9742-1148dac64bac")
 	)
-	(hierarchical_label "SERVO1"
-		(shape output)
-		(at 72.39 91.44 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "b4a9d815-4e02-4a63-8284-9479fae3d9dc")
-	)
-	(hierarchical_label "LED1"
-		(shape output)
-		(at 72.39 101.6 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e88595cf-9215-457e-a2dd-9935844cac14")
-	)
-	(hierarchical_label "ESC2"
-		(shape output)
-		(at 72.39 78.74 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "eacc5ecc-6430-45f9-a844-e60703f163f1")
-	)
-	(hierarchical_label "ESC1"
+	(hierarchical_label "MOTOR1_PWM"
 		(shape output)
 		(at 72.39 76.2 180)
 		(effects
@@ -3575,29 +3550,51 @@
 			)
 			(justify right)
 		)
-		(uuid "eccb00e8-0c52-4cbe-8db7-000465620205")
+		(uuid "ddf2cc76-88b4-4483-8920-e8192dc2cc4f")
 	)
 	(hierarchical_label "ESC4"
 		(shape output)
-		(at 72.39 83.82 180)
+		(at 72.39 99.06 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "ef3fcab5-b0d2-4127-9142-3cba67ceee8a")
+		(uuid "e52cd0fd-0090-47e0-886a-2c6de5041f30")
 	)
-	(hierarchical_label "MOTOR3_PWM"
+	(hierarchical_label "MOTOR2_PWM"
 		(shape output)
-		(at 72.39 71.12 180)
+		(at 72.39 78.74 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "f72da5a9-eb17-4415-891c-90458ce4561e")
+		(uuid "e924483d-b221-4bb5-a216-2a00ba7402e8")
+	)
+	(hierarchical_label "ESC5"
+		(shape output)
+		(at 72.39 101.6 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e929ce8f-00e2-43e6-9117-f5c6d67fff79")
+	)
+	(hierarchical_label "MOTOR2_DIR"
+		(shape output)
+		(at 72.39 68.58 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ef40790b-38f4-4dfa-8a08-08e3bd24ca33")
 	)
 	(hierarchical_label "ENCODER_SCL"
 		(shape bidirectional)
@@ -3609,6 +3606,17 @@
 			(justify left)
 		)
 		(uuid "fc270f35-bc07-4d96-8673-7c65f6da7962")
+	)
+	(hierarchical_label "MOTOR3_PWM"
+		(shape output)
+		(at 72.39 81.28 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fd586533-b0f9-4399-9e4b-02087785fa9a")
 	)
 	(symbol
 		(lib_id "power:+3V3")

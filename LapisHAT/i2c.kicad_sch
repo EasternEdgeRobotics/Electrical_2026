@@ -3484,7 +3484,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "f1f99825-f131-4b32-b669-782c11191c83")
 		(property "Reference" "U9"
 			(at 122.7933 38.1 0)
