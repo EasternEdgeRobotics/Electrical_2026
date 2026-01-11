@@ -4,16 +4,130 @@
 	(generator_version "9.0")
 	(uuid "c11dd49f-3857-455d-be5f-4e8a0f139ac8")
 	(paper "A4")
-	(lib_symbols)
-	(wire
-		(pts
-			(xy 41.91 68.58) (xy 43.18 68.58)
+	(lib_symbols
+		(symbol "Mechanical:MountingHole_Pad"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom no)
+			(on_board yes)
+			(property "Reference" "H"
+				(at 0 6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "MountingHole_Pad"
+				(at 0 4.445 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Mounting Hole with connection"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "mounting hole"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "MountingHole*Pad*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "MountingHole_Pad_0_1"
+				(circle
+					(center 0 1.27)
+					(radius 1.27)
+					(stroke
+						(width 1.27)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "MountingHole_Pad_1_1"
+				(pin input line
+					(at 0 -2.54 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
 		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1ed04f5e-1be7-4e11-ae8c-4db6594f50d0")
+	)
+	(no_connect
+		(at 46.99 67.31)
+		(uuid "2eef1ea8-0df5-41f4-8c35-eb8c12845f4d")
+	)
+	(no_connect
+		(at 46.99 77.47)
+		(uuid "544f4cb3-7c3c-4222-8d4a-d1039febe535")
+	)
+	(no_connect
+		(at 46.99 82.55)
+		(uuid "78fbaf7c-1596-4849-adb7-8c5787d9d968")
+	)
+	(no_connect
+		(at 46.99 72.39)
+		(uuid "7da77e13-9d5e-4c06-b3e1-ad21f99ebd3c")
 	)
 	(wire
 		(pts
@@ -37,16 +151,6 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 69.85) (xy 72.39 74.93)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3ef51892-a121-43ec-bb04-e5c002df00ff")
-	)
-	(wire
-		(pts
 			(xy 41.91 43.18) (xy 43.18 43.18)
 		)
 		(stroke
@@ -67,23 +171,33 @@
 	)
 	(wire
 		(pts
-			(xy 41.91 76.2) (xy 43.18 76.2)
+			(xy 41.91 58.42) (xy 43.18 58.42)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "691bc396-0ebc-489e-827f-b918a987e8ee")
+		(uuid "5603a641-8fab-439f-847b-1230594d4512")
 	)
 	(wire
 		(pts
-			(xy 41.91 60.96) (xy 43.18 60.96)
+			(xy 41.91 55.88) (xy 43.18 55.88)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "69f7bed8-3593-4754-883f-84bafef106b9")
+		(uuid "58fc29a5-0298-4b6f-a817-7111f3913d28")
+	)
+	(wire
+		(pts
+			(xy 41.91 53.34) (xy 43.18 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6b81c8ac-5cc7-4897-8e28-07e9cc926aa0")
 	)
 	(wire
 		(pts
@@ -94,16 +208,6 @@
 			(type default)
 		)
 		(uuid "76a45067-39c6-47d1-b9de-c5d84e7747ca")
-	)
-	(wire
-		(pts
-			(xy 41.91 63.5) (xy 43.18 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7f20648a-376c-4ecc-89f3-a8ee8c8fd376")
 	)
 	(wire
 		(pts
@@ -127,16 +231,6 @@
 	)
 	(wire
 		(pts
-			(xy 74.93 69.85) (xy 74.93 74.93)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a8fd35e8-b442-4449-bdae-b394866dfc78")
-	)
-	(wire
-		(pts
 			(xy 41.91 25.4) (xy 43.18 25.4)
 		)
 		(stroke
@@ -154,46 +248,6 @@
 			(type default)
 		)
 		(uuid "b2e86c0d-bdd7-4eac-9e2d-91d909bbafb0")
-	)
-	(wire
-		(pts
-			(xy 41.91 66.04) (xy 43.18 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b52c92ac-59bd-4e71-a5c6-a35161fd9453")
-	)
-	(wire
-		(pts
-			(xy 41.91 50.8) (xy 43.18 50.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c43deda8-de89-4911-a3e2-433606e5118b")
-	)
-	(wire
-		(pts
-			(xy 41.91 58.42) (xy 43.18 58.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ccda0300-aecf-4e1c-b4f2-6765c30a7d25")
-	)
-	(wire
-		(pts
-			(xy 41.91 53.34) (xy 43.18 53.34)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cdf37286-3bcf-43b4-bfaa-d2c793ea6044")
 	)
 	(wire
 		(pts
@@ -217,16 +271,6 @@
 	)
 	(wire
 		(pts
-			(xy 67.31 69.85) (xy 67.31 74.93)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d2e9838b-c52d-4c23-a16e-d69250178466")
-	)
-	(wire
-		(pts
 			(xy 41.91 48.26) (xy 43.18 48.26)
 		)
 		(stroke
@@ -237,47 +281,273 @@
 	)
 	(wire
 		(pts
-			(xy 41.91 81.28) (xy 43.18 81.28)
+			(xy 41.91 50.8) (xy 43.18 50.8)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "de22f44d-742c-457a-be72-c374b7d226a0")
+		(uuid "d494611d-77f2-49f2-baca-079a21e74be9")
 	)
-	(wire
-		(pts
-			(xy 41.91 55.88) (xy 43.18 55.88)
+	(symbol
+		(lib_id "Mechanical:MountingHole_Pad")
+		(at 44.45 67.31 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "6f12280e-6020-44e5-ade5-482d24abc850")
+		(property "Reference" "H1"
+			(at 32.258 64.77 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
 		)
-		(stroke
-			(width 0)
-			(type default)
+		(property "Value" "MountingHole_Pad"
+			(at 32.258 67.31 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
 		)
-		(uuid "ec0848df-a266-4251-83f7-f5ce004568e3")
+		(property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5_Pad_Via"
+			(at 44.45 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 44.45 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole with connection"
+			(at 44.45 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ead03487-76f4-4ce3-8e30-d9aafb330e0f")
+		)
+		(instances
+			(project ""
+				(path "/c11dd49f-3857-455d-be5f-4e8a0f139ac8"
+					(reference "H1")
+					(unit 1)
+				)
+			)
+		)
 	)
-	(wire
-		(pts
-			(xy 41.91 78.74) (xy 43.18 78.74)
+	(symbol
+		(lib_id "Mechanical:MountingHole_Pad")
+		(at 44.45 82.55 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "ce5f7b75-ee2d-4651-b2dd-bcba681222d9")
+		(property "Reference" "H4"
+			(at 32.258 80.01 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
 		)
-		(stroke
-			(width 0)
-			(type default)
+		(property "Value" "MountingHole_Pad"
+			(at 32.258 82.55 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
 		)
-		(uuid "ed0d7ad8-d4bb-428a-9f51-637aee2f1f0c")
+		(property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5_Pad_Via"
+			(at 44.45 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 44.45 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole with connection"
+			(at 44.45 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3e56cfdf-e3f5-435d-bb2b-c99f9caaa901")
+		)
+		(instances
+			(project "LapisHAT"
+				(path "/c11dd49f-3857-455d-be5f-4e8a0f139ac8"
+					(reference "H4")
+					(unit 1)
+				)
+			)
+		)
 	)
-	(wire
-		(pts
-			(xy 69.85 69.85) (xy 69.85 74.93)
+	(symbol
+		(lib_id "Mechanical:MountingHole_Pad")
+		(at 44.45 72.39 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "f1a1abce-b7a5-433f-b702-577bce2aeb44")
+		(property "Reference" "H2"
+			(at 32.258 69.85 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
 		)
-		(stroke
-			(width 0)
-			(type default)
+		(property "Value" "MountingHole_Pad"
+			(at 32.258 72.39 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
 		)
-		(uuid "f0d559ae-038a-4f5b-b3bf-87d6f10f1fe7")
+		(property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5_Pad_Via"
+			(at 44.45 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 44.45 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole with connection"
+			(at 44.45 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1ccb334b-1a40-45e7-877d-1399d844b3dd")
+		)
+		(instances
+			(project "LapisHAT"
+				(path "/c11dd49f-3857-455d-be5f-4e8a0f139ac8"
+					(reference "H2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole_Pad")
+		(at 44.45 77.47 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "f3b1978f-e3cc-4c2a-a6ba-b1c906cd18a7")
+		(property "Reference" "H3"
+			(at 32.258 74.93 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "MountingHole_Pad"
+			(at 32.258 77.47 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5_Pad_Via"
+			(at 44.45 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 44.45 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole with connection"
+			(at 44.45 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c9d010c7-8829-4cb5-be98-c843d75d4505")
+		)
+		(instances
+			(project "LapisHAT"
+				(path "/c11dd49f-3857-455d-be5f-4e8a0f139ac8"
+					(reference "H3")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(sheet
-		(at 16.51 19.05)
-		(size 25.4 72.39)
+		(at 22.86 19.05)
+		(size 19.05 40.64)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -292,7 +562,7 @@
 		)
 		(uuid "08da98b4-18ef-4160-9f33-04c7292d9a7a")
 		(property "Sheetname" "Pico"
-			(at 16.51 18.3384 0)
+			(at 22.86 18.3384 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -301,7 +571,7 @@
 			)
 		)
 		(property "Sheetfile" "pico.kicad_sch"
-			(at 16.51 92.0246 0)
+			(at 22.86 60.2746 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -310,41 +580,11 @@
 			)
 		)
 		(property "Field2" ""
-			(at 16.51 19.05 0)
+			(at 22.86 19.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-			)
-		)
-		(pin "MOTOR0_PWM" output
-			(at 41.91 53.34 0)
-			(uuid "14b57e31-3869-499d-add7-6fc715c86ea5")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "MOTOR1_DIR" output
-			(at 41.91 55.88 0)
-			(uuid "e6d5f665-4989-439a-900f-7bc5b96d405f")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "MOTOR3_PWM" output
-			(at 41.91 68.58 0)
-			(uuid "e1ad2008-8eb4-41e5-93b5-385d9e1c6d4b")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
 			)
 		)
 		(pin "ESC5" output
@@ -357,39 +597,9 @@
 				(justify right)
 			)
 		)
-		(pin "MOTOR2_PWM" output
-			(at 41.91 63.5 0)
-			(uuid "8614c325-f108-48b3-a751-0f72c598a4fd")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "MOTOR3_DIR" output
-			(at 41.91 66.04 0)
-			(uuid "9c174cad-e0f3-48dc-b796-50d64b89ffc2")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
 		(pin "LED1" output
 			(at 41.91 48.26 0)
 			(uuid "50a81428-df5d-4d9f-baf7-64d9b658cb15")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "MOTOR0_DIR" output
-			(at 41.91 50.8 0)
-			(uuid "24d01d8e-9d50-4b29-803f-603480ec1c19")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -447,16 +657,6 @@
 				(justify right)
 			)
 		)
-		(pin "MOTOR2_DIR" output
-			(at 41.91 60.96 0)
-			(uuid "b84ede2f-5b6f-4260-af69-a675899be11c")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
 		(pin "SERVO1" output
 			(at 41.91 38.1 0)
 			(uuid "0ee613ff-1d91-42fc-a872-109e0a8e8129")
@@ -470,16 +670,6 @@
 		(pin "LED0" output
 			(at 41.91 45.72 0)
 			(uuid "b3260154-4325-4c40-904a-a573c27de9a6")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "MOTOR1_PWM" output
-			(at 41.91 58.42 0)
-			(uuid "c4de54ab-4933-4350-b764-f794b4703268")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -517,9 +707,9 @@
 				(justify right)
 			)
 		)
-		(pin "ENCODER_SDA" bidirectional
-			(at 41.91 76.2 0)
-			(uuid "875a9086-765f-4282-866f-97896d5db75a")
+		(pin "MOTOR0_IN1" output
+			(at 41.91 50.8 0)
+			(uuid "65110e0c-50dc-407f-8036-07a6c82ce9bd")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -527,9 +717,9 @@
 				(justify right)
 			)
 		)
-		(pin "ENCODER_SCL" bidirectional
-			(at 41.91 78.74 0)
-			(uuid "aff59be1-241e-4cb7-8ef3-7dac578f16fc")
+		(pin "MOTOR0_IN2" output
+			(at 41.91 53.34 0)
+			(uuid "bc31dfbe-f550-4a75-8354-3b8bb6d15596")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -537,9 +727,19 @@
 				(justify right)
 			)
 		)
-		(pin "~{I2C_MUX_RESET}" output
-			(at 41.91 81.28 0)
-			(uuid "9ede33a0-6239-460e-9979-863c099ab40d")
+		(pin "MOTOR1_IN2" output
+			(at 41.91 58.42 0)
+			(uuid "0150d45f-7206-4157-b9ec-55e301273b21")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOTOR1_IN1" output
+			(at 41.91 55.88 0)
+			(uuid "daa26784-c5b3-49c9-8138-d5535f92fe0c")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -557,7 +757,7 @@
 	)
 	(sheet
 		(at 43.18 19.05)
-		(size 33.02 50.8)
+		(size 21.59 40.64)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -581,7 +781,7 @@
 			)
 		)
 		(property "Sheetfile" "tooling.kicad_sch"
-			(at 43.18 70.4346 0)
+			(at 43.18 60.2746 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -689,16 +889,6 @@
 				(justify left)
 			)
 		)
-		(pin "MOTOR2_DIR" input
-			(at 43.18 60.96 180)
-			(uuid "546e67d5-fd1c-4746-bd9f-6f4d8e3cda4b")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
 		(pin "LED1" input
 			(at 43.18 48.26 180)
 			(uuid "a2518b3c-d519-4a90-8094-c5b413b43868")
@@ -719,39 +909,9 @@
 				(justify left)
 			)
 		)
-		(pin "MOTOR1_PWM" input
-			(at 43.18 58.42 180)
-			(uuid "313d3eb8-036c-4600-ad58-f8aeea4ea676")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "MOTOR1_DIR" input
-			(at 43.18 55.88 180)
-			(uuid "7c2e0d3a-2f4b-422f-b06b-66fd3f0bbb23")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "MOTOR0_DIR" input
-			(at 43.18 50.8 180)
-			(uuid "3d7d1435-135e-4292-8320-95257313679b")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "MOTOR0_PWM" input
+		(pin "MOTOR0_IN2" input
 			(at 43.18 53.34 180)
-			(uuid "0ec0cc7e-e1d4-4319-8b00-b0ffe67f50bf")
+			(uuid "809cb042-812a-41db-a202-a1a59bccf82f")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -759,9 +919,9 @@
 				(justify left)
 			)
 		)
-		(pin "MOTOR3_DIR" input
-			(at 43.18 66.04 180)
-			(uuid "500e4c62-8260-4bd6-9672-ffa40eb1f629")
+		(pin "MOTOR0_IN1" input
+			(at 43.18 50.8 180)
+			(uuid "d9ba1a22-2a6c-463e-899d-7dad6296d342")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -769,9 +929,9 @@
 				(justify left)
 			)
 		)
-		(pin "MOTOR3_PWM" input
-			(at 43.18 68.58 180)
-			(uuid "19ce4f97-3d8f-43df-9614-67d68fedd2fa")
+		(pin "MOTOR1_IN1" input
+			(at 43.18 55.88 180)
+			(uuid "c10bc21c-4461-4afa-938f-5502269b2038")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -779,49 +939,9 @@
 				(justify left)
 			)
 		)
-		(pin "MOTOR2_PWM" input
-			(at 43.18 63.5 180)
-			(uuid "d2b91bfa-97c1-4152-a350-b2dd3b476b7b")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "ENCODER0_SDA" bidirectional
-			(at 67.31 69.85 270)
-			(uuid "be30a426-bbd6-47cd-abfc-1894dfa39305")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "ENCODER1_SCL" bidirectional
-			(at 74.93 69.85 270)
-			(uuid "f77af970-3236-489e-8d76-7975070de44b")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "ENCODER1_SDA" bidirectional
-			(at 72.39 69.85 270)
-			(uuid "4724a40f-bbe0-498d-b428-ec5272afc103")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "ENCODER0_SCL" bidirectional
-			(at 69.85 69.85 270)
-			(uuid "68dc42f9-51fd-4b5e-97c4-bcf25bfeef12")
+		(pin "MOTOR1_IN2" input
+			(at 43.18 58.42 180)
+			(uuid "37d82e81-04ba-49ee-8dab-e6a213ba6e4f")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -833,118 +953,6 @@
 			(project "LapisHAT"
 				(path "/c11dd49f-3857-455d-be5f-4e8a0f139ac8"
 					(page "3")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 43.18 74.93)
-		(size 33.02 16.51)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "bb1d02e7-54b8-4889-9a76-ba1387bb89cf")
-		(property "Sheetname" "I2C"
-			(at 43.18 74.2184 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "i2c.kicad_sch"
-			(at 43.18 92.0246 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(pin "ENCODER0_SCL" bidirectional
-			(at 69.85 74.93 90)
-			(uuid "7d9c6937-a4e4-44f8-a2b7-4528ff9acc54")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "ENCODER1_SCL" bidirectional
-			(at 74.93 74.93 90)
-			(uuid "1baa25ee-fd00-41c3-af70-543ed381442c")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "ENCODER1_SDA" bidirectional
-			(at 72.39 74.93 90)
-			(uuid "7c6b30b1-08c4-4a7c-a25e-f773d86d5c77")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "~{I2C_MUX_RESET}" input
-			(at 43.18 81.28 180)
-			(uuid "00d05265-0a72-446b-9e90-5e14e03bb435")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "ENCODER_SCL" bidirectional
-			(at 43.18 78.74 180)
-			(uuid "9bc2c033-e435-4ef7-b50e-b25204ac7b60")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "ENCODER_SDA" bidirectional
-			(at 43.18 76.2 180)
-			(uuid "27a50975-b857-44d3-9d28-d0ed9566b9cf")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "ENCODER0_SDA" bidirectional
-			(at 67.31 74.93 90)
-			(uuid "d198e3d1-bb8e-4e00-ac6d-38a2e958d549")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(instances
-			(project "LapisHAT"
-				(path "/c11dd49f-3857-455d-be5f-4e8a0f139ac8"
-					(page "4")
 				)
 			)
 		)

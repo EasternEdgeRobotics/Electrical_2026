@@ -2850,8 +2850,16 @@
 		(uuid "6273e25d-d688-444b-ac3d-9e2295b2b885")
 	)
 	(no_connect
+		(at 73.66 63.5)
+		(uuid "62fb8b3a-655e-499f-b0e0-3b8050ae947a")
+	)
+	(no_connect
 		(at 173.99 58.42)
 		(uuid "6a0d440b-d1ed-406e-8935-b40cdb93d654")
+	)
+	(no_connect
+		(at 73.66 66.04)
+		(uuid "6f02677b-8e06-4b5a-b5f4-64c46dcb9f66")
 	)
 	(no_connect
 		(at 173.99 55.88)
@@ -2872,6 +2880,10 @@
 	(no_connect
 		(at 173.99 66.04)
 		(uuid "7971f840-8587-467c-8c0e-929afe531102")
+	)
+	(no_connect
+		(at 73.66 68.58)
+		(uuid "87083b78-662b-47ea-bf14-3366a4371257")
 	)
 	(no_connect
 		(at 173.99 71.12)
@@ -2898,6 +2910,18 @@
 		(uuid "affd3474-97ef-42ba-a500-4999ce76d88a")
 	)
 	(no_connect
+		(at 73.66 71.12)
+		(uuid "b912cd6d-64c6-4b1a-8158-a64dd5cacb70")
+	)
+	(no_connect
+		(at 119.38 96.52)
+		(uuid "bfc4247d-26ab-4c71-bec0-3c7baac52e2e")
+	)
+	(no_connect
+		(at 119.38 91.44)
+		(uuid "c5e561d3-9ce9-4335-8670-8317b8c2e5fa")
+	)
+	(no_connect
 		(at 186.69 96.52)
 		(uuid "c6ad6fe9-d90e-4513-80c0-498610f31fbf")
 	)
@@ -2908,6 +2932,10 @@
 	(no_connect
 		(at 186.69 76.2)
 		(uuid "d64425ba-60a8-4555-b0dd-c96d2afc425b")
+	)
+	(no_connect
+		(at 119.38 93.98)
+		(uuid "df220f5f-0d0e-449f-829e-51e1001e9e5d")
 	)
 	(no_connect
 		(at 186.69 55.88)
@@ -2924,26 +2952,6 @@
 	(no_connect
 		(at 186.69 86.36)
 		(uuid "f982d532-a209-4c19-9f4f-36c71c80dbd7")
-	)
-	(wire
-		(pts
-			(xy 72.39 68.58) (xy 73.66 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0297bf39-8aaf-4be2-a64f-e81244189bf3")
-	)
-	(wire
-		(pts
-			(xy 119.38 93.98) (xy 120.65 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "03229b0e-876d-4023-8d1a-1d66d9fb1269")
 	)
 	(wire
 		(pts
@@ -2974,16 +2982,6 @@
 			(type default)
 		)
 		(uuid "17693dff-ebc7-4d25-891d-7fa6d663545e")
-	)
-	(wire
-		(pts
-			(xy 119.38 96.52) (xy 120.65 96.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "18bde3cb-d1ca-429c-8dac-5e2ab0acaee4")
 	)
 	(wire
 		(pts
@@ -3057,16 +3055,6 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 63.5) (xy 73.66 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "528a64bf-643d-4aca-9fd9-b8e2a494b267")
-	)
-	(wire
-		(pts
 			(xy 119.38 76.2) (xy 142.24 76.2)
 		)
 		(stroke
@@ -3127,16 +3115,6 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 66.04) (xy 73.66 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "94cf1923-e6cd-444f-becc-d2d9d3c9521c")
-	)
-	(wire
-		(pts
 			(xy 36.83 34.29) (xy 35.56 34.29)
 		)
 		(stroke
@@ -3184,16 +3162,6 @@
 			(type default)
 		)
 		(uuid "b07a2cf2-49a1-47df-852c-cd305146e31d")
-	)
-	(wire
-		(pts
-			(xy 72.39 71.12) (xy 73.66 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b6983b90-d23c-4895-8d72-46b2161a9ed1")
 	)
 	(wire
 		(pts
@@ -3277,16 +3245,6 @@
 	)
 	(wire
 		(pts
-			(xy 119.38 91.44) (xy 120.65 91.44)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d71738a1-e97c-44b7-bd90-bafb85bf964b")
-	)
-	(wire
-		(pts
 			(xy 119.38 78.74) (xy 142.24 78.74)
 		)
 		(stroke
@@ -3365,38 +3323,16 @@
 		)
 		(uuid "b215f664-34df-465f-80a5-2405311822c0")
 	)
-	(hierarchical_label "ENCODER_SDA"
-		(shape bidirectional)
-		(at 120.65 93.98 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "0570844e-36ff-44a4-90c6-31b97dbcf078")
-	)
-	(hierarchical_label "MOTOR0_PWM"
+	(hierarchical_label "MOTOR1_IN2"
 		(shape output)
-		(at 72.39 73.66 180)
+		(at 72.39 81.28 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "1b126d20-11b5-474a-a2fb-8b42cf6008f7")
-	)
-	(hierarchical_label "MOTOR0_DIR"
-		(shape output)
-		(at 72.39 63.5 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "1f52168f-229c-44db-a7de-5fc0e66966f8")
+		(uuid "1f6d43ed-1f68-45a8-b496-20442d839c3b")
 	)
 	(hierarchical_label "ESC3"
 		(shape output)
@@ -3453,16 +3389,16 @@
 		)
 		(uuid "3bb7ab90-fe01-40d9-8fa4-69e9da8181cb")
 	)
-	(hierarchical_label "MOTOR1_DIR"
+	(hierarchical_label "MOTOR0_IN2"
 		(shape output)
-		(at 72.39 66.04 180)
+		(at 72.39 76.2 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "42cb2174-65f6-457a-8d1a-8565ae78a1c0")
+		(uuid "41dab42e-52e5-44b6-9b44-3f54f0a75c58")
 	)
 	(hierarchical_label "LED0"
 		(shape output)
@@ -3497,16 +3433,16 @@
 		)
 		(uuid "65ebf65c-8e1b-4329-bdcc-bdea774dda04")
 	)
-	(hierarchical_label "MOTOR3_DIR"
+	(hierarchical_label "MOTOR1_IN1"
 		(shape output)
-		(at 72.39 71.12 180)
+		(at 72.39 78.74 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "6ff49304-eaa0-419d-8b84-8e4051121a44")
+		(uuid "6bbdd632-e58c-4c12-bb7a-7b46fd9b24e6")
 	)
 	(hierarchical_label "LED1"
 		(shape output)
@@ -3519,6 +3455,17 @@
 		)
 		(uuid "78540c5c-ab50-4527-a4ff-38086bb054ca")
 	)
+	(hierarchical_label "MOTOR0_IN1"
+		(shape output)
+		(at 72.39 73.66 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "84aa34a7-55e1-493e-a171-4c1eba5263b6")
+	)
 	(hierarchical_label "SERVO3"
 		(shape output)
 		(at 120.65 73.66 0)
@@ -3529,28 +3476,6 @@
 			(justify left)
 		)
 		(uuid "99d90630-1cc3-4f94-b8ef-6da14c3d43a2")
-	)
-	(hierarchical_label "~{I2C_MUX_RESET}"
-		(shape output)
-		(at 120.65 96.52 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "9d8c398e-2acc-42a9-9742-1148dac64bac")
-	)
-	(hierarchical_label "MOTOR1_PWM"
-		(shape output)
-		(at 72.39 76.2 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ddf2cc76-88b4-4483-8920-e8192dc2cc4f")
 	)
 	(hierarchical_label "ESC4"
 		(shape output)
@@ -3563,17 +3488,6 @@
 		)
 		(uuid "e52cd0fd-0090-47e0-886a-2c6de5041f30")
 	)
-	(hierarchical_label "MOTOR2_PWM"
-		(shape output)
-		(at 72.39 78.74 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e924483d-b221-4bb5-a216-2a00ba7402e8")
-	)
 	(hierarchical_label "ESC5"
 		(shape output)
 		(at 72.39 101.6 180)
@@ -3584,39 +3498,6 @@
 			(justify right)
 		)
 		(uuid "e929ce8f-00e2-43e6-9117-f5c6d67fff79")
-	)
-	(hierarchical_label "MOTOR2_DIR"
-		(shape output)
-		(at 72.39 68.58 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ef40790b-38f4-4dfa-8a08-08e3bd24ca33")
-	)
-	(hierarchical_label "ENCODER_SCL"
-		(shape bidirectional)
-		(at 120.65 91.44 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "fc270f35-bc07-4d96-8673-7c65f6da7962")
-	)
-	(hierarchical_label "MOTOR3_PWM"
-		(shape output)
-		(at 72.39 81.28 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "fd586533-b0f9-4399-9e4b-02087785fa9a")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -3909,7 +3790,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "footprints:Molex-43650-0227_-MFG"
 			(at 30.48 36.83 0)
 			(effects
 				(font
@@ -3936,7 +3817,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C585468"
 			(at 30.48 36.83 0)
 			(effects
 				(font
@@ -4145,7 +4026,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C132132"
 			(at 179.07 71.12 0)
 			(effects
 				(font
@@ -4423,7 +4304,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "e1d31006-b2bf-4d50-91d4-8beb40c9390c")
 		(property "Reference" "A1"
