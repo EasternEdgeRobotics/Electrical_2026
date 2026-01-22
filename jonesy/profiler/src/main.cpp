@@ -4,6 +4,8 @@
 #include <Wire.h>
 #include <MS5837.h>
 #include <Array.h>
+#include <vector>
+#include <ArduinoJson.h>
 
 #include "pid.h"
 
@@ -62,6 +64,17 @@ bool profiling = false;
 bool priming = false;
 
 bool recieverAvailable = false;
+
+float kP = 0.0;
+float kI = 0.0;
+float kD = 0.0;
+std::vector<String> profileVector;
+
+void print(const char *data) {
+  char tmp[strlen(data)];
+  strcpy(tmp, data);
+  print(tmp);
+}
 
 void print(char* data) {
     message.time = millis();
@@ -126,10 +139,6 @@ bool dive(float setpoint, float margin, long timer, long failsafeTimer) {
   unsigned long startTime = millis();
   unsigned long in_range_time = startTime;
 
-  float Kp = 50.0; // TODO: set the values
-  float Ki = 0.5;
-  float Kd = 0.25;
-
   float tau = 0.02;
 
   float outputLimitMin = -255;
@@ -140,7 +149,7 @@ bool dive(float setpoint, float margin, long timer, long failsafeTimer) {
 
   float dt = 100 * portTICK_PERIOD_MS;
 
-  PIDController pid = {Kp, Ki, Kd, tau, outputLimitMin, outputLimitMax, integralMin, integralMax, (dt/1000)};
+  PIDController pid = {kP, kI, kD, tau, outputLimitMin, outputLimitMax, integralMin, integralMax, (dt/1000)};
   PIDController_Init(&pid);
 
   for (unsigned long currentTime = startTime; currentTime < startTime+failsafeTimer*1000; currentTime = millis())
@@ -185,42 +194,77 @@ bool dive(float setpoint, float margin, long timer, long failsafeTimer) {
   return false; // failsafe timeout
 }
 
+void sink() {
+  // sink to the bottom
+  while (digitalRead(SYRINGE_MAX) == HIGH) {
+    ledcWrite(SYRINGE_PULL, 255);
+    ledcWrite(SYRINGE_PUSH, 0);
+    vTaskDelay(100 * portTICK_PERIOD_MS);
+  }
+  // You're at min buoyancy, stop the motor
+  ledcWrite(SYRINGE_PULL, 0);
+  ledcWrite(SYRINGE_PUSH, 0);
+}
+
+void surface() {
+  while (digitalRead(SYRINGE_MIN) == HIGH) {
+    ledcWrite(SYRINGE_PULL, 0);
+    ledcWrite(SYRINGE_PUSH, 255); // Full power up
+    vTaskDelay(100 * portTICK_PERIOD_MS);
+  }
+  
+  // You're at max buoyancy, stop the motor
+  ledcWrite(SYRINGE_PULL, 0);
+  ledcWrite(SYRINGE_PUSH, 0);
+}
+
+void parseDiveCommand(const String& action, float &a, float &b, float &c, float &d) {
+    int start = 0;
+    int commaIndex = 0;
+
+    // Extract first value
+    commaIndex = action.indexOf(',', start);
+    a = action.substring(start, commaIndex).toFloat();
+    start = commaIndex + 1;
+
+    // Extract second value
+    commaIndex = action.indexOf(',', start);
+    b = action.substring(start, commaIndex).toFloat();
+    start = commaIndex + 1;
+
+    // Extract third value
+    commaIndex = action.indexOf(',', start);
+    c = action.substring(start, commaIndex).toFloat();
+    start = commaIndex + 1;
+
+    // Extract fourth value (rest of string)
+    d = action.substring(start).toFloat();
+}
+
 void profile(void * parameter) {
   profiling = true;
   message.time = millis();
   strcpy(message.text, "Profile commencing!");
   esp_now_send(broadcastAddress, (uint8_t *) &message, sizeof(message));
 
-  // sink to the bottom
-  while (digitalRead(SYRINGE_MAX) == HIGH) {
-    ledcWrite(SYRINGE_PULL, 255);
-    ledcWrite(SYRINGE_PUSH, 0);
-  }
-  ledcWrite(SYRINGE_PULL, 0);
+  for (String action : profileVector)  {
+    print(action.c_str());
+    if (action == "sink") {
+      sink();
+    }
+    else if (action == "surface") {
+      surface();
+    }
+    else if (action.startsWith("dive:")) {
+      action.remove(0, 5);
+      action.trim();
+      
+      float setpoint, margin, timer, failsafeTimer;
+      parseDiveCommand(action, setpoint, margin, timer, failsafeTimer);
 
-  // // perform the dive
-  if (dive(2.5, 0.3, 30, 5*60))
-  {
-    print("true");
+      dive(setpoint, margin, timer, failsafeTimer);
+    }
   }
-  else {
-    print("false");
-  }
-  
-  // You are done. Attempt to go back up
-
-  // To speed up going up, go to max buoyancy
-  while (digitalRead(SYRINGE_MIN) == HIGH) {
-    ledcWrite(SYRINGE_PULL, 0);
-    ledcWrite(SYRINGE_PUSH, 255); // Full power up
-    vTaskDelay(100 * portTICK_PERIOD_MS);
-  }
-
-  // You're at max buoyancy, stop the motor
-  ledcWrite(SYRINGE_PULL, 0);
-  ledcWrite(SYRINGE_PUSH, 0);
-
-  vTaskDelay(10000 * portTICK_PERIOD_MS);
 
   profiling = false;
   message.time = millis();
@@ -261,14 +305,76 @@ void onReceive(const uint8_t * mac, const uint8_t *incomingData, int len) {
   uint8_t mod;
   memcpy(&mod, incomingData, sizeof(uint8_t));
   switch(mod) {
-    case(1):
+    case 1: {
       if (profiling || priming) {
         message.time = millis();
         strcpy(message.text, "Profile already ongoing!");
         esp_now_send(broadcastAddress, (uint8_t *) &message, sizeof(message));
       }
-      else xTaskCreate(profile, "Profile", 1000, NULL, 1, NULL);
-      break;
+      else xTaskCreate(profile, "Profile", 1000, NULL, 1, NULL);    
+    } break;
+    case 3: {
+      // Buffer for reassembling JSON profile
+      static char profileBuffer[5000];   // adjust size as needed
+      static bool chunkReceived[50];     // supports up to 50 chunks
+      static uint8_t expectedChunks = 0;
+      static size_t receivedChunks = 0;
+
+      uint8_t totalChunks = incomingData[1];
+      uint8_t chunkIndex  = incomingData[2];
+      print("initialise");
+      // First chunk → reset state
+      if (receivedChunks == 0 || chunkIndex == 0) {
+        memset(profileBuffer, 0, sizeof(profileBuffer));
+        memset(chunkReceived, 0, sizeof(chunkReceived));
+        expectedChunks = totalChunks;
+        receivedChunks = 0;
+      }
+      print("first chunk");
+      // Copy chunk data into buffer
+      size_t dataLen = len - 3; // subtract header bytes
+      size_t offset = chunkIndex * (250 - 3);
+
+      memcpy(profileBuffer + offset, incomingData + 3, dataLen);
+      
+      // count only unique chunks
+      if(!chunkReceived[chunkIndex]) {
+        chunkReceived[chunkIndex] = true;
+        receivedChunks++;
+      }
+      
+      print("received chunks");
+      
+      Serial.printf("Received chunk %u/%u (%u bytes)\n",
+                    chunkIndex + 1, totalChunks, dataLen);
+
+      // If all chunks received → JSON complete
+      if (receivedChunks == expectedChunks) {
+        print("Full profile JSON received:");
+        print(profileBuffer);
+
+        DynamicJsonDocument doc(4096);
+        DeserializationError err = deserializeJson(doc, profileBuffer);
+
+        if (err)
+        {
+          print("JSON parse error: ");
+          print(err.c_str());
+          return;
+        }
+
+        kP = doc["kP"].as<float>();
+        kD = doc["kD"].as<float>();
+        kI = doc["kI"].as<float>();
+
+        JsonArray profileArray = doc["profile"].as<JsonArray>();
+        
+        profileVector.clear();
+        for (JsonVariant v : profileArray){
+          profileVector.push_back(v.as<String>());
+        }  
+      }
+    } break;
     default:
       break;
   }

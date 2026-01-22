@@ -61,7 +61,7 @@
       reader.readAsText(file);
     }
 
-    function saveProfile() {
+    function createJSONProfile() {
       profile = {};
       profile.kP = document.getElementById("kP").value;
       profile.kD = document.getElementById("kD").value;
@@ -69,7 +69,12 @@
 
       profile.profile = Array.from(document.querySelectorAll("#profile li")).map(li => li.textContent.trim());
 
-      const jsonProfile = JSON.stringify(profile);
+      return JSON.stringify(profile);
+    }
+
+    function saveProfile() {
+
+      const jsonProfile = createJSONProfile();
 
       const blob = new Blob([jsonProfile], {type: "application/json"});
 
@@ -83,13 +88,32 @@
       URL.revokeObjectURL(url);
     }
 
+    function sendProfile() {
+      if (document.getElementById("profile").querySelectorAll("li").length == 0) {
+        document.getElementById("logs").textContent += "Cannot send empty profile\n";
+        return false;
+      }
+
+      const jsonProfile = createJSONProfile();
+
+      $.ajax({
+        url: "/profile",
+        type: "POST",
+        data: JSON.stringify(jsonProfile),
+        contentType:"application/json"
+      })
+      return true;
+    }
+
     $(document).ready(function () {
       let data = [];
       let launchIndex = 0;
 
       function launch() {
-        $.get('/start');
+        if(sendProfile()) {
+          $.get('/start');
         launchIndex = g.numRows();
+        }
       }
       window.launch = launch;
 

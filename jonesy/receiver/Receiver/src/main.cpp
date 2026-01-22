@@ -132,8 +132,61 @@ void setup() {
     request->send(response);
   });
   server.on("/start", [](AsyncWebServerRequest *request) {
+    ws.textAll("start");
     uint8_t startSignal = 1;
     esp_now_send(broadcastAddress, (uint8_t *) &startSignal, sizeof(uint8_t));
+  });
+
+  server.on("/profile", HTTP_POST,
+  [](AsyncWebServerRequest *request) {},
+  NULL,
+  [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
+
+    static String jsonBuffer;
+    
+    // First chunk of HTTP body
+    if (index == 0) {
+      jsonBuffer = "";
+      jsonBuffer.reserve(total);
+    }
+    ws.textAll("profile");
+    // Append HTTP chunk
+    jsonBuffer += String((char*)data).substring(0, len);
+
+    // Final chunk of HTTP body
+    if (index + len == total) {
+
+      Serial.println("Full JSON received:");
+      Serial.println(jsonBuffer);
+
+
+      // Convert to bytes
+      const uint8_t* raw = (const uint8_t*)jsonBuffer.c_str();
+      size_t jsonLen = jsonBuffer.length();
+
+      const size_t maxPayload = 250 - 3; // header bytes
+      size_t totalChunks = (jsonLen + maxPayload - 1) / maxPayload;
+
+      Serial.printf("Sending %u chunks via ESP-NOW\n", totalChunks);
+
+      for (size_t i = 0; i < totalChunks; i++) {
+
+        uint8_t packet[250];
+        size_t offset = i * maxPayload;
+        size_t chunkSize = min(maxPayload, jsonLen - offset);
+
+        packet[0] = 3;              // profile signal
+        packet[1] = totalChunks;    // total number of chunks
+        packet[2] = i;              // chunk index
+
+        memcpy(&packet[3], raw + offset, chunkSize);
+
+        esp_now_send(broadcastAddress, packet, chunkSize + 3);
+        delay(10); // avoid flooding
+      }
+
+      request->send(200, "text/plain", "OK");
+    }
   });
 
   server.begin();
