@@ -4752,7 +4752,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_SL_171971-0002_1x02_P2.54mm_Vertical"
+		(property "Footprint" "footprints:CONN_70553-xxxx_02_MOL"
 			(at 142.24 67.31 0)
 			(effects
 				(font
@@ -4779,7 +4779,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C585468"
+		(property "LCSC" "C588446"
 			(at 142.24 67.31 0)
 			(effects
 				(font
@@ -5105,7 +5105,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_SL_171971-0002_1x02_P2.54mm_Vertical"
+		(property "Footprint" "footprints:CONN_70553-xxxx_02_MOL"
 			(at 160.02 102.87 0)
 			(effects
 				(font
@@ -5132,7 +5132,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C585468"
+		(property "LCSC" "C588446"
 			(at 160.02 102.87 0)
 			(effects
 				(font
@@ -6575,7 +6575,7 @@
 				)
 			)
 		)
-		(property "Footprint" "footprints:Molex-43650-0227_-MFG"
+		(property "Footprint" "Connector_Molex:Molex_Micro-Fit_3.0_43650-0200_1x02_P3.00mm_Horizontal"
 			(at 19.05 29.21 0)
 			(effects
 				(font
@@ -6602,7 +6602,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C585468"
+		(property "LCSC" "C192562"
 			(at 19.05 29.21 0)
 			(effects
 				(font
@@ -7927,7 +7927,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_SL_171971-0002_1x02_P2.54mm_Vertical"
+		(property "Footprint" "footprints:CONN_70553-xxxx_02_MOL"
 			(at 142.24 85.09 0)
 			(effects
 				(font
@@ -7954,7 +7954,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C585468"
+		(property "LCSC" "C588446"
 			(at 142.24 85.09 0)
 			(effects
 				(font
@@ -8070,7 +8070,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_SL_171971-0002_1x02_P2.54mm_Vertical"
+		(property "Footprint" "footprints:CONN_70553-xxxx_02_MOL"
 			(at 160.02 67.31 0)
 			(effects
 				(font
@@ -8097,7 +8097,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C585468"
+		(property "LCSC" "C588446"
 			(at 160.02 67.31 0)
 			(effects
 				(font
@@ -8651,7 +8651,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_SL_171971-0002_1x02_P2.54mm_Vertical"
+		(property "Footprint" "footprints:CONN_70553-xxxx_02_MOL"
 			(at 160.02 85.09 0)
 			(effects
 				(font
@@ -8678,7 +8678,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C585468"
+		(property "LCSC" "C588446"
 			(at 160.02 85.09 0)
 			(effects
 				(font
@@ -9293,7 +9293,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_SL_171971-0002_1x02_P2.54mm_Vertical"
+		(property "Footprint" "footprints:CONN_70553-xxxx_02_MOL"
 			(at 142.24 102.87 0)
 			(effects
 				(font
@@ -9320,7 +9320,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C585468"
+		(property "LCSC" "C588446"
 			(at 142.24 102.87 0)
 			(effects
 				(font
