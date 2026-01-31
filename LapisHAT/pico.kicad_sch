@@ -4150,27 +4150,27 @@
 		)
 		(uuid "c736154a-b7fe-47aa-9ffe-616274d34efe")
 	)
-	(hierarchical_label "MOTOR1_IN1"
+	(hierarchical_label "LED1"
 		(shape output)
-		(at 80.01 57.15 180)
+		(at 80.01 85.09 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "08dd62e4-39cf-42cb-ac51-59d28ee7fb33")
+		(uuid "0c081db2-8c49-44c3-84a3-c80a3ebedba4")
 	)
-	(hierarchical_label "ESC3"
+	(hierarchical_label "ESC5"
 		(shape output)
-		(at 80.01 77.47 180)
+		(at 80.01 64.77 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "162fd0cf-ba91-46e7-af20-a97cb5642b78")
+		(uuid "1f486c4a-0f95-4948-aa56-fa147368bf5c")
 	)
 	(hierarchical_label "SERVO2"
 		(shape output)
@@ -4183,29 +4183,29 @@
 		)
 		(uuid "2760c917-2a0c-402c-89cc-757181586a55")
 	)
-	(hierarchical_label "ESC2"
+	(hierarchical_label "ESC0"
 		(shape output)
-		(at 80.01 74.93 180)
+		(at 80.01 49.53 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "3b7a0c12-4315-4d6b-8df6-d80b30dc59f2")
-	)
-	(hierarchical_label "ESC4"
-		(shape output)
-		(at 80.01 82.55 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "65a98b41-9975-4d46-b6bf-30b0a6e8741a")
+		(uuid "3c825945-8770-471b-b831-7a0065cefa44")
 	)
 	(hierarchical_label "MOTOR0_IN2"
+		(shape output)
+		(at 80.01 72.39 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "42a5f23e-e404-4cfa-aacf-160cc732ff84")
+	)
+	(hierarchical_label "ESC1"
 		(shape output)
 		(at 80.01 52.07 180)
 		(effects
@@ -4214,9 +4214,64 @@
 			)
 			(justify right)
 		)
-		(uuid "675e0439-93e8-4ae4-8258-ec3132ea86fb")
+		(uuid "477634c2-bdd0-400b-8efa-1bab4e93ddba")
 	)
-	(hierarchical_label "ESC0"
+	(hierarchical_label "ESC2"
+		(shape output)
+		(at 80.01 57.15 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "47a20772-351d-4841-a245-bb15adf1248e")
+	)
+	(hierarchical_label "MOTOR1_IN1"
+		(shape output)
+		(at 80.01 74.93 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5266b986-1a19-4e82-9592-ecb7e47e8f6a")
+	)
+	(hierarchical_label "ESC3"
+		(shape output)
+		(at 80.01 59.69 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "66dcc788-4713-42cf-b7c3-5ba7eae75863")
+	)
+	(hierarchical_label "MOTOR1_IN2"
+		(shape output)
+		(at 80.01 77.47 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b39c14fa-1698-4ab9-98eb-31a395b51fcb")
+	)
+	(hierarchical_label "LED0"
+		(shape output)
+		(at 80.01 82.55 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c88088d0-ebf3-4e64-9e4b-8ada7a607ffa")
+	)
+	(hierarchical_label "MOTOR0_IN1"
 		(shape output)
 		(at 80.01 69.85 180)
 		(effects
@@ -4225,18 +4280,7 @@
 			)
 			(justify right)
 		)
-		(uuid "6d8e8d90-ca7b-426c-8ab4-d90e452f4c59")
-	)
-	(hierarchical_label "LED0"
-		(shape output)
-		(at 80.01 62.23 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "821f31c9-4074-4c63-b9d5-7fbca1384fe8")
+		(uuid "cd3ac118-eb3f-4501-9c8f-2f503844e4f2")
 	)
 	(hierarchical_label "SERVO3"
 		(shape output)
@@ -4249,16 +4293,16 @@
 		)
 		(uuid "d23f4cfb-a072-48c9-a901-a9e1715d1ab3")
 	)
-	(hierarchical_label "MOTOR1_IN2"
+	(hierarchical_label "ESC4"
 		(shape output)
-		(at 80.01 59.69 180)
+		(at 80.01 62.23 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "d951e990-a3b3-4419-bc6e-2a4139cb1429")
+		(uuid "e1465a95-9fc2-4abc-a40f-b15a488ef3a3")
 	)
 	(hierarchical_label "SERVO0"
 		(shape output)
@@ -4281,50 +4325,6 @@
 			(justify left)
 		)
 		(uuid "e31c5614-5c51-4fb5-bd61-4d915bd17dde")
-	)
-	(hierarchical_label "ESC5"
-		(shape output)
-		(at 80.01 85.09 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e6fe45e3-5b6a-432d-b484-87ea4079a9f7")
-	)
-	(hierarchical_label "LED1"
-		(shape output)
-		(at 80.01 64.77 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "eaa140c7-b6a8-4543-a70c-6efd8b3cd6fb")
-	)
-	(hierarchical_label "ESC1"
-		(shape output)
-		(at 80.01 72.39 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "f781d884-fbd3-4267-b4e1-2992b2cfaa50")
-	)
-	(hierarchical_label "MOTOR0_IN1"
-		(shape output)
-		(at 80.01 49.53 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "fa0b0541-13b9-4e76-8c70-f7a7645a503c")
 	)
 	(symbol
 		(lib_id "Device:R_Small_US")
@@ -4488,7 +4488,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100u"
+		(property "Value" "120u"
 			(at 43.18 38.9381 0)
 			(effects
 				(font
@@ -4497,7 +4497,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:CP_Elec_6.3x7.7"
+		(property "Footprint" "Capacitor_SMD:CP_Elec_10x12.5"
 			(at 40.64 38.1 0)
 			(effects
 				(font
@@ -4524,7 +4524,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C3338"
+		(property "LCSC" "C24725845"
 			(at 40.64 38.1 0)
 			(effects
 				(font
