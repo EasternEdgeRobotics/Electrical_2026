@@ -9,7 +9,8 @@
 const int topLimitSwitch = 0;
 const int bottomLimitSwitch = 1;
 const int led = 2;
-const int motor = 3
+const int motorPWM = 3;
+const int motorDirection = 4;  // CURRENTLY ASSUMING HIGH IS DOWN AND LOW IS UP
 
 MS5837 sensor;
 
@@ -18,14 +19,19 @@ MS5837 sensor;
 seperate all initialization functions in their respective tabs
 */
 void setup() {
+
+  pinMode(topLimitSwitch, INPUT);
+  pinMode(bottomLimitSwitch, INPUT);
+  pinMode(led, OUTPUT);
+  pinMode(motorPWM, OUTPUT);
+  pinMode(motorDirection, OUTPUT);
   
   WifiSetup();
-
-  Wire.begin();
 
   // Initialize pressure sensor
   // Returns true if initialization was successful
   // We can't continue with the rest of the program unless we can initialize the sensor
+  Wire.begin();
   while (!sensor.init()) {
     delay(5000);
   }
