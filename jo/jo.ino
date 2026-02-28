@@ -2,8 +2,16 @@
  Main.  execute top level calls
 */
 
+#include <Wire.h>
+#include "MS5837.h"
+
 // pin definitions
- // TODO
+const int topLimitSwitch = 0;
+const int bottomLimitSwitch = 1;
+const int led = 2;
+const int motor = 3
+
+MS5837 sensor;
 
 
 /*
