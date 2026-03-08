@@ -8,7 +8,7 @@
 // pin definitions
 const int topLimitSwitch = 0;
 const int bottomLimitSwitch = 1;
-const int led = 2;
+const int led = LED_BUILTIN;
 const int motorPWM = 3;
 const int motorDirection = 4;  // CURRENTLY ASSUMING HIGH IS DOWN AND LOW IS UP
 
@@ -20,13 +20,13 @@ seperate all initialization functions in their respective tabs
 */
 void setup() {
 
+  Serial.begin(9600);
+
   pinMode(topLimitSwitch, INPUT);
   pinMode(bottomLimitSwitch, INPUT);
   pinMode(led, OUTPUT);
   pinMode(motorPWM, OUTPUT);
   pinMode(motorDirection, OUTPUT);
-  
-  WifiSetup();
 
   // Initialize pressure sensor
   // Returns true if initialization was successful
@@ -35,8 +35,12 @@ void setup() {
   while (!sensor.init()) {
     delay(5000);
   }
+  
+  
 
   sensor.setFluidDensity(997); // kg/m^3 (freshwater, 1029 for seawater)
+
+  WifiSetup();
 }
 
 /*
