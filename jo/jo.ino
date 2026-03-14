@@ -2,6 +2,7 @@
  Main.  execute top level calls
 */
 
+#include <WiFiNINA.h>
 #include <Wire.h>
 #include "MS5837.h"
 
