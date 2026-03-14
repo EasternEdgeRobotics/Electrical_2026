@@ -31,15 +31,16 @@ void setup() {
   // Initialize pressure sensor
   // Returns true if initialization was successful
   // We can't continue with the rest of the program unless we can initialize the sensor
-  Wire.begin();
-  while (!sensor.init()) {
-    delay(5000);
-  }
+  // Wire.begin();
+  // while (!sensor.init()) {
+  //   delay(5000);
+  // }
   
   
 
-  sensor.setFluidDensity(997); // kg/m^3 (freshwater, 1029 for seawater)
+  // sensor.setFluidDensity(997); // kg/m^3 (freshwater, 1029 for seawater)
 
+  sdSetup();
   WifiSetup();
 }
 

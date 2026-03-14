@@ -10,6 +10,8 @@ Add more functions if needed
 
 const char ssid[] = "EER_Profiler";
 const char pass[] = "CrazyAssPassword69!";
+const int NUMBER_OF_FILES = 4;
+const String FILE_NAMES[NUMBER_OF_FILES] = {"index.txt", "output.txt", "dygraph.min.txt", "jquery.min.txt"};
 int status = WL_IDLE_STATUS;
 
 WiFiServer server(80);
@@ -74,13 +76,20 @@ void WifiLoop() {
         if (c == '\n') {// end of line
           if (currentLine.length() == 0) { // end of HTTP request
             // nothing was asked, so first connection.  send web page
-            File websiteFile = SD.open("website.txt", FILE_READ);
-            if (websiteFile) {
-              while (websiteFile.available()) {
-                client.write(websiteFile.read());
+            for(int i = 0; i < NUMBER_OF_FILES; i++) {
+              Serial.println("1");
+              File websiteFile = SD.open(FILE_NAMES[i], FILE_READ);
+              if (websiteFile) {
+                Serial.println("2");
+                while (websiteFile.available()) {
+                  client.write(websiteFile.read());
+                }
               }
+              Serial.println("3");
+              websiteFile.close();
             }
-            websiteFile.close();
+            
+            Serial.println("4");
             break;
           }
           else { // useless info reset buffer

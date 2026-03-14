@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jonesy Mk.2 Control Panel</title>
+  <link href="output.css" rel="stylesheet" />
+  <script src="dygraph.min.js"></script>
+  <script src="jquery.min.js"></script>
+  <script>
+
+    function addToProfile(name) {
+      const li = document.createElement("li");
+      switch (name) {
+        case "dive": {
+          li.textContent = name + ": 0.0 , 0.0 , 00.00 , 00.00";
+          li.title = "setpoint(meters), margin(meters), timer(seconds), failsafe(seconds)";
+          break;
+        }
+        default: {
+          li.textContent = name;
+          break;
+        }
+      }
+
+      li.contentEditable = "true";
+      li.addEventListener("dblclick", () => {
+        li.remove();
+      });
+      document.getElementById("profile").appendChild(li);
+    }
+
+    function getProfile() {
+      document.getElementById("profileFileInput").click();
+    }
+
+    function readFile(input) {
+      const file = input.files[0];
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        try {
+          const profile = JSON.parse(event.target.result);
+          
+          document.getElementById("kP").value = profile.kP;
+          document.getElementById("kD").value = profile.kD;
+          document.getElementById("kI").value = profile.kI;
+          
+          profile.profile.forEach(element => {
+            addToProfile(element);
+          });
+        }
+        catch (err) {
+          console.error("Invalid JSON file", err);
+        }
+      }
+
+      reader.readAsText(file);
+    }
+
+    function createJSONProfile() {
+      profile = {};
+      profile.kP = document.getElementById("kP").value;
+      profile.kD = document.getElementById("kD").value;
+      profile.kI = document.getElementById("kI").value;
+
+      profile.profile = Array.from(document.querySelectorAll("#profile li")).map(li => li.textContent.trim());
+
+      return JSON.stringify(profile);
+    }
+
+    function saveProfile() {
+
+      const jsonProfile = createJSONProfile();
+
+      const blob = new Blob([jsonProfile], {type: "application/json"});
+
+      const url = URL.createObjectURL(blob);
+      const tmpLink = document.createElement("a");
+
+      tmpLink.href = url;
+      tmpLink.download = "profile.json";
+      tmpLink.click();
+
+      URL.revokeObjectURL(url);
+    }
+
+    function sendProfile() {
+      if (document.getElementById("profile").querySelectorAll("li").length == 0) {
+        document.getElementById("logs").textContent += "Cannot send empty profile\n";
+        return false;
+      }
+
+      const jsonProfile = createJSONProfile();
+
+      $.ajax({
+        url: "/profile",
+        type: "POST",
+        data: JSON.stringify(jsonProfile),
+        contentType:"application/json"
+      })
+      return true;
+    }
+
+    $(document).ready(function () {
+      let data = [];
+      let launchIndex = 0;
+
+      function launch() {
+        if(sendProfile()) {
+          $.get('/start');
+        launchIndex = g.numRows();
+        }
+      }
+      window.launch = launch;
+
+      const g = new Dygraph(
+        document.getElementById("chart"),
+        [[0, 0]],
+        {
+          drawPoints: true,
+          interactionModel: {},
+          valueRange: [6, -0.5],
+          labels: ["Time", "Depth"],
+          underlayCallback: function (canvas, area, g) {
+            canvas.fillStyle = "rgba(0, 255, 0, 0.15)";
+            for (let i = 0; i < g.numRows() - 1; i++) {
+              const y1 = g.getValue(i, 1);
+              const y2 = g.getValue(i + 1, 1);
+              const x1 = g.getValue(i, 0);
+              const x2 = g.getValue(i + 1, 0);
+              if (y1 >= 2 && y1 <= 3 && y2 >= 2 && y2 <= 3) {
+                const xStart = g.toDomXCoord(x1);
+                const xEnd   = g.toDomXCoord(x2);
+                canvas.fillRect(xStart, area.y, xEnd - xStart, area.h);
+              }
+            }
+          }
+        }
+      );
+
+      // cache the two elements
+      const logs    = document.getElementById("logs");
+      const logsBox = document.getElementById("logsContainer");
+
+      // websocket for logs
+      const ws = new WebSocket("ws://192.168.0.1/ws");
+      ws.onmessage = function (event) {
+        // are we already scrolled to bottom?
+        const shouldScroll =
+          logsBox.scrollTop + logsBox.clientHeight >= logsBox.scrollHeight - 10;
+
+        // append new line
+        logs.textContent += event.data.endsWith("\n")
+          ? event.data
+          : event.data + "\n";
+
+        // if at bottom before, scroll to bottom now
+        if (shouldScroll) {
+          requestAnimationFrame(() => {
+            logsBox.scrollTop = logsBox.scrollHeight;
+          });
+        }
+      };
+
+      // polling for chart updates
+      setInterval(function () {
+        $.get("/data", function (dot) {
+          data = dot;
+          g.updateOptions({ file: data });
+
+          if (launchIndex > data.length) launchIndex = 0;
+          const count = data
+            .slice(launchIndex)
+            .filter(d => d[1] >= 2 && d[1] <= 3).length;
+          document.getElementById("rangeCount").textContent =
+            `Points between 2 and 3 meter range: ${count}`;
+        });
+      }, 1000);
+    });
+  </script>
+</head>
+<body class="bg-[#323232] text-white font-mono p-1">
+  <h1 class="mt-0 text-2xl text-center mb-2">Jonesy Mk.3 Control Panel</h1>
+  <div class="grid grid-cols-2 grid-rows-1 gap-4">
+    <div>
+      <button onclick="getProfile()" class="text-xl font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 w-half">Get Profile</button>
+      <input onchange="readFile(this)" type="file" id="profileFileInput" accept=".json" style="display:none;">
+
+      <button onclick="saveProfile()" class="text-xl font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 w-half">Save Profile</button>
+
+      <div class="input-row">
+        <label class="text-m " for="kP">kP: </label>
+        <input type="number" class="form-input text-m" id="kP" step="0.01">
+
+        <label class="text-m" for="kD">kD: </label>
+        <input type="number" class="form-input text-m" id="kD" step="0.01">
+
+        <label class="text-m" for="kI">kI: </label>
+        <input type="number" class="form-input text-m" id="kI" step="0.01">
+      </div>
+      
+      <br>
+      
+      <div class="grid grid-cols-2 grid-rows-1 gap-4">
+        <div>
+          <button onclick="addToProfile('sink')" class="text-m font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">sink</button>
+          <button onclick="addToProfile('surface')" class="text-m font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">surface</button>
+          <button onclick="addToProfile('dive')" class="text-m font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">dive</button>
+        </div>
+
+        <div>
+          <label class="text-center text-xl">Profile:</label>
+          <ul id="profile" class="text-m">
+            <!-- profile components will be dynamicaly added here-->
+          </ul>
+        </div>
+
+      </div>
+      
+      
+      <button
+        onclick="launch()"
+        class="text-2xl font-bold rounded-lg px-6 py-4 bg-red-600 text-white w-full active:bg-red-700"
+      >
+        Launch
+      </button>
+
+      <!-- give this div the scroll ID -->
+      <div
+        id="logsContainer"
+        class="console bg-[#222] h-[512px] rounded-xl overflow-auto"
+      >
+        <pre
+          id="logs"
+          class="text-left font-mono text-xs font-normal ml-2 mt-1 whitespace-pre-line leading-tight break-words"
+        ></pre>
+      </div>
+
+      <h2 id="rangeCount" class="pt-2 text-xl">
+        Points between 2 and 3 meter range: 0
+      </h2>
+    </div>
+
+    <div class="w-full h-full">
+      <div class="flex w-full h-full justify-start">
+        <div class="flex items-center justify-center w-8">
+          <p class="-rotate-90 transform origin-center whitespace-nowrap">
+            Depth (m)
+          </p>
+        </div>
+        <div id="chart" class="w-full h-[400px]"></div>
+      </div>
+      <p class="text-center">Time (s)</p>
+    </div>
+  </div>
+</body>
+</html>
