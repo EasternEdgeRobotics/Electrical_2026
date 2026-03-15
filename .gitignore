@@ -28,3 +28,8 @@ fp-info-cache
 *.csv
 
 # Compiled code
+.DS_Store
+**/.DS_Store
+
+.vscode
+build

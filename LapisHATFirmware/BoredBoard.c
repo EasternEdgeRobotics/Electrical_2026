@@ -64,12 +64,12 @@ void i2cSlaveHandler() {
                         break;
                     case -1:
                         pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2], 0);
-                        pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2+1], -1 * receivedData[i]);
+                        pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2+1], -1 * receivedData[1]); // Was [i], swapped for 1 assuming its a typo -PC
                         break;
                     default:
                         pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2], 0);
                         pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2+1], 0);
-                        break
+                        break;
                 }
             case 10: case 11: case 12: case 13:
                 // NOTE: not sure if i need to set to 254 if its at 255 with servos
