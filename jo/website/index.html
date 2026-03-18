@@ -17,6 +17,11 @@
           li.title = "setpoint(meters), margin(meters), timer(seconds), failsafe(seconds)";
           break;
         }
+        case "led":{
+          li.textContent = name + ": 255 255 255";
+          li.title = "RGB";
+          break;
+        }
         default: {
           li.textContent = name;
           break;
@@ -48,6 +53,7 @@
           document.getElementById("kP").value = profile.kP;
           document.getElementById("kD").value = profile.kD;
           document.getElementById("kI").value = profile.kI;
+          document.getElementById("density").value = profile.density;
           
           profile.profile.forEach(element => {
             addToProfile(element);
@@ -66,6 +72,7 @@
       profile.kP = document.getElementById("kP").value;
       profile.kD = document.getElementById("kD").value;
       profile.kI = document.getElementById("kI").value;
+      profile.density = document.getElementById("density").value;
 
       profile.profile = Array.from(document.querySelectorAll("#profile li")).map(li => li.textContent.trim());
 
@@ -201,6 +208,9 @@
 
         <label class="text-m" for="kI">kI: </label>
         <input type="number" class="form-input text-m" id="kI" step="0.01">
+
+        <label class="text-m" for="density">density<br>(kg/m^3): </label>
+        <input type="number" class="form-input text-m" id="density" step="0.01" value="997">
       </div>
       
       <br>
@@ -210,6 +220,7 @@
           <button onclick="addToProfile('sink')" class="text-m font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">sink</button>
           <button onclick="addToProfile('surface')" class="text-m font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">surface</button>
           <button onclick="addToProfile('dive')" class="text-m font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">dive</button>
+          <button onclick="addToProfile('led')" class="text-m font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">LED</button>
         </div>
 
         <div>
