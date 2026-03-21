@@ -74,7 +74,7 @@ thruster_menu() {
 
 main_menu() {
     while true; do
-        sub_menu_choice=$(whiptail --title "$TITLE" --menu "Select an option:" 15 50 4 "1" "Thrusters" "2" "Servos" "3" "DC Motors" "4" "External LEDs" "5" "Pico LEDs" 3>&1 1>&2 2>&3)
+        sub_menu_choice=$(whiptail --title "$TITLE" --menu "Select an option:" 15 50 5 "1" "Thrusters" "2" "Servos" "3" "DC Motors" "4" "External LEDs" "5" "Pico LEDs" 3>&1 1>&2 2>&3)
         case $sub_menu_choice in
 
         1)  thruster_menu ;;
