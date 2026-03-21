@@ -56,9 +56,10 @@ void WifiSetup() {
 void readandSendFile(WiFiClient *client, String name) {
   File websiteFile = SD.open(name, FILE_READ);
   if (websiteFile) {
-    Serial.println(name);
+    byte buffer[1024];
     while (websiteFile.available()) {
-      client->write(websiteFile.read());
+      int length = websiteFile.readBytes(buffer, sizeof(buffer));
+      client->write(buffer, length);
     }
     websiteFile.close();
   }
