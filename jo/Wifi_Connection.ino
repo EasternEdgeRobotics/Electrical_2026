@@ -78,22 +78,41 @@ void WifiLoop() {
     Serial.println("new client");
 
     String currentLine = "";
+    bool receivingProfile = false;
+    bool isContent = false;
+    String jsonData = "";
+
     while (client.connected()) {
       delayMicroseconds(10);
       
       if (client.available()) {
         char c = client.read();
-
         if (c == '\n') {// end of line
           if (currentLine.length() == 0) { // end of HTTP request
+            if (receivingProfile) {
+              isContent = true;
+            }
           }
           else { // useless info reset buffer
-            Serial.println(currentLine);
             currentLine = "";
           }
         }
         else if (c != '\r') { //data being received.  append
           currentLine += c;
+        }
+        if (isContent) {
+          jsonData += c;
+          if (c == '}') {
+            Serial.println(jsonData);
+            break;
+          }
+        }
+        if (currentLine.startsWith("POST /profile")) {
+          receivingProfile = true;
+          client.println("HTTP/1.1 200 OK");
+          client.println("Connection: close");
+          client.println();
+          client.println("OK");
         }
         if (currentLine.startsWith("GET / ") || currentLine.startsWith("GET /HTTP")) {
           // nothing was asked, so first connection.  send web page
@@ -126,6 +145,12 @@ void WifiLoop() {
           client.println("Connection: close");
           client.println();
           readandSendFile(&client, FILE_NAMES[2]);
+          break;
+        }
+        if (currentLine.startsWith("GET /favicon.ico")) {
+          client.println("HTTP/1.1 404 Not Found");
+          client.println("Connection: close");
+          client.println();
           break;
         }
       }
