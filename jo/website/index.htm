@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jonesy Mk.2 Control Panel</title>
   <link href="output.css" rel="stylesheet" />
-  <script src="dygraph.min.js"></script>
-  <script src="jquery.min.js"></script>
+  <script src="dygraph.js"></script>
+  <script src="jquery.js"></script>
   <script>
 
     function addToProfile(name) {
@@ -101,28 +101,23 @@
         return false;
       }
 
-      const jsonProfile = createJSONProfile();
-
       $.ajax({
         url: "/profile",
         type: "POST",
-        data: JSON.stringify(jsonProfile),
+        data: createJSONProfile(),
         contentType:"application/json"
       })
       return true;
     }
 
+    function launch() {
+      console.log("launching!");
+      sendProfile();
+    }
+
     $(document).ready(function () {
       let data = [];
       let launchIndex = 0;
-
-      function launch() {
-        if(sendProfile()) {
-          $.get('/start');
-        launchIndex = g.numRows();
-        }
-      }
-      window.launch = launch;
 
       const g = new Dygraph(
         document.getElementById("chart"),
@@ -150,43 +145,43 @@
       );
 
       // cache the two elements
-      const logs    = document.getElementById("logs");
-      const logsBox = document.getElementById("logsContainer");
+      // const logs    = document.getElementById("logs");
+      // const logsBox = document.getElementById("logsContainer");
 
-      // websocket for logs
-      const ws = new WebSocket("ws://192.168.0.1/ws");
-      ws.onmessage = function (event) {
-        // are we already scrolled to bottom?
-        const shouldScroll =
-          logsBox.scrollTop + logsBox.clientHeight >= logsBox.scrollHeight - 10;
+    //   // websocket for logs
+    //   const ws = new WebSocket("ws://192.168.4.1/ws");
+    //   ws.onmessage = function (event) {
+    //     // are we already scrolled to bottom?
+    //     const shouldScroll =
+    //       logsBox.scrollTop + logsBox.clientHeight >= logsBox.scrollHeight - 10;
 
-        // append new line
-        logs.textContent += event.data.endsWith("\n")
-          ? event.data
-          : event.data + "\n";
+    //     // append new line
+    //     logs.textContent += event.data.endsWith("\n")
+    //       ? event.data
+    //       : event.data + "\n";
 
-        // if at bottom before, scroll to bottom now
-        if (shouldScroll) {
-          requestAnimationFrame(() => {
-            logsBox.scrollTop = logsBox.scrollHeight;
-          });
-        }
-      };
+    //     // if at bottom before, scroll to bottom now
+    //     if (shouldScroll) {
+    //       requestAnimationFrame(() => {
+    //         logsBox.scrollTop = logsBox.scrollHeight;
+    //       });
+    //     }
+    //   };
 
-      // polling for chart updates
-      setInterval(function () {
-        $.get("/data", function (dot) {
-          data = dot;
-          g.updateOptions({ file: data });
+    //   // polling for chart updates
+    //   setInterval(function () {
+    //     $.get("/data", function (dot) {
+    //       data = dot;
+    //       g.updateOptions({ file: data });
 
-          if (launchIndex > data.length) launchIndex = 0;
-          const count = data
-            .slice(launchIndex)
-            .filter(d => d[1] >= 2 && d[1] <= 3).length;
-          document.getElementById("rangeCount").textContent =
-            `Points between 2 and 3 meter range: ${count}`;
-        });
-      }, 1000);
+    //       if (launchIndex > data.length) launchIndex = 0;
+    //       const count = data
+    //         .slice(launchIndex)
+    //         .filter(d => d[1] >= 2 && d[1] <= 3).length;
+    //       document.getElementById("rangeCount").textContent =
+    //         `Points between 2 and 3 meter range: ${count}`;
+    //     });
+    //   }, 1000);
     });
   </script>
 </head>
