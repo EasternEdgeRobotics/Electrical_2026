@@ -15,9 +15,9 @@ run_motor() { # Idk what to call this when this is also used for LEDs. -PC
 }
 
 servo_menu() {
-    SERVO_NUM=$(dialog --title "$TITLE" --inputbox "Select a Servo (1-4):" 8 50 3>&1 1>&2 2>&3)
+    SERVO_NUM=$(whiptail --title "$TITLE" --inputbox "Select a Servo (1-4):" 8 50 3>&1 1>&2 2>&3)
     [ $? -ne 0 ] && return
-    SERVO_VAL=$(dialog --title "$TITLE" --inputbox "What Level (0x00-0xFF):" 8 50 3>&1 1>&2 2>&3)
+    SERVO_VAL=$(whiptail --title "$TITLE" --inputbox "What Level (0x00-0xFF):" 8 50 3>&1 1>&2 2>&3)
     [ $? -ne 0 ] && return
 
     case $SERVO_NUM in
@@ -31,9 +31,9 @@ servo_menu() {
 }
 
 led_menu() {
-    LED_NUM=$(dialog --title "$TITLE" --inputbox "Select a LED (1-2):" 8 50 3>&1 1>&2 2>&3)
+    LED_NUM=$(whiptail --title "$TITLE" --inputbox "Select a LED (1-2):" 8 50 3>&1 1>&2 2>&3)
     [ $? -ne 0 ] && return
-    LED_VAL=$(dialog --title "$TITLE" --inputbox "What Level (0x00-0xFF):" 8 50 3>&1 1>&2 2>&3)
+    LED_VAL=$(whiptail --title "$TITLE" --inputbox "What Level (0x00-0xFF):" 8 50 3>&1 1>&2 2>&3)
     [ $? -ne 0 ] && return
 
     case $LED_NUM in
@@ -45,9 +45,9 @@ led_menu() {
 }
 
 motor_menu() {
-    MOTOR_NUM=$(dialog --title "$TITLE" --inputbox "Select a motor (1-2):" 8 50 3>&1 1>&2 2>&3)
+    MOTOR_NUM=$(whiptail --title "$TITLE" --inputbox "Select a motor (1-2):" 8 50 3>&1 1>&2 2>&3)
     [ $? -ne 0 ] && return
-    MOTOR_VAL=$(dialog --title "$TITLE" --inputbox "What Speed (0x00-0xFF):" 8 50 3>&1 1>&2 2>&3)
+    MOTOR_VAL=$(whiptail --title "$TITLE" --inputbox "What Speed (0x00-0xFF):" 8 50 3>&1 1>&2 2>&3)
     [ $? -ne 0 ] && return
 
     case $MOTOR_NUM in
@@ -59,7 +59,7 @@ motor_menu() {
 }
 
 thruster_menu() {
-    THRUSTER=$(dialog --title "$TITLE" --inputbox "Enter the thruster you want to run (1-6):" 8 50 3>&1 1>&2 2>&3)
+    THRUSTER=$(whiptail --title "$TITLE" --inputbox "Enter the thruster you want to run (1-6):" 8 50 3>&1 1>&2 2>&3)
     case $THRUSTER in
 
     1)  set_i2c_val 0x00 $LAPISHAT_THRUSTER_PWM ;;
@@ -74,7 +74,7 @@ thruster_menu() {
 
 main_menu() {
     while true; do
-        sub_menu_choice=$(dialog --title "$TITLE" --menu "Select an option:" 15 50 4 "1" "Thrusters" "2" "Servos" "3" "DC Motors" "4" "External LEDs" "5" "Pico LEDs" 3>&1 1>&2 2>&3)
+        sub_menu_choice=$(whiptail --title "$TITLE" --menu "Select an option:" 15 50 4 "1" "Thrusters" "2" "Servos" "3" "DC Motors" "4" "External LEDs" "5" "Pico LEDs" 3>&1 1>&2 2>&3)
         case $sub_menu_choice in
 
         1)  thruster_menu ;;
