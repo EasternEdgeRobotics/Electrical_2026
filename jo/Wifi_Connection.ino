@@ -104,6 +104,8 @@ void WifiLoop() {
           jsonData += c;
           if (c == '}') {
             Serial.println(jsonData);
+            SplitJson(jsonData);
+            profiling = true;
             break;
           }
         }

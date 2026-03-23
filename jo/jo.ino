@@ -51,4 +51,5 @@ separate the loop code into functions in their respective tabs.  the functions t
 void loop() {
 
   WifiLoop();
+  Profile();
 }
