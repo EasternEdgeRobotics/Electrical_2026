@@ -82,7 +82,20 @@ void Profile() {
       Dive();
     }
     else if (input.startsWith("led")) {
-      SetLED(input);
+      // Remove the "led: " prefix
+      int colonIndex = input.indexOf(':');
+      String values = input.substring(colonIndex + 1);
+      values.trim(); // remove spaces
+
+      // Parse the three numbers
+      int firstComma = values.indexOf(',');
+      int secondComma = values.indexOf(',', firstComma + 1);
+
+      r = values.substring(0, firstComma).toInt();
+      g = values.substring(firstComma + 1, secondComma).toInt();
+      b = values.substring(secondComma + 1).toInt();
+
+      SetLED(r, g, b);
     }
   }
 }
@@ -127,7 +140,7 @@ void Dive() {
 /*
  control the LEDs
 */
-void SetLED(String input) {
+void SetLED(int r, int g, int b) {
   // TODO
   Serial.println("led");
   currentStepIndex += 1;
