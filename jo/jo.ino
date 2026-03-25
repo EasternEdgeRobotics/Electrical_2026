@@ -32,10 +32,10 @@ void setup() {
   // Initialize pressure sensor
   // Returns true if initialization was successful
   // We can't continue with the rest of the program unless we can initialize the sensor
-  // Wire.begin();
-  // while (!sensor.init()) {
-  //   delay(5000);
-  // }
+  Wire.begin();
+  while (!sensor.init()) {
+    delay(5000);
+  }
   
   
 

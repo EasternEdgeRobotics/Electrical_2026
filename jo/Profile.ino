@@ -3,6 +3,7 @@ main document for Profiling methods
 */
 
 #include <ArduinoJson.h>
+#include "PID.h"
 
 JsonDocument doc;
 bool profiling = false;
@@ -13,8 +14,23 @@ int currentStepIndex = 0;
 float kP = 0.0;
 float kD = 0;
 float kI = 0;
-float diveValues[4]; // setpoint, margin, timer, failsafeTimer
+float setpoint = 0;
+float margin = 0;
+float timer = 0;
+float failsafeTimer = 0;
 bool diving = false;
+
+unsigned long startTime = 0;
+unsigned long inRangeTime = 0;
+
+const float tau = 0.02;
+const float outputLimitMin = -255;
+const float outputLimitMax = 255;
+const float integralMin = -50;
+const float integralMax = 50;
+const float dt = 100;
+
+PIDController pid;
 
 /*
 split the json with the profiling info for execution
@@ -38,6 +54,7 @@ void setupDive(String input) {
   numbers.trim();
 
   int index = 0;
+  float diveValues[4]; // setpoint, margin, timer, failsafeTimer
 
   // Split by comma
   while (numbers.length() > 0 && index < 4) {
@@ -56,6 +73,16 @@ void setupDive(String input) {
     diveValues[index] = token.toFloat();
     index++;
   }
+
+  setpoint = diveValues[0];
+  margin = diveValues[1];
+  timer = diveValues[2];
+  failsafeTimer = diveValues[3];
+
+  pid = {kP, kI, kD, tau, outputLimitMin, outputLimitMax, integralMin, integralMax, (dt/1000)};
+  PIDController_Init(&pid);
+  startTime = millis();
+  inRangeTime = startTime;
 }
 
 /*
@@ -91,9 +118,9 @@ void Profile() {
       int firstComma = values.indexOf(',');
       int secondComma = values.indexOf(',', firstComma + 1);
 
-      r = values.substring(0, firstComma).toInt();
-      g = values.substring(firstComma + 1, secondComma).toInt();
-      b = values.substring(secondComma + 1).toInt();
+      int r = values.substring(0, firstComma).toInt();
+      int g = values.substring(firstComma + 1, secondComma).toInt();
+      int b = values.substring(secondComma + 1).toInt();
 
       SetLED(r, g, b);
     }
@@ -132,9 +159,32 @@ void Surface() {
  perform a dive
 */
 void Dive() {
-  // TODO
-  Serial.println("dive");
-  currentStepIndex += 1;
+  unsigned long currentTime = millis();
+
+  if (currentTime > startTime+failsafeTimer*1000) {
+    SetLED(255, 0, 0);
+    currentStepIndex += 1;
+    return;
+  }
+  else if (currentTime - inRangeTime >= timer * 1000) {
+    SetLED(0, 255, 0);
+    currentStepIndex += 1;
+    return;
+  }
+
+  float measurement = sensor.depth();
+  float output = PIDController_Update(&pid, setpoint, measurement);
+
+  if (output >= 0) {
+    Move(true, output);
+  }
+  else {
+    Move(false, -output);
+  }
+
+  if(!((setpoint-margin < measurement) && (measurement < setpoint+margin))) {
+    inRangeTime = currentTime;
+  }
 }
 
 /*
