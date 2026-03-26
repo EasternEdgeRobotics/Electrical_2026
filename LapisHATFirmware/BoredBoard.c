@@ -56,21 +56,23 @@ void i2cSlaveHandler() {
                 pwm_set_gpio_level(ledPins[receivedData[0]-6], receivedData[1]);
                 break;
             case 8: case 9:
-                // NOTE: no clue if this works
-                switch (sgn(receivedData[1])) {
-                    case 1:
-                        pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2], receivedData[1]);
-                        pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2+1], 0);
-                        break;
-                    case -1:
-                        pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2], 0);
-                        pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2+1], -1 * receivedData[1]); // Was [i], swapped for 1 assuming its a typo -PC
-                        break;
-                    default:
-                        pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2], 0);
-                        pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2+1], 0);
-                        break;
+                // 0       = Stall
+                // 1-127   = one way, slow to fast
+                // 128-255 = the other way, slow to fast
+                if (receivedData[1] <= 127 && receivedData[1] != 0) {
+                    pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2], ((receivedData[1] & 0x7F) * 2));
+                    pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2+1], 0);
+                    break;
+                } else if (receivedData[1] > 127) {
+                    pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2], 0);
+                    pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2+1], ((receivedData[1] & 0x7F) * 2)); // This had the "-1 *" but that doesn't make sense so its gone
+                    break;
+                } else if (receivedData[1] == 0) {
+                    pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2], 0);
+                    pwm_set_gpio_level(motorPins[(receivedData[0]-8)*2+1], 0);
+                    break;
                 }
+                break;
             case 10: case 11: case 12: case 13:
                 // NOTE: not sure if i need to set to 254 if its at 255 with servos
                 pwm_set_gpio_level(servoPins[receivedData[0]-10], PWM_WRAP / 10 * receivedData[1]);
