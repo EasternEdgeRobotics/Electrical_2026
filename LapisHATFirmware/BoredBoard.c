@@ -33,6 +33,11 @@ uint8_t servoPins[4] = {16, 17, 18, 19};
 #define MOTOR_WRAP 255 // TODO
 #define MOTOR_CLOCK_DIV 9.77f // TODO
 
+#define SERVO_CLOCK_DIV 255
+#define SERVO_PWM_WRAP 5000
+#define SERVO_MIN_PULSE 900
+#define SERVO_MAX_PULSE 2100
+
 uint64_t lastInputTime = 0;
 
 int sgn(int x) {
@@ -48,14 +53,19 @@ void i2cSlaveHandler() {
         
         lastInputTime = to_ms_since_boot(get_absolute_time());
 
-        switch (receivedData[0]) {
+        switch (receivedData[0]) { // Thruster
             case 0: case 1: case 2: case 3: case 4: case 5:
+                // 0x00 -  1100μs - Full Reverse
+                // 0x40 - ~1300μs - Half Reverse
+                // 0x7F -  1500μs - Stall
+                // 0xBF - ~1700μs - Half Forward
+                // 0xFF -  1900μs - Full Forward
                 if (receivedData[1] == 255) targetThrust[receivedData[0]] = 254;
                 else targetThrust[receivedData[0]] = receivedData[1];
-            case 6: case 7:
+            case 6: case 7: // LED
                 pwm_set_gpio_level(ledPins[receivedData[0]-6], receivedData[1]);
                 break;
-            case 8: case 9:
+            case 8: case 9: // DC Motor
                 // 0       = Stall
                 // 1-127   = one way, slow to fast
                 // 128-255 = the other way, slow to fast
@@ -73,9 +83,8 @@ void i2cSlaveHandler() {
                     break;
                 }
                 break;
-            case 10: case 11: case 12: case 13:
-                // NOTE: not sure if i need to set to 254 if its at 255 with servos
-                pwm_set_gpio_level(servoPins[receivedData[0]-10], PWM_WRAP / 10 * receivedData[1]);
+            case 10: case 11: case 12: case 13: // Servo
+                pwm_set_gpio_level(servoPins[receivedData[0]-10], SERVO_MIN_PULSE + (SERVO_MAX_PULSE - SERVO_MIN_PULSE) * receivedData[1] / 255); // This seems logical, idk if it works though -PC 
                 break;
             case 255: //test case for pico led
                 gpio_put(PICO_DEFAULT_LED_PIN, receivedData[1]);
@@ -92,7 +101,6 @@ void i2cSlave() {
     gpio_pull_up(I2C_SDA_PIN);
     gpio_pull_up(I2C_SCL_PIN);
 
-    // TODO: unsure if its i2c0 or i2c1? i think its i2c0
     i2c_set_slave_mode(i2c0, true, I2C_SLAVE_ADDR);
 
     irq_set_exclusive_handler(I2C0_IRQ, i2cSlaveHandler);
@@ -104,6 +112,7 @@ void i2cSlave() {
 int main() {
     // stdio_init_all();
 
+    // Thrusters Setup
     for (int i = 0; i < 6; i++) {
         gpio_set_function(thrusterPins[i], GPIO_FUNC_PWM);
         uint8_t slice_num = pwm_gpio_to_slice_num(thrusterPins[i]);
@@ -115,6 +124,7 @@ int main() {
         pwm_set_gpio_level(thrusterPins[i], PWM_WRAP / 10 * 1.5);
     }
 
+    // LED Setup
     for (int i = 0; i < 2; i++) {
         gpio_set_function(ledPins[i], GPIO_FUNC_PWM);
         uint8_t slice_num = pwm_gpio_to_slice_num(ledPins[i]);
@@ -124,6 +134,7 @@ int main() {
         pwm_set_gpio_level(ledPins[i], 0);
     }
     
+    // DC Motor Setup
     for (int i = 0; i < 4; i++) {
         gpio_set_function(motorPins[i], GPIO_FUNC_PWM);
         uint8_t slice_num = pwm_gpio_to_slice_num(motorPins[i]);
@@ -133,16 +144,17 @@ int main() {
         pwm_set_gpio_level(motorPins[i], 0);
     }
 
+    // Servo Setup
     for (int i = 0; i < 4; i++) {
-        // NOTE: im pretty sure servos use the same timing as the thrusters?
         gpio_set_function(servoPins[i], GPIO_FUNC_PWM);
         uint8_t slice_num = pwm_gpio_to_slice_num(servoPins[i]);
-        pwm_set_clkdiv(slice_num, CLOCK_DIV);
-        pwm_set_wrap(slice_num, PWM_WRAP);
+        pwm_set_clkdiv(slice_num, SERVO_CLOCK_DIV);
+        pwm_set_wrap(slice_num, SERVO_PWM_WRAP);
         pwm_set_enabled(slice_num, true);
-        pwm_set_gpio_level(servoPins[i], PWM_WRAP / 10 * 1.5);
+        pwm_set_gpio_level(servoPins[i], SERVO_PWM_WRAP / 10 * 1.5);
     }
 
+    // Onboard LED Setup
     gpio_init(PICO_DEFAULT_LED_PIN);
     gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
 
@@ -155,6 +167,8 @@ int main() {
             }
             lastInputTime = to_ms_since_boot(get_absolute_time());
         }
+
+        // the thing that handles thrusters
         for (int i = 0; i < 6; i++) {
             if (targetThrust[i] != currentThrust[i]) {
                 if (abs(targetThrust[i] - currentThrust[i]) > THRUSTER_ACCELERATION) {
