@@ -33,8 +33,8 @@ uint8_t servoPins[4] = {16, 17, 18, 19};
 #define MOTOR_WRAP 255 // TODO
 #define MOTOR_CLOCK_DIV 9.77f // TODO
 
-#define SERVO_CLOCK_DIV 255
-#define SERVO_PWM_WRAP 5000
+#define SERVO_CLOCK_DIV 125.0f
+#define SERVO_PWM_WRAP 19999
 #define SERVO_MIN_PULSE 900
 #define SERVO_MAX_PULSE 2100
 
@@ -84,7 +84,7 @@ void i2cSlaveHandler() {
                 }
                 break;
             case 10: case 11: case 12: case 13: // Servo
-                pwm_set_gpio_level(servoPins[receivedData[0]-10], SERVO_MIN_PULSE + (SERVO_MAX_PULSE - SERVO_MIN_PULSE) * receivedData[1] / 255); // This seems logical, idk if it works though -PC 
+                pwm_set_gpio_level(servoPins[receivedData[0] - 10], SERVO_MIN_PULSE + ((SERVO_MAX_PULSE - SERVO_MIN_PULSE) * receivedData[1]) / 255);
                 break;
             case 255: //test case for pico led
                 gpio_put(PICO_DEFAULT_LED_PIN, receivedData[1]);
@@ -151,7 +151,7 @@ int main() {
         pwm_set_clkdiv(slice_num, SERVO_CLOCK_DIV);
         pwm_set_wrap(slice_num, SERVO_PWM_WRAP);
         pwm_set_enabled(slice_num, true);
-        pwm_set_gpio_level(servoPins[i], SERVO_PWM_WRAP / 10 * 1.5);
+        pwm_set_gpio_level(servoPins[i], 1500); // neutral
     }
 
     // Onboard LED Setup
