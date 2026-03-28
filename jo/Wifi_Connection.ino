@@ -80,6 +80,8 @@ void WifiLoop() {
     String currentLine = "";
     bool receivingProfile = false;
     bool isContent = false;
+    bool receivingTime = false;
+    bool isTime = false;
     String jsonData = "";
 
     while (client.connected()) {
@@ -91,6 +93,9 @@ void WifiLoop() {
           if (currentLine.length() == 0) { // end of HTTP request
             if (receivingProfile) {
               isContent = true;
+            }
+            else if (receivingTime) {
+              isTime = true;
             }
           }
           else { // useless info reset buffer
@@ -109,8 +114,33 @@ void WifiLoop() {
             break;
           }
         }
+        else if (isTime) {
+          jsonData += c;
+          if (c == '}') {
+            Serial.println(jsonData);
+            char input[16];
+            jsonData.toCharArray(input, sizeof(input));
+            int h, m, s;
+            sscanf(jsonData.c_str()+1, "{%d:%d:%d}", &h, &m, &s);
+            Serial.print(h);
+            Serial.print(":");
+            Serial.print(m);
+            Serial.print(":");
+            Serial.println(s);
+            ZeroHour(h, m, s);
+            break;
+          }
+          
+        }
         if (currentLine.startsWith("POST /profile")) {
           receivingProfile = true;
+          client.println("HTTP/1.1 200 OK");
+          client.println("Connection: close");
+          client.println();
+          client.println("OK");
+        }
+        if (currentLine.startsWith("POST /time")) {
+          receivingTime = true;
           client.println("HTTP/1.1 200 OK");
           client.println("Connection: close");
           client.println();
