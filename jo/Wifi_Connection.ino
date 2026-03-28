@@ -53,19 +53,6 @@ void WifiSetup() {
   printWiFiStatus();
 }
 
-void readandSendFile(WiFiClient *client, String name) {
-  File websiteFile = SD.open(name, FILE_READ);
-  if (websiteFile) {
-    byte buffer[1024];
-    while (websiteFile.available()) {
-      int length = websiteFile.readBytes(buffer, sizeof(buffer));
-      client->write(buffer, length);
-    }
-    websiteFile.close();
-  }
-  
-}
-
 /*
  main loop for the wifi connection.  calls other wifi functions that need to be executed at each iterations
  the function is not an infinite loop.  it gets called by loop() in Main

@@ -14,3 +14,29 @@ void sdSetup() {
   }
   Serial.println("card initialized.");
 }
+
+void readandSendFile(WiFiClient *client, String name) {
+  File websiteFile = SD.open(name, FILE_READ);
+  if (websiteFile) {
+    byte buffer[1024];
+    while (websiteFile.available()) {
+      int length = websiteFile.readBytes(buffer, sizeof(buffer));
+      client->write(buffer, length);
+    }
+    websiteFile.close();
+  }
+}
+
+void writeFile(String name, char data[]){
+  File dataFile = SD.open(name+".txt", FILE_WRITE);
+    if (dataFile) {
+    dataFile.println(data);
+    dataFile.close();
+    // print to the serial port too:
+    Serial.println(data);
+  }
+  // if the file isn't open, pop up an error:
+  else {
+    Serial.println("error opening file");
+  }
+}
