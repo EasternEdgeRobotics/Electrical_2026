@@ -15,6 +15,7 @@ const int motorDirection = 4;  // CURRENTLY ASSUMING HIGH IS DOWN AND LOW IS UP
 
 MS5837 sensor;
 
+const char companyNumber[] = "EX00";
 
 /*
 seperate all initialization functions in their respective tabs

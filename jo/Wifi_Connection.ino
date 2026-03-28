@@ -98,6 +98,16 @@ void WifiLoop() {
             Serial.println(jsonData);
             SplitJson(jsonData);
             profiling = true;
+            int i = 0;
+            while (true) {
+              if (SD.exists(i+".txt")) {
+                i++;
+              }
+              else {
+                fileName = i+".txt";
+                break;
+              }
+            }
             break;
           }
         }

@@ -11,6 +11,12 @@ bool profiling = false;
 int N = 0;
 int currentStepIndex = 0;
 
+String fileName = "";
+unsigned long lastMeasurementTime = 0;
+const int dataBufferSize = 1024;
+char dataBuffer[dataBufferSize];
+int dataIndex = 0;
+
 float kP = 0.0;
 float kD = 0;
 float kI = 0;
@@ -46,6 +52,28 @@ void SplitJson(String profileMessage) {
   kD = doc["kD"];
   kI = doc["kI"];
   N = doc["profile"].size();
+}
+
+void saveData() {
+  writeFile(fileName, dataBuffer);
+}
+
+void AddDataPacket() {
+  unsigned long current = millis();
+  if (current - lastMeasurementTime >= 1000) {
+    float pressure = sensor.pressure(0.1);
+    float depth = sensor.depth();
+    dataIndex += snprintf(
+      dataBuffer+dataIndex,
+      dataBufferSize - dataIndex,
+      "%s, %s, %.2f, %.2f\n",
+      companyNumber, GetCurrentTime().c_str(), pressure, depth
+    );
+
+    if (dataIndex > dataBufferSize - 50) {
+      saveData();
+    }
+  }
 }
 
 void setupDive(String input) {
@@ -92,6 +120,7 @@ void Profile() {
   if (profiling) {
     if (currentStepIndex == N) {
       profiling = false;
+      saveData();
       return;
     }
     String input = doc["profile"][currentStepIndex];
