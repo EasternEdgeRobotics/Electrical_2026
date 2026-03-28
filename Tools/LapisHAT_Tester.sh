@@ -2,7 +2,6 @@
 
 TITLE="BlueStar LapisHAT Tester"
 LAPISHAT_I2C_ADDR="0x69"
-LAPISHAT_THRUSTER_PWM="0xFF"
 
 set_i2c_val() {
     i2cset -y 1 $LAPISHAT_I2C_ADDR $1 $2
@@ -60,14 +59,15 @@ motor_menu() {
 
 thruster_menu() {
     THRUSTER=$(whiptail --title "$TITLE" --inputbox "Enter the thruster you want to run (1-6):" 8 50 3>&1 1>&2 2>&3)
+    THRUSTER_VAL=$(whiptail --title "$TITLE" --inputbox "What Speed (0x00-0xFF): \n DO NOT RUN AT FULL SPEED OUT OF WATER!!!!!!!!!!!!!" 8 50 3>&1 1>&2 2>&3)
     case $THRUSTER in
 
-    1)  set_i2c_val 0x00 $LAPISHAT_THRUSTER_PWM ;;
-    2)  set_i2c_val 0x01 $LAPISHAT_THRUSTER_PWM ;;
-    3)  set_i2c_val 0x02 $LAPISHAT_THRUSTER_PWM ;;
-    4)  set_i2c_val 0x03 $LAPISHAT_THRUSTER_PWM ;;
-    5)  set_i2c_val 0x04 $LAPISHAT_THRUSTER_PWM ;;
-    6)  set_i2c_val 0x05 $LAPISHAT_THRUSTER_PWM ;;
+    1)  set_i2c_val 0x00 $THRUSTER_VAL ;;
+    2)  set_i2c_val 0x01 $THRUSTER_VAL ;;
+    3)  set_i2c_val 0x02 $THRUSTER_VAL ;;
+    4)  set_i2c_val 0x03 $THRUSTER_VAL ;;
+    5)  set_i2c_val 0x04 $THRUSTER_VAL ;;
+    6)  set_i2c_val 0x05 $THRUSTER_VAL ;;
     *)  return ;;
     esac
 }
