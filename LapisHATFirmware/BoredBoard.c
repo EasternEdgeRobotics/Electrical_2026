@@ -33,8 +33,10 @@ uint8_t servoPins[4] = {16, 17, 18, 19};
 #define MOTOR_WRAP 255 // TODO
 #define MOTOR_CLOCK_DIV 9.77f // TODO
 
-#define SERVO_CLOCK_DIV 125.0f
-#define SERVO_PWM_WRAP 19999
+//#define SERVO_CLOCK_DIV 62.5f
+#define SERVO_CLOCK_DIV 100.0f
+
+#define SERVO_PWM_WRAP 24999 // w/ CLK DIV this is supposed to be 50hz, which claude said should be right for servos - PC
 #define SERVO_MIN_PULSE 900
 #define SERVO_MAX_PULSE 2100
 
