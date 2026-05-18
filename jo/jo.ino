@@ -5,13 +5,18 @@
 #include <WiFiNINA.h>
 #include <Wire.h>
 #include "MS5837.h"
+#include <FastLED.h>
 
 // pin definitions
 const int topLimitSwitch = 0;
 const int bottomLimitSwitch = 1;
-const int led = LED_BUILTIN;
-const int motorPWM = 3;
-const int motorDirection = 4;  // CURRENTLY ASSUMING HIGH IS DOWN AND LOW IS UP
+
+const int ledPin = 5;
+const int ledCount = 13;
+CRGB leds[ledCount];
+
+const int motorUp = 2;
+const int motorDown = 3;
 
 MS5837 sensor;
 
@@ -23,10 +28,13 @@ seperate all initialization functions in their respective tabs
 void setup() {
 
   Serial.begin(9600);
+  Serial.println("Starting up");
 
   pinMode(topLimitSwitch, INPUT);
   pinMode(bottomLimitSwitch, INPUT);
-  pinMode(led, OUTPUT);
+
+  FastLED.addLeds<WS2812, ledPin, GRB>(leds, ledCount);
+  
   pinMode(motorPWM, OUTPUT);
   pinMode(motorDirection, OUTPUT);
 
