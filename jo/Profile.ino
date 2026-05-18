@@ -120,7 +120,7 @@ void Profile() {
   if (profiling) {
     if (currentStepIndex == N) {
       profiling = false;
-      saveData();
+      AddDataPacket();
       return;
     }
     String input = doc["profile"][currentStepIndex];
@@ -170,18 +170,29 @@ then check if the goal has been reached.  if yes, currentStepIndex += 1
  sink the profiler
 */
 void Sink() {
-  // TODO
+  // TODO DONE? Untested
+  float sinkDepth=sensor.depth();
+  Move(true, 255);
   Serial.println("sink");
-  currentStepIndex += 1;
+  if (sinkDepth>=2)
+  {
+    currentStepIndex += 1;
+  }
+  
 }
 
 /*
  surface the profiler
 */
 void Surface() {
- // TODO
- Serial.println("surface");
-  currentStepIndex += 1;
+ // TODO DONE? Untested
+  float surfaceDepth=sensor.depth();
+  Move(false, 255);
+  Serial.println("surface");
+  if (surfaceDepth<=0.02)
+  {
+    currentStepIndex += 1;
+  }
 }
 
 /*

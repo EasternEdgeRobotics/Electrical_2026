@@ -15,8 +15,8 @@ const int ledPin = 5;
 const int ledCount = 13;
 CRGB leds[ledCount];
 
-const int motorUp = 2;
-const int motorDown = 3;
+const int motorUp = 3;
+const int motorDown = 2;
 
 MS5837 sensor;
 
@@ -45,10 +45,11 @@ void setup() {
   while (!sensor.init()) {
     delay(5000);
   }
+  sensor.setModel(MS5837::MS5837_02BA);
   
   
-
-  // sensor.setFluidDensity(997); // kg/m^3 (freshwater, 1029 for seawater)
+  /*I belive this should be set upon getting the profilier for data, defaults to seawater */
+  //sensor.setFluidDensity(997); // kg/m^3 (freshwater, 1029 for seawater)
 
   sdSetup();
   WifiSetup();
@@ -58,7 +59,7 @@ void setup() {
 separate the loop code into functions in their respective tabs.  the functions themselves should not loop since loop() is an infinite loop
 */
 void loop() {
-
+  EmergencyStop();
   WifiLoop();
   Profile();
 }
