@@ -119,8 +119,11 @@ void setupDive(String input) {
 void Profile() {
   if (profiling) {
     if (currentStepIndex == N) {
+      Serial.println("profile complete");
       profiling = false;
       AddDataPacket();
+      currentStepIndex = 0;
+      saveData();
       return;
     }
     String input = doc["profile"][currentStepIndex];
@@ -231,7 +234,11 @@ void Dive() {
  control the LEDs
 */
 void SetLED(int r, int g, int b) {
-  // TODO
+  for (int i = 0; i < ledCount; i++) {
+    leds[i] = CRGB(r,g,b);
+  }
+  FastLED.show();
+  
   Serial.println("led");
   currentStepIndex += 1;
 }

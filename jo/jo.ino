@@ -35,8 +35,8 @@ void setup() {
 
   FastLED.addLeds<WS2812, ledPin, GRB>(leds, ledCount);
   
-  pinMode(motorPWM, OUTPUT);
-  pinMode(motorDirection, OUTPUT);
+  pinMode(motorUp, OUTPUT);
+  pinMode(motorDown, OUTPUT);
 
   // Initialize pressure sensor
   // Returns true if initialization was successful

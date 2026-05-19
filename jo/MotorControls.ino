@@ -9,14 +9,14 @@ speed: 0-255 pwm*/
 
 void Move(bool direction, int speed) {
 
-  bool TopSwitch digitalRead(topLimitSwitch);
-  bool BottomSwitch digitalRead(bottomLimitSwitch);
+  bool TopSwitch = digitalRead(topLimitSwitch);
+  bool BottomSwitch = digitalRead(bottomLimitSwitch);
 
   if ((!BottomSwitch) || (!TopSwitch))
   {
     digitalWrite(motorDown, 0);
     digitalWrite(motorUp, 0);
-    break;
+    return;
   }
   if (direction)
   {
@@ -30,8 +30,8 @@ void Move(bool direction, int speed) {
 }
 
 void EmergencyStop() {
-  bool TopSwitch digitalRead(topLimitSwitch);
-  bool BottomSwitch digitalRead(bottomLimitSwitch);
+  bool TopSwitch = digitalRead(topLimitSwitch);
+  bool BottomSwitch = digitalRead(bottomLimitSwitch);
   if ((!BottomSwitch) || (!TopSwitch))
   {
     digitalWrite(motorDown, 0);
