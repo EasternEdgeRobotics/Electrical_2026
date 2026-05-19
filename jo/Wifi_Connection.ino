@@ -76,6 +76,7 @@ void WifiLoop() {
       
       if (client.available()) {
         char c = client.read();
+        Serial.print(c);
         if (c == '\n') {// end of line
           if (currentLine.length() == 0) { // end of HTTP request
             if (receivingProfile) {
@@ -104,7 +105,7 @@ void WifiLoop() {
                 i++;
               }
               else {
-                fileName = i+".txt";
+                fileName = i+"";
                 break;
               }
             }
@@ -143,7 +144,7 @@ void WifiLoop() {
           client.println();
           client.println("OK");
         }
-        if (currentLine.startsWith("GET / ") || currentLine.startsWith("GET /HTTP")) {
+        if ( currentLine.startsWith("GET / HTTP")) {
           // nothing was asked, so first connection.  send web page
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/html");
@@ -182,6 +183,35 @@ void WifiLoop() {
           client.println();
           break;
         }
+        if (currentLine.startsWith("GET /data")) {
+          client.println("HTTP/1.1 200 OK");
+          client.println("Content-Type: text/text");
+          client.println("Connection: close");
+          client.println();
+          if (fileName != "") {
+            readandSendFile(&client, fileName);
+          }
+          else {
+            if (!SD.exists("0.txt")) {
+              client.println("HTTP/1.1 404 Not Found");
+              break;
+            }
+            int i = 0;
+            while (true) {
+              if (SD.exists(i+".txt")) {
+                i++;
+              }
+              else {
+                fileName = (i-1)+"";
+                break;
+              }
+            }
+            readandSendFile(&client, fileName);
+          }
+          
+          break;
+        }
+
       }
     }
     // give the web browser time to receive the data
