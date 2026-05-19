@@ -73,7 +73,7 @@ void setup() {
   Serial.println("direction 1");
   leds[2] = CRGB(0,255,0);
   FastLED.show();
-  while (digitalRead(downlimit) == HIGH && digitalRead(uplimit) == HIGH) {
+  while ((digitalRead(downlimit) == HIGH) && (digitalRead(uplimit) == HIGH)) {
     analogWrite(motor1, 255);
     analogWrite(motor2, 0);
   }
@@ -87,6 +87,14 @@ void setup() {
   Serial.println("direction 2");
   leds[3] = CRGB(0,255,0);
   FastLED.show();
+
+  //move until the limit switch is no longer pressed
+  while ((digitalRead(downlimit) == LOW) || (digitalRead(uplimit) == LOW)) {
+    analogWrite(motor1, 0);
+    analogWrite(motor2, 255);
+  }
+  delay(2000);
+
   while (digitalRead(downlimit) == HIGH && digitalRead(uplimit) == HIGH) {
     analogWrite(motor1, 0);
     analogWrite(motor2, 255);
@@ -94,6 +102,12 @@ void setup() {
   analogWrite(motor2, 0);
   leds[3] = CRGB(0,0,255);
   FastLED.show();
+
+  Serial.println("centering relic");
+  analogWrite(motor1, 255);
+  delay(2000);
+  analogWrite(motor1, 0);
+
   Serial.println("Test Completed");
 }
 
