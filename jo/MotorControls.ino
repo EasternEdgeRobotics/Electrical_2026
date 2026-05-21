@@ -2,6 +2,17 @@
 All methods to control the motor
 */
 
+void SetupSyringe() {
+  while(digitalRead(bottomLimitSwitch)) {
+    Move(true, 255);
+  }
+
+  Move(false, 255);
+  delay(3000);
+  Move(false, 0);
+  
+}
+
 /*
 direction: true is down
 speed: 0-255 pwm*/
