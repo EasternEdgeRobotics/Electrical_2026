@@ -105,7 +105,7 @@ void WifiLoop() {
                 i++;
               }
               else {
-                fileName = String(i);
+                fileName = String(i)+".txt";
                 Serial.println("file name:");
                 Serial.println(fileName);
                 break;
@@ -204,7 +204,7 @@ void WifiLoop() {
                 i++;
               }
               else {
-                fileName = (i-1)+"";
+                fileName = String(i-1)+".txt";
                 break;
               }
             }

@@ -18,7 +18,7 @@ void sdSetup() {
 void  readandSendFile(WiFiClient *client, String name) {
   File websiteFile = SD.open(name, FILE_READ);
   if (websiteFile) {
-    byte buffer[1024];
+    byte buffer[1024*2];
     while (websiteFile.available()) {
       int length = websiteFile.readBytes(buffer, sizeof(buffer));
       client->write(buffer, length);
@@ -28,9 +28,10 @@ void  readandSendFile(WiFiClient *client, String name) {
 }
 
 void writeFile(String name, char data[]){
-  File dataFile = SD.open(name+".txt", FILE_WRITE);
+  File dataFile = SD.open(name, FILE_WRITE);
     if (dataFile) {
-    dataFile.close();
+      dataFile.println(data);
+      dataFile.close();
   }
   // if the file isn't open, pop up an error:
   else {

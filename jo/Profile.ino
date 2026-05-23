@@ -65,7 +65,7 @@ void saveData() {
 void AddDataPacket() {
   unsigned long current = millis();
   if (current - lastMeasurementTime >= 1000) {
-    sensor.read();
+    lastMeasurementTime = current;
     float pressure = sensor.pressure(0.1);
     float depth = sensor.depth();
     dataIndex += snprintf(
@@ -74,6 +74,7 @@ void AddDataPacket() {
       "%s, %s, %.2f, %.2f\n",
       companyNumber, GetCurrentTime().c_str(), pressure, depth
     );
+    
     Serial.print("depth: ");
     Serial.println(depth);
     if (dataIndex > dataBufferSize - 50) {
@@ -125,6 +126,7 @@ void setupDive(String input) {
 void Profile() {
   if (profiling) {
     AddDataPacket();
+    sensor.read();
     if (currentStepIndex == N) {
       Serial.println("profile complete");
       profiling = false;
@@ -211,11 +213,13 @@ void Dive() {
   if (currentTime > startTime+failsafeTimer*1000) {
     SetLED(255, 0, 0);
     currentStepIndex += 1;
+    diving = false;
     return;
   }
   else if (currentTime - inRangeTime >= timer * 1000) {
     SetLED(0, 255, 0);
     currentStepIndex += 1;
+    diving = false;
     return;
   }
 

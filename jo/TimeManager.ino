@@ -12,19 +12,14 @@ void ZeroHour(int h, int m, int s) {
 }
 
 String GetCurrentTime() {
-  int current = millis();
-  second += (current - timeDelay)/1000;
-  timeDelay = current;
+  unsigned long totalSeconds = millis() / 1000;
 
-  while(second >= 60) {
-    minute += 1;
-    second -= 60;
-  }
+  int h = totalSeconds / 3600;
+  int m = (totalSeconds % 3600) / 60;
+  int s = totalSeconds % 60;
 
-  while (minute >= 60){
-    hour += 1;
-    minute -= 60;
-  }
-  
-  return String(hour) + ":" + String(minute) + ":" + String(second);
+  char buffer[16];
+  snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d", h, m, s);
+
+  return String(buffer);
 }
