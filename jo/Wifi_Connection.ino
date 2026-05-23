@@ -76,7 +76,7 @@ void WifiLoop() {
       
       if (client.available()) {
         char c = client.read();
-        Serial.print(c);
+        // Serial.print(c);
         if (c == '\n') {// end of line
           if (currentLine.length() == 0) { // end of HTTP request
             if (receivingProfile) {
@@ -96,7 +96,7 @@ void WifiLoop() {
         if (isContent) {
           jsonData += c;
           if (c == '}') {
-            Serial.println(jsonData);
+            // Serial.println(jsonData);
             SplitJson(jsonData);
             profiling = true;
             int i = 0;
@@ -105,7 +105,9 @@ void WifiLoop() {
                 i++;
               }
               else {
-                fileName = i+"";
+                fileName = String(i);
+                Serial.println("file name:");
+                Serial.println(fileName);
                 break;
               }
             }
@@ -115,16 +117,16 @@ void WifiLoop() {
         else if (isTime) {
           jsonData += c;
           if (c == '}') {
-            Serial.println(jsonData);
+            // Serial.println(jsonData);
             char input[16];
             jsonData.toCharArray(input, sizeof(input));
             int h, m, s;
             sscanf(jsonData.c_str()+1, "{%d:%d:%d}", &h, &m, &s);
-            Serial.print(h);
-            Serial.print(":");
-            Serial.print(m);
-            Serial.print(":");
-            Serial.println(s);
+            // Serial.print(h);
+            // Serial.print(":");
+            // Serial.print(m);
+            // Serial.print(":");
+            // Serial.println(s);
             ZeroHour(h, m, s);
             break;
           }

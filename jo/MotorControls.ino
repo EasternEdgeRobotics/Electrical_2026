@@ -4,17 +4,18 @@ All methods to control the motor
 
 void SetupSyringe() {
   while(digitalRead(bottomLimitSwitch)) {
-    Move(true, 255);
+    Move(false, 255);
   }
 
-  Move(false, 255);
+  Move(true, 255);
   delay(3000);
-  Move(false, 0);
+  Move(true, 0);
   
 }
 
 /*
-direction: true is down
+direction: Profiler goes down when True
+
 speed: 0-255 pwm*/
 void Move(bool direction, int speed) {
 
@@ -22,16 +23,6 @@ void Move(bool direction, int speed) {
   bool bottomSwitch = digitalRead(bottomLimitSwitch);
 
   if (direction) {
-    digitalWrite(motorUp, 0);
-
-    if (bottomSwitch) {
-      digitalWrite(motorDown, speed);
-    }
-    else {
-      digitalWrite(motorDown, 0);
-    }
-  }
-  else {
     digitalWrite(motorDown, 0);
 
     if (topSwitch) {
@@ -39,6 +30,17 @@ void Move(bool direction, int speed) {
     }
     else {
       digitalWrite(motorUp, 0);
+    }
+    
+  }
+  else {
+    digitalWrite(motorUp, 0);
+
+    if (bottomSwitch) {
+      digitalWrite(motorDown, speed);
+    }
+    else {
+      digitalWrite(motorDown, 0);
     }
   }
 
@@ -50,13 +52,13 @@ void EmergencyStop() {
   if (!BottomSwitch) {
     digitalWrite(motorDown, 0);
 
-    Serial.println("EMERGENY STOP BOTTOM");
+    // Serial.println("EMERGENY STOP BOTTOM");
   }
 
   if (!TopSwitch) {
     digitalWrite(motorUp, 0);
 
-    Serial.println("EMERGENY STOP TOP");
+    // Serial.println("EMERGENY STOP TOP");
   }
 }
 

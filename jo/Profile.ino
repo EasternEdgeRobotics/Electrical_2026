@@ -46,6 +46,8 @@ void SplitJson(String profileMessage) {
   // TODO: check to see if it breaks 
   DeserializationError error = deserializeJson(doc, profileMessage);
 
+  Serial.print("density: ");
+  Serial.println(doc["density"].as<float>());
   sensor.setFluidDensity(doc["density"]);
 
   kP = doc["kP"];
@@ -56,6 +58,8 @@ void SplitJson(String profileMessage) {
 
 void saveData() {
   writeFile(fileName, dataBuffer);
+  memset(dataBuffer, 0, dataBufferSize);
+  dataIndex = 0;
 }
 
 void AddDataPacket() {
@@ -69,7 +73,8 @@ void AddDataPacket() {
       "%s, %s, %.2f, %.2f\n",
       companyNumber, GetCurrentTime().c_str(), pressure, depth
     );
-
+    Serial.print("depth: ");
+    Serial.println(depth);
     if (dataIndex > dataBufferSize - 50) {
       saveData();
     }
@@ -118,10 +123,10 @@ void setupDive(String input) {
 */
 void Profile() {
   if (profiling) {
+    AddDataPacket();
     if (currentStepIndex == N) {
       Serial.println("profile complete");
       profiling = false;
-      AddDataPacket();
       currentStepIndex = 0;
       saveData();
       return;
@@ -176,7 +181,6 @@ void Sink() {
   // TODO DONE? Untested
   float sinkDepth=sensor.depth();
   Move(true, 255);
-  Serial.println("sink");
   if (sinkDepth>=2)
   {
     currentStepIndex += 1;
@@ -191,7 +195,6 @@ void Surface() {
  // TODO DONE? Untested
   float surfaceDepth=sensor.depth();
   Move(false, 255);
-  Serial.println("surface");
   if (surfaceDepth<=0.02)
   {
     currentStepIndex += 1;
@@ -238,8 +241,7 @@ void SetLED(int r, int g, int b) {
     leds[i] = CRGB(r,g,b);
   }
   FastLED.show();
-  
-  Serial.println("led");
+
   currentStepIndex += 1;
 }
 
