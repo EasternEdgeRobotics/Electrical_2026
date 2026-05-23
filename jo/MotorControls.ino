@@ -2,29 +2,44 @@
 All methods to control the motor
 */
 
+void SetupSyringe() {
+  while(digitalRead(bottomLimitSwitch)) {
+    Move(true, 255);
+  }
+
+  Move(false, 255);
+  delay(3000);
+  Move(false, 0);
+  
+}
+
 /*
 direction: true is down
 speed: 0-255 pwm*/
-
-
 void Move(bool direction, int speed) {
 
-  bool TopSwitch = digitalRead(topLimitSwitch);
-  bool BottomSwitch = digitalRead(bottomLimitSwitch);
+  bool topSwitch = digitalRead(topLimitSwitch);
+  bool bottomSwitch = digitalRead(bottomLimitSwitch);
 
-  if ((!BottomSwitch) || (!TopSwitch))
-  {
-    digitalWrite(motorDown, 0);
+  if (direction) {
     digitalWrite(motorUp, 0);
-    return;
+
+    if (bottomSwitch) {
+      digitalWrite(motorDown, speed);
+    }
+    else {
+      digitalWrite(motorDown, 0);
+    }
   }
-  if (direction)
-  {
-    digitalWrite(motorDown, speed);
-  }
-  if (!direction)
-  {
-    digitalWrite(motorUp, speed);
+  else {
+    digitalWrite(motorDown, 0);
+
+    if (topSwitch) {
+      digitalWrite(motorUp, speed);
+    }
+    else {
+      digitalWrite(motorUp, 0);
+    }
   }
 
 }
@@ -32,19 +47,24 @@ void Move(bool direction, int speed) {
 void EmergencyStop() {
   bool TopSwitch = digitalRead(topLimitSwitch);
   bool BottomSwitch = digitalRead(bottomLimitSwitch);
-  if ((!BottomSwitch) || (!TopSwitch))
-  {
+  if (!BottomSwitch) {
     digitalWrite(motorDown, 0);
+
+    Serial.println("EMERGENY STOP BOTTOM");
+  }
+
+  if (!TopSwitch) {
     digitalWrite(motorUp, 0);
-    Serial.print("EMERGENY STOP ");
-    if (!BottomSwitch)
-    {
-      Serial.println(" BOTTOM");
-      
-    }
-    if (!TopSwitch)
-    {
-      Serial.println(" BOTTOM");
-    }
+
+    Serial.println("EMERGENY STOP TOP");
   }
 }
+
+
+
+
+
+
+
+
+

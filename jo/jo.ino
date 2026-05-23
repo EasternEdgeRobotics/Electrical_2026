@@ -53,6 +53,8 @@ void setup() {
 
   sdSetup();
   WifiSetup();
+
+  SetupSyringe();
 }
 
 /*
