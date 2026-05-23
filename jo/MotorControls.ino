@@ -40,6 +40,7 @@ void EmergencyStop() {
     if (!BottomSwitch)
     {
       Serial.println(" BOTTOM");
+      
     }
     if (!TopSwitch)
     {
