@@ -48,7 +48,7 @@ void SplitJson(String profileMessage) {
 
   Serial.print("density: ");
   Serial.println(doc["density"].as<float>());
-  sensor.setFluidDensity(doc["density"]);
+  // sensor.setFluidDensity(doc["density"]);
 
   kP = doc["kP"];
   kD = doc["kD"];
@@ -65,6 +65,7 @@ void saveData() {
 void AddDataPacket() {
   unsigned long current = millis();
   if (current - lastMeasurementTime >= 1000) {
+    sensor.read();
     float pressure = sensor.pressure(0.1);
     float depth = sensor.depth();
     dataIndex += snprintf(
