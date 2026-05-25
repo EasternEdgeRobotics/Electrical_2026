@@ -29,12 +29,13 @@ void setup() {
 
   Serial.begin(9600);
   Serial.println("Starting up");
+  
 
   pinMode(topLimitSwitch, INPUT);
   pinMode(bottomLimitSwitch, INPUT);
 
   FastLED.addLeds<WS2812, ledPin, GRB>(leds, ledCount);
-  
+  SetLED(0, 10, 5); //Light to show its on
   pinMode(motorUp, OUTPUT);
   pinMode(motorDown, OUTPUT);
 

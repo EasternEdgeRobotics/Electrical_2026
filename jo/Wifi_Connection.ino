@@ -155,6 +155,19 @@ void WifiLoop() {
           readandSendFile(&client, FILE_NAMES[0]);
           break;
         }
+        if (currentLine.startsWith("GET /data HTTP")) {
+        Serial.println("DATA REQUEST HIT");
+        client.println("HTTP/1.1 200 OK");
+        client.println("Content-Type: text/plain");
+        client.println("Connection: close");
+        client.println();
+
+        client.println("EX00, 00:05:03, 133.55, 1.30");
+        client.println("EX00, 00:06:03, 133.55, 0.30");
+        client.println("EX00, 00:07:03, 133.55, 0.90");
+
+        break;
+        }
         if (currentLine.startsWith("GET /output.css")) {
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/css");
