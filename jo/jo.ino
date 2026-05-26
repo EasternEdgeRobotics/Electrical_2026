@@ -35,7 +35,7 @@ void setup() {
   pinMode(bottomLimitSwitch, INPUT);
 
   FastLED.addLeds<WS2812, ledPin, GRB>(leds, ledCount);
-  SetLED(0, 10, 5); //Light to show its on
+  SetLED(15, 0, 0); //Light to show its on
   pinMode(motorUp, OUTPUT);
   pinMode(motorDown, OUTPUT);
 
@@ -48,14 +48,20 @@ void setup() {
   }
   sensor.setModel(MS5837::MS5837_02BA);
   sensor.setFluidDensity(997);
+  sensor.read();
   
   /*I belive this should be set upon getting the profilier for data, defaults to seawater */
   //sensor.setFluidDensity(997); // kg/m^3 (freshwater, 1029 for seawater)
 
   sdSetup();
   WifiSetup();
+  sensor.read();
 
   SetupSyringe();
+
+  sensor.read();
+  
+  SetLED(0,15,0);
 }
 
 /*

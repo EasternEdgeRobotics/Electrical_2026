@@ -101,7 +101,7 @@ void WifiLoop() {
             profiling = true;
             int i = 0;
             while (true) {
-              if (SD.exists(i+".txt")) {
+              if (SD.exists(String(i)+".txt")) {
                 i++;
               }
               else {
@@ -155,19 +155,6 @@ void WifiLoop() {
           readandSendFile(&client, FILE_NAMES[0]);
           break;
         }
-        if (currentLine.startsWith("GET /data HTTP")) {
-        Serial.println("DATA REQUEST HIT");
-        client.println("HTTP/1.1 200 OK");
-        client.println("Content-Type: text/plain");
-        client.println("Connection: close");
-        client.println();
-
-        client.println("EX00, 00:05:03, 133.55, 1.30");
-        client.println("EX00, 00:06:03, 133.55, 0.30");
-        client.println("EX00, 00:07:03, 133.55, 0.90");
-
-        break;
-        }
         if (currentLine.startsWith("GET /output.css")) {
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/css");
@@ -200,35 +187,32 @@ void WifiLoop() {
         }
         if (currentLine.startsWith("GET /data")) {
           client.println("HTTP/1.1 200 OK");
-          client.println("Content-Type: text/text");
+          client.println("Content-Type: text/plain");
           client.println("Connection: close");
           client.println();
+
           if (fileName != "") {
             readandSendFile(&client, fileName);
-          }
-          else {
+          } else {
             if (!SD.exists("0.txt")) {
               client.println("HTTP/1.1 404 Not Found");
-              break;
+              client.flush();
+              client.stop();
+              return;
             }
             int i = 0;
-            while (true) {
-              if (SD.exists(i+".txt")) {
-                i++;
-              }
-              else {
-                fileName = String(i-1)+".txt";
-                break;
-              }
-            }
+            while (SD.exists(String(i) + ".txt")) i++;
+            fileName = String(i - 1) + ".txt";
             readandSendFile(&client, fileName);
           }
-          
-          break;
-        }
 
+          client.flush();
+          client.stop();
+          return;
+        }
       }
     }
+
     // give the web browser time to receive the data
     delay(1);
     // close the connection:

@@ -130,13 +130,35 @@
     }
 
     function parseData(dot) {
-    return dot
-      .trim()
-      .split("\n")
-      .map(line => {
-        const [company, ts, p, d] = line.split(",").map(v => v.trim());
-        return [new Date(ts), parseFloat(p), parseFloat(d)];
-      });
+      return dot
+        .split("\n")
+        .map(line => line.trim())
+        .filter(line => line.length > 0) // skip blank lines
+        .map(line => {
+          const parts = line.split(",").map(v => v.trim());
+          if (parts.length !== 4) return null; // skip malformed lines
+
+          const ts = parts[1];
+          const pressure = parseFloat(parts[2]);
+          const depth = parseFloat(parts[3]);
+
+          if (isNaN(pressure) || isNaN(depth)) return null;
+
+          // Convert HH:MM:SS → Date
+          const [h, m, s] = ts.split(":").map(Number);
+          if ([h, m, s].some(v => isNaN(v))) return null;
+
+          const now = new Date();
+          const dateObj = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+            h, m, s
+          );
+
+          return [dateObj, pressure, depth];
+        })
+        .filter(row => row !== null);
     }
 
 
@@ -166,7 +188,11 @@
 
   function getData() {
     $.get("/data", function (dot) {
+      console.log("RAW DATA:\n" + dot);
       const rows = parseData(dot);
+
+      
+      console.log("PARSED ROWS:", rows);
 
       g.updateOptions({ file: rows });
 
