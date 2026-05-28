@@ -188,7 +188,7 @@
 
   function getData() {
     $.get("/data", function (dot) {
-      console.log("RAW DATA:\n" + dot);
+      document.getElementById("logs").textContent = dot;
       const rows = parseData(dot);
 
       
