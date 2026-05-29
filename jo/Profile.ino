@@ -120,6 +120,33 @@ void setupDive(String input) {
   inRangeTime = startTime;
 }
 
+void SetNextProfileStep() {
+
+  if (!profiling) {
+    return;
+  }
+  saveData();
+
+  currentStepIndex += 1;
+
+  char data[128];
+  if (currentStepIndex == N) {
+    profiling = false;
+    currentStepIndex = 0;
+    saveData();
+    Serial.println("profile complete");
+
+    snprintf(data, sizeof(data), "# profile complete");
+    writeFile(fileName, data);
+    return;
+  }
+
+  String step = doc["profile"][currentStepIndex];
+
+  snprintf(data, sizeof(data), "\n# %s", step.c_str());
+  writeFile(fileName, data);
+}
+
 /*
  calls each tasks of the profile in order.  needs to also get the data points and save them each second
 */
@@ -127,13 +154,6 @@ void Profile() {
   if (profiling) {
     AddDataPacket();
     sensor.read();
-    if (currentStepIndex == N) {
-      Serial.println("profile complete");
-      profiling = false;
-      currentStepIndex = 0;
-      saveData();
-      return;
-    }
     String input = doc["profile"][currentStepIndex];
     if(input == "sink") {
       Sink();
@@ -186,7 +206,7 @@ void Sink() {
   Move(true, 255);
   if (sinkDepth>=2)
   {
-    currentStepIndex += 1;
+    SetNextProfileStep();
   }
   
 }
@@ -200,7 +220,7 @@ void Surface() {
   Move(false, 255);
   if (surfaceDepth<=0.02)
   {
-    currentStepIndex += 1;
+    SetNextProfileStep();
   }
 }
 
@@ -212,14 +232,14 @@ void Dive() {
 
   if (currentTime > startTime+failsafeTimer*1000) {
     SetLED(255, 0, 0);
-    currentStepIndex += 1;
     diving = false;
+    SetNextProfileStep();
     return;
   }
   else if (currentTime - inRangeTime >= timer * 1000) {
     SetLED(0, 255, 0);
-    currentStepIndex += 1;
     diving = false;
+    SetNextProfileStep();
     return;
   }
 
@@ -247,7 +267,7 @@ void SetLED(int r, int g, int b) {
   }
   FastLED.show();
 
-  currentStepIndex += 1;
+  SetNextProfileStep();
 }
 
 

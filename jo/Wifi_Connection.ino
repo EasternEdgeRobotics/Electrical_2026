@@ -96,7 +96,6 @@ void WifiLoop() {
         if (isContent) {
           jsonData += c;
           if (c == '}') {
-            // Serial.println(jsonData);
             SplitJson(jsonData);
             profiling = true;
             int i = 0;
@@ -108,6 +107,17 @@ void WifiLoop() {
                 fileName = String(i)+".txt";
                 Serial.println("file name:");
                 Serial.println(fileName);
+                
+                String step = doc["profile"][currentStepIndex];
+                char data[780];
+                snprintf(
+                  data,
+                  sizeof(data),
+                  "# %s\n\n%s",
+                  jsonData.c_str(),
+                  step.c_str()
+                );
+                writeFile(fileName, data);
                 break;
               }
             }

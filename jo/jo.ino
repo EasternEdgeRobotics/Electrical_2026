@@ -20,7 +20,7 @@ const int motorDown = 2;
 
 MS5837 sensor;
 
-const char companyNumber[] = "EX00";
+const char companyNumber[] = "EX20";
 
 /*
 seperate all initialization functions in their respective tabs
