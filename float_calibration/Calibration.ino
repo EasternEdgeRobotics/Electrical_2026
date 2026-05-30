@@ -23,10 +23,7 @@ void Cycle(int index) {
   }
   Move(false);
   unsigned long end = millis();
-  simpleprint(String(depth),String(end-start)); 
-
-  // pushDataArray[index][0] = sensor.depth();
-  // pushDataArray[index][1] = end-start;
+  simpleprint("push.csv", String(depth), String(end-start)); 
 
   // pull the syringe
   start = millis();
@@ -35,9 +32,7 @@ void Cycle(int index) {
   }
   Move(true);
   end = millis();
-  simpleprint(String(depth),String(end-start)); 
-  // pullDataArray[index][0] = sensor.depth();
-  // pushDataArray[index][1] = end-start;
+  simpleprint("pull.csv", String(depth), String(end-start)); 
 }
 
 

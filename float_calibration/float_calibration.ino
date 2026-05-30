@@ -11,9 +11,6 @@ const int motorDown = 2;
 
 const int dataPointCount = 5; // CHANGE THIS NUMBER TO TAKE MORE DATA POINTS
 
-float pushDataArray[dataPointCount][2];
-float pullDataArray[dataPointCount][2];
-
 MS5837 sensor;
 
 void sensorSetup() {
@@ -40,9 +37,6 @@ void setup() {
   for (int i = 0; i < dataPointCount; i++) {
     Cycle(i);
   }
-
-  // SaveArrays(); 
-  
 }
 
 void loop() {
