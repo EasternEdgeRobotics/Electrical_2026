@@ -14,26 +14,30 @@ void Cycle(int index) {
   SetLED(CRGB::Green2);
 
   sensor.read();
+  float depth=sensor.depth();
 
   // push the syringe
   unsigned long start = millis();
   while (digitalRead(bottomLimitSwitch)) {
     Move(false);
   }
+  Move(false);
   unsigned long end = millis();
+  simpleprint(String(depth),String(end-start)); 
 
-  pushDataArray[index][0] = sensor.depth();
-  pushDataArray[index][1] = end-start;
+  // pushDataArray[index][0] = sensor.depth();
+  // pushDataArray[index][1] = end-start;
 
   // pull the syringe
   start = millis();
   while (digitalRead(topLimitSwitch)) {
     Move(true);
   }
+  Move(true);
   end = millis();
-
-  pullDataArray[index][0] = sensor.depth();
-  pushDataArray[index][1] = end-start;
+  simpleprint(String(depth),String(end-start)); 
+  // pullDataArray[index][0] = sensor.depth();
+  // pushDataArray[index][1] = end-start;
 }
 
 

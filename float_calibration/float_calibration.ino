@@ -36,12 +36,13 @@ void setup() {
   while (digitalRead(topLimitSwitch)) {
     Move(true);
   }
-
+  Move(true);
   for (int i = 0; i < dataPointCount; i++) {
     Cycle(i);
   }
 
-  SaveArrays();  
+  // SaveArrays(); 
+  
 }
 
 void loop() {
