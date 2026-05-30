@@ -9,7 +9,7 @@ const int bottomLimitSwitch = 1;
 const int motorUp = 3;
 const int motorDown = 2;
 
-const int dataPointCount = 5; // CHANGE THIS NUMBER TO TAKE MORE DATA POINTS
+const int dataPointCount = 30; // CHANGE THIS NUMBER TO TAKE MORE DATA POINTS
 
 MS5837 sensor;
 

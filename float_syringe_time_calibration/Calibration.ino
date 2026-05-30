@@ -3,7 +3,7 @@
 void Cycle(int index) {
   unsigned long t = millis();
 
-  while (millis() - t <= 30*1000) {
+  while (millis() - t <= 15*1000) {
     LEDWave(CRGB::Blue, CRGB::Olive);
   }
 
