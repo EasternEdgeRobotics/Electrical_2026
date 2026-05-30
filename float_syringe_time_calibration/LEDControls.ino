@@ -54,9 +54,11 @@ void LEDBlink(CRGB colour) {
 
     if(blinkStatus) {
       SetLED(CRGB::Gray0);
+      blinkStatus = false;
     }
     else {
       SetLED(colour);
+      blinkStatus = true;
     }
 
     FastLED.show();
