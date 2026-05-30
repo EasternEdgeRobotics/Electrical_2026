@@ -58,6 +58,8 @@ void LEDBlink(CRGB colour) {
     else {
       SetLED(colour);
     }
+
+    FastLED.show();
   }
 }
 
