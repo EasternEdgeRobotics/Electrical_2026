@@ -29,14 +29,14 @@ bool diving = false;
 unsigned long startTime = 0;
 unsigned long inRangeTime = 0;
 unsigned long pidLastUpdateTime = 0;
-const unsigned int pidUpdateTime = 1000;
+float pidOutput = 0;
 
 const float tau = 0.02;
 const float outputLimitMin = -255;
 const float outputLimitMax = 255;
 const float integralMin = -50;
 const float integralMax = 50;
-const float dt = 100;
+const float dt = 1000;
 
 PIDController pid;
 
@@ -68,13 +68,12 @@ void AddDataPacket() {
   unsigned long current = millis();
   if (current - lastMeasurementTime >= 100) {
     lastMeasurementTime = current;
-    float pressure = sensor.pressure(0.1);
     float depth = sensor.depth();
     dataIndex += snprintf(
       dataBuffer+dataIndex,
       dataBufferSize - dataIndex,
       "%s, %s, %.2f, %.2f\n",
-      companyNumber, GetCurrentTime().c_str(), pressure, depth
+      companyNumber, GetCurrentTime().c_str(), pidOutput, depth
     );
     
     Serial.print("depth: ");
@@ -185,6 +184,7 @@ void Profile() {
       int b = values.substring(secondComma + 1).toInt();
 
       SetLED(r, g, b);
+      SetNextProfileStep();
     }
   }
 }
@@ -203,26 +203,30 @@ then check if the goal has been reached.  if yes, currentStepIndex += 1
  sink the profiler
 */
 void Sink() {
-  // TODO DONE? Untested
+  pidOutput = 0;
   float sinkDepth=sensor.depth();
   Move(true, 255);
   if (sinkDepth>=2)
   {
     SetNextProfileStep();
   }
+
+  LEDBlink(CRGB::DarkSlateBlue);
 }
 
 /*
  surface the profiler
 */
 void Surface() {
- // TODO DONE? Untested
+  pidOutput = 0;
   float surfaceDepth=sensor.depth();
   Move(false, 255);
   if (surfaceDepth<=0.02)
   {
     SetNextProfileStep();
   }
+
+  LEDBlink(CRGB::DarkSeaGreen);
 }
 
 /*
@@ -248,30 +252,25 @@ void Dive() {
 
   float measurement = sensor.depth();
   
-  if(millis()-pidLastUpdateTime >= pidUpdateTime) {
+  if(millis()-pidLastUpdateTime >= dt) {
     pidLastUpdateTime = millis();
 
-    float output = PIDController_Update(&pid, setpoint, measurement); //returns the distance the syringe must move
+    pidOutput = PIDController_Update(&pid, setpoint, measurement); //returns the distance the syringe must move
 
-    MoveTarget(output);
+    MoveTarget(pidOutput);
   }
   
   TimeoutMove();
   if(!((setpoint-margin < measurement) && (measurement < setpoint+margin))) {
     inRangeTime = currentTime;
   }
-}
 
-/*
- control the LEDs
-*/
-void SetLED(int r, int g, int b) {
-  for (int i = 0; i < ledCount; i++) {
-    leds[i] = CRGB(r,g,b);
+  if(pidOutput > 0) {
+    LEDWave(1, CRGB::Amethyst, CRGB::Salmon);
   }
-  FastLED.show();
-
-  SetNextProfileStep();
+  else {
+    LEDWave(-1, CRGB::Amethyst, CRGB::Salmon);
+  }
 }
 
 

@@ -140,10 +140,10 @@
           if (parts.length !== 4) return null; // skip malformed lines
 
           const ts = parts[1];
-          const pressure = parseFloat(parts[2]);
+          const PID_displacement = parseFloat(parts[2]);
           const depth = parseFloat(parts[3]);
 
-          if (isNaN(pressure) || isNaN(depth)) return null;
+          if (isNaN(PID_displacement) || isNaN(depth)) return null;
 
           // Convert HH:MM:SS → Date
           const [h, m, s] = ts.split(":").map(Number);
@@ -157,7 +157,7 @@
             h, m, s
           );
 
-          return [dateObj, pressure, depth];
+          return [dateObj, PID_displacement, depth];
         })
         .filter(row => row !== null);
     }
@@ -170,15 +170,15 @@
     document.getElementById("chart"),
     [[new Date(), 0, 0]],
     {
-      labels: ["Time", "Pressure", "Depth"],
+      labels: ["Time", "PID_displacement", "Depth"],
       drawPoints: true,
       interactionModel: {},
       series: {
-        Pressure: { axis: "y" },
+        PID_displacement: { axis: "y" },
         Depth: { axis: "y2" }
       },
       axes: {
-        y: { label: "Pressure" },
+        y: { label: "PID_displacement" },
         y2: { label: "Depth", independentTicks: true },
       }
     }
