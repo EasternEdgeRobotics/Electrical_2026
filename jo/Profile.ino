@@ -28,6 +28,8 @@ bool diving = false;
 
 unsigned long startTime = 0;
 unsigned long inRangeTime = 0;
+unsigned long pidLastUpdateTime = 0;
+const unsigned int pidUpdateTime = 1000;
 
 const float tau = 0.02;
 const float outputLimitMin = -255;
@@ -64,7 +66,7 @@ void saveData() {
 
 void AddDataPacket() {
   unsigned long current = millis();
-  if (current - lastMeasurementTime >= 1000) {
+  if (current - lastMeasurementTime >= 100) {
     lastMeasurementTime = current;
     float pressure = sensor.pressure(0.1);
     float depth = sensor.depth();
@@ -208,7 +210,6 @@ void Sink() {
   {
     SetNextProfileStep();
   }
-  
 }
 
 /*
@@ -230,12 +231,14 @@ void Surface() {
 void Dive() {
   unsigned long currentTime = millis();
 
+  // failled, timeout
   if (currentTime > startTime+failsafeTimer*1000) {
     SetLED(255, 0, 0);
     diving = false;
     SetNextProfileStep();
     return;
   }
+  // success
   else if (currentTime - inRangeTime >= timer * 1000) {
     SetLED(0, 255, 0);
     diving = false;
@@ -244,15 +247,16 @@ void Dive() {
   }
 
   float measurement = sensor.depth();
-  float output = PIDController_Update(&pid, setpoint, measurement);
+  
+  if(millis()-pidLastUpdateTime >= pidUpdateTime) {
+    pidLastUpdateTime = millis();
 
-  if (output >= 0) {
-    Move(true, output);
-  }
-  else {
-    Move(false, -output);
-  }
+    float output = PIDController_Update(&pid, setpoint, measurement); //returns the distance the syringe must move
 
+    MoveTarget(output);
+  }
+  
+  TimeoutMove();
   if(!((setpoint-margin < measurement) && (measurement < setpoint+margin))) {
     inRangeTime = currentTime;
   }
