@@ -31,16 +31,11 @@ void LEDWave(int direction, CRGB colour1, CRGB colour2) {
 
     fadeToBlackBy(leds, ledCount, fadeAmount);
 
-    if (pos == ledCount) {pos = 0;}
-    if (pos2 == ledCount) {pos2 = 0;}
-    if (pos == -1) {pos = ledCount-1;}
-    if (pos2 == -1) {pos2 = ledCount-1;}
- 
-
     leds[pos] = colour1;
     leds[pos2] = colour2;
-    pos = pos + direction;
-    pos2 = pos2 + direction;
+
+    pos  = (pos  + direction + ledCount) % ledCount;
+    pos2 = (pos2 + direction + ledCount) % ledCount;
 
     FastLED.show();
   }

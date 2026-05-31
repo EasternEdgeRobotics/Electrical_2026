@@ -226,7 +226,7 @@ void Surface() {
     SetNextProfileStep();
   }
 
-  LEDBlink(CRGB::DarkSeaGreen);
+  LEDBlink(CRGB::DarkGreen);
 }
 
 /*
@@ -266,10 +266,10 @@ void Dive() {
   }
 
   if(pidOutput > 0) {
-    LEDWave(1, CRGB::Amethyst, CRGB::Salmon);
+    LEDWave(1, CRGB::Purple, CRGB::DeepPink2);
   }
-  else {
-    LEDWave(-1, CRGB::Amethyst, CRGB::Salmon);
+  else if(pidOutput < 0) {
+    LEDWave(-1, CRGB::Purple, CRGB::DeepPink2);
   }
 }
 
