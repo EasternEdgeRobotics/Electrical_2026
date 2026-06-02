@@ -20,6 +20,7 @@ int dataIndex = 0;
 float kP = 0.0;
 float kD = 0;
 float kI = 0;
+float depthError = 0;
 float setpoint = 0;
 float margin = 0;
 float timer = 0;
@@ -252,22 +253,38 @@ void Dive() {
     SetNextProfileStep();
     return;
   }
-
   float measurement = sensor.depth();
+  if(millis()-pidLastUpdateTime >= (dt-velocityInterval))
+  {
+    if (!velocityTimeMeasured)
+    {
+      depth1=measurement;
+      depth1Time=millis();
+      velocityTimeMeasured=true;
+    }
+  }
   
   if(millis()-pidLastUpdateTime >= dt) {
+
+    depthError=DepthError(setpoint, measurement); //calcualates depth error from setpoint
+
+    float targetVelocity=VelocityMap(depthError); //convertes depth error to velocity error with map
+
+    float currentVelocity=CurrentVelocity(measurement); //measures current velocity
+
     pidLastUpdateTime = millis();
 
-    pidOutput = PIDController_Update(&pid, setpoint, measurement); //returns the distance the syringe must move
+    pidOutput = PIDController_Update(&pid, targetVelocity, currentVelocity); //returns unfiltered PID output
 
-    MoveTarget(pidOutput,measurement);
+    MoveTarget(pidOutput,measurement); //huge chain here
   }
   
   TimeoutMove();
   if(!((setpoint-margin < measurement) && (measurement < setpoint+margin))) {
     inRangeTime = currentTime;
   }
-
+  
+  
   if(pidOutput > 0) {
     LEDWave(1, CRGB::Purple, CRGB::DeepPink2);
   }

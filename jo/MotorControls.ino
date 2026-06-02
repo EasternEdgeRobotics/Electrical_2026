@@ -9,6 +9,7 @@ const float travelLength = 0.087; // meters
 
 /*
  calculates the time it takes the syringe to move a distance based on the depth
+ also clamps output time to less then loop time
 */
 long TimeToMove(float distance, float depth) {
   float moveTime=0;
