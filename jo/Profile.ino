@@ -32,11 +32,14 @@ unsigned long pidLastUpdateTime = 0;
 float pidOutput = 0;
 
 const float tau = 0.02;
+
+//CLAMPING
 const float outputLimitMin = -255;
 const float outputLimitMax = 255;
+
 const float integralMin = -50;
 const float integralMax = 50;
-const float dt = 1000;
+const float dt = 1500;
 
 PIDController pid;
 
@@ -257,7 +260,7 @@ void Dive() {
 
     pidOutput = PIDController_Update(&pid, setpoint, measurement); //returns the distance the syringe must move
 
-    MoveTarget(pidOutput);
+    MoveTarget(pidOutput,measurement);
   }
   
   TimeoutMove();

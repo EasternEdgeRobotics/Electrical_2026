@@ -63,20 +63,20 @@ float PIDController_Update(PIDController *pid, float setpoint, float measurement
         pid->integrator = pid->limMinInt;
     }
 
-    // derivative (band-limited differentiator)
+    // derivative (band-limited differentiator) MIGHT WANT TO CHANGE -Brendan & ozzy
     pid->differentiator = -(2.0f * pid->Kd * (measurement - pid->prevMeasurement) // note: derivative on measurement, therefore minus sign in fromt of equation
                             + (2.0f * pid->tau - pid->T) * pid->differentiator)
                             / (2.0f * pid->tau + pid->T);
     
     // compute output and apply limits
     pid->out = proportional + pid->integrator + pid->differentiator;
-
-    if (pid->out > pid->outLimMax) {
-        pid->out = pid->outLimMax;
-    }
-    else if (pid->out < pid->outLimMin) {
-        pid->out = pid->outLimMin;
-    }
+//use our own clamping function later maybe
+    // if (pid->out > pid->outLimMax) { 
+    //     pid->out = pid->outLimMax;
+    // }
+    // else if (pid->out < pid->outLimMin) {
+    //     pid->out = pid->outLimMin;
+    // }
 
     // store error and measurement for later use
     pid->prevError = error;

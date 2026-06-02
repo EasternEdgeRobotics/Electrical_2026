@@ -3,21 +3,27 @@ const int pullB = 13352;
 
 const float pushM = 905.57;
 const int pushB = 14130;
+const int maxTime = 0.75; // in s could also be a ratio of loop time
 
 const float travelLength = 0.087; // meters
 
 /*
  calculates the time it takes the syringe to move a distance based on the depth
 */
-long TimeToMove(float distance) {
-  float depth = sensor.depth();
-
+long TimeToMove(float distance, float depth) {
+  float moveTime=0;
   if (distance > 0) {
-    return (pullM*depth + pullB)/travelLength * distance;
+    moveTime=((pullM*depth + pullB)/travelLength) * distance;
   }
   else {
-    return (pushM*depth + pushB)/travelLength * (-distance);
+    moveTime=((pushM*depth + pushB)/travelLength) * (-distance);
   }
+
+  if (moveTime>=maxTime)
+  {
+    moveTime=maxTime;
+  } 
+  return(moveTime);
 }
 
 /*
@@ -40,13 +46,13 @@ unsigned long movementTime = 0;
 /*
 direction: Profiler goes down when positive
 */
-void MoveTarget(float distance) {
+void MoveTarget(float distance, float depth) {
 
   bool topSwitch = digitalRead(topLimitSwitch);
   bool bottomSwitch = digitalRead(bottomLimitSwitch);
 
   startMovement = millis();
-  movementTime = TimeToMove(distance);
+  movementTime = TimeToMove(distance, depth);
 
   if (distance > 0) {
     digitalWrite(motorDown, 0);
