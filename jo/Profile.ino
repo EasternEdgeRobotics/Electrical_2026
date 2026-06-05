@@ -40,7 +40,7 @@ const float outputLimitMax = 255;
 
 const float integralMin = -50;
 const float integralMax = 50;
-const float dt = 1500;
+const float dt = 750;
 
 PIDController pid;
 
@@ -80,8 +80,8 @@ void AddDataPacket() {
       companyNumber, GetCurrentTime().c_str(), pidOutput, depth
     );
     
-    Serial.print("depth: ");
-    Serial.println(depth);
+    // Serial.print("depth: ");
+    // Serial.println(depth);
     if (dataIndex > dataBufferSize - 50) {
       saveData();
     }
@@ -256,8 +256,10 @@ void Dive() {
   float measurement = sensor.depth();
   if(millis()-pidLastUpdateTime >= (dt-velocityInterval))
   {
+    // Serial.println("velocityInterval Dive1");
     if (!velocityTimeMeasured)
     {
+      // Serial.println("velocityInterval Dive2");
       depth1=measurement;
       depth1Time=millis();
       velocityTimeMeasured=true;
@@ -273,22 +275,28 @@ void Dive() {
     float currentVelocity=CurrentVelocity(measurement); //measures current velocity
 
     pidLastUpdateTime = millis();
+    Serial.print("targetVelocity:");
+    Serial.println(targetVelocity);
 
     pidOutput = PIDController_Update(&pid, targetVelocity, currentVelocity); //returns unfiltered PID output
 
     MoveTarget(pidOutput,measurement); //huge chain here
+    Serial.print("pidOutput:");
+    Serial.println(pidOutput,5);
   }
   
   TimeoutMove();
   if(!((setpoint-margin < measurement) && (measurement < setpoint+margin))) {
     inRangeTime = currentTime;
   }
-  
-  
+  // Serial.print("pidOutput: ");
+  // Serial.println(pidOutput);
   if(pidOutput > 0) {
+    // Serial.println("pidOutput>0");
     LEDWave(1, CRGB::Purple, CRGB::DeepPink2);
   }
   else if(pidOutput < 0) {
+    // Serial.println("pidOutput<0");
     LEDWave(-1, CRGB::Purple, CRGB::DeepPink2);
   }
 }

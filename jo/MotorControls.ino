@@ -3,7 +3,7 @@ const int pullB = 13352;
 
 const float pushM = 905.57;
 const int pushB = 14130;
-const int maxTime = 0.75; // in s could also be a ratio of loop time
+const int maxTime = 0.375*1000; // in s could also be a ratio of loop time
 
 const float travelLength = 0.087; // meters
 
@@ -15,6 +15,8 @@ long TimeToMove(float distance, float depth) {
   float moveTime=0;
   if (distance > 0) {
     moveTime=((pullM*depth + pullB)/travelLength) * distance;
+    Serial.print("movetime:");
+    Serial.println(moveTime);
   }
   else {
     moveTime=((pushM*depth + pushB)/travelLength) * (-distance);
@@ -24,6 +26,8 @@ long TimeToMove(float distance, float depth) {
   {
     moveTime=maxTime;
   } 
+  Serial.print("movetime:");
+  Serial.println(moveTime);
   return(moveTime);
 }
 
@@ -51,10 +55,10 @@ void MoveTarget(float distance, float depth) {
 
   bool topSwitch = digitalRead(topLimitSwitch);
   bool bottomSwitch = digitalRead(bottomLimitSwitch);
-
+  
   startMovement = millis();
   movementTime = TimeToMove(distance, depth);
-
+  Serial.println("trying to move");
   if (distance > 0) {
     digitalWrite(motorDown, 0);
 
