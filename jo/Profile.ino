@@ -8,6 +8,7 @@ main document for Profiling methods
 JsonDocument doc;
 bool profiling = false;
 
+unsigned long profileStartingTime = 0;
 int N = 0;
 int currentStepIndex = 0;
 
@@ -62,6 +63,16 @@ void SplitJson(String profileMessage) {
   N = doc["profile"].size();
 }
 
+char* GetCurrentTime() {
+  static char buffer[9];
+  unsigned long seconds = (millis() - profileStartingTime) / 1000;
+  unsigned int hours = seconds / 3600;
+  unsigned int minutes = (seconds % 3600) / 60;
+  unsigned int secs = seconds % 60;
+  sprintf(buffer, "%02u:%02u:%02u", hours, minutes, secs);
+  return buffer;
+}
+
 void saveData() {
   writeFile(fileName, dataBuffer);
   memset(dataBuffer, 0, dataBufferSize);
@@ -77,7 +88,7 @@ void AddDataPacket() {
       dataBuffer+dataIndex,
       dataBufferSize - dataIndex,
       "%s, %s, %.2f\n",
-      companyNumber, GetCurrentTime().c_str(), depth
+      companyNumber, GetCurrentTime(), depth
     );
     
     // Serial.print("depth: ");
