@@ -26,7 +26,9 @@ float setpoint = 0;
 float margin = 0;
 float timer = 0;
 float failsafeTimer = 0;
+float sensorOffset= 0; //positive down because float fucked
 bool diving = false;
+float offsetDepth=0; //added to replace sensor.depth() and include offset
 
 unsigned long startTime = 0;
 unsigned long inRangeTime = 0;
@@ -55,7 +57,7 @@ void SplitJson(String profileMessage) {
 
   Serial.print("density: ");
   Serial.println(doc["density"].as<float>());
-  // sensor.setFluidDensity(doc["density"]);
+  //sensor.setFluidDensity(doc["density"]);
 
   kP = doc["kP"];
   kD = doc["kD"];
@@ -79,11 +81,16 @@ void saveData() {
   dataIndex = 0;
 }
 
+void updateSensor(offset)
+{
+  sensor.read();
+  offsetDepth=sensor.depth()+offset;
+}
 void AddDataPacket() {
   unsigned long current = millis();
-  if (current - lastMeasurementTime >= 100) {
+  if (current - lastMeasurementTime >= 1000) {
     lastMeasurementTime = current;
-    float depth = sensor.depth();
+    float depth = offsetDepth;
     dataIndex += snprintf(
       dataBuffer+dataIndex,
       dataBufferSize - dataIndex,
@@ -105,10 +112,10 @@ void setupDive(String input) {
   numbers.trim();
 
   int index = 0;
-  float diveValues[4]; // setpoint, margin, timer, failsafeTimer
+  float diveValues[5]; // setpoint, margin, timer, failsafeTimer, pressure sensor offset
 
   // Split by comma
-  while (numbers.length() > 0 && index < 4) {
+  while (numbers.length() > 0 && index < 5) {
     int commaIndex = numbers.indexOf(',');
     String token;
 
@@ -129,6 +136,7 @@ void setupDive(String input) {
   margin = diveValues[1];
   timer = diveValues[2];
   failsafeTimer = diveValues[3];
+  sensorOffset = diveValues[4];
 
   pid = {kP, kI, kD, tau, outputLimitMin, outputLimitMax, integralMin, integralMax, (dt/1000)};
   PIDController_Init(&pid);
@@ -169,7 +177,7 @@ void SetNextProfileStep() {
 void Profile() {
   if (profiling) {
     AddDataPacket();
-    sensor.read();
+    updateSensor();
     String input = doc["profile"][currentStepIndex];
     if(input == "sink") {
       Sink();
@@ -264,7 +272,7 @@ void Dive() {
     SetNextProfileStep();
     return;
   }
-  float measurement = sensor.depth();
+  float measurement = offsetDepth;
   if(millis()-pidLastUpdateTime >= (dt-velocityInterval))
   {
     // Serial.println("velocityInterval Dive1");
