@@ -47,7 +47,7 @@ void setup() {
     delay(5000);
   }
   sensor.setModel(MS5837::MS5837_02BA);
-  sensor.setFluidDensity(997);
+  sensor.setFluidDensity(997); //might have to change if we want to update desnsity
   sensor.read();
   
   /*I belive this should be set upon getting the profilier for data, defaults to seawater */
