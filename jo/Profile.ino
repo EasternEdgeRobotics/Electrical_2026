@@ -77,7 +77,7 @@ void AddDataPacket() {
       dataBuffer+dataIndex,
       dataBufferSize - dataIndex,
       "%s, %s, %.2f, %.2f\n",
-      companyNumber, GetCurrentTime().c_str(), pidOutput, depth
+      companyNumber, GetCurrentTime().c_str(), velocityForRead, depth
     );
     
     // Serial.print("depth: ");

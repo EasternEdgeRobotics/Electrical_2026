@@ -46,6 +46,7 @@ void PIDController_Init(PIDController *pid) {
 
 float PIDController_Update(PIDController *pid, float setpoint, float measurement) {
     
+    
     //error
     float error = setpoint - measurement;
     // proportional
@@ -68,7 +69,7 @@ float PIDController_Update(PIDController *pid, float setpoint, float measurement
                             / (2.0f * pid->tau + pid->T);
     
     // compute output and apply limits
-    pid->out = proportional + pid->integrator + pid->differentiator;
+    pid->out = proportional; /*+ pid->integrator + pid->differentiator;*/
 //use our own clamping function later maybe
     // if (pid->out > pid->outLimMax) { 
     //     pid->out = pid->outLimMax;
