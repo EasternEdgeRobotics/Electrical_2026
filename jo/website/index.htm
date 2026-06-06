@@ -115,20 +115,6 @@
       sendProfile();
     }
 
-    function sendTime() {
-      var date = new Date();
-
-      time = String("{" + date.getHours()) + ":" + String(date.getMinutes()) + ":" + String(date.getSeconds() + "}");
-
-      $.ajax({
-        url: "/time",
-        type: "POST",
-        data: time,
-        contentType: "text/plain",
-        processData: false
-      });
-    }
-
     function parseData(dot) {
       return dot
         .split("\n")
@@ -213,6 +199,22 @@
       });
     }
 
+    function getPoint() {
+      $.get("/point", function (dot) {
+
+        document.getElementById("logs").textContent += dot + "\n";
+        logs.scrollTop = logs.scrollHeight;
+
+        const rows = parseData(dot);
+        if (rows.length > 0) {
+          const point = rows[0];
+          console.log("Single point:", point);
+        } else {
+          console.log("No valid point received");
+        }
+      });
+    }
+
 
   </script>
 </head>
@@ -221,8 +223,8 @@
   <h1 class="mt-0 text-2xl text-center mb-2">Jonesy Mk.3 Control Panel</h1>
   <div class="grid grid-cols-2 grid-rows-1 gap-4">
     <div>
-      <button onclick="sendTime()"
-        class="text-xl font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">Set Time</button>
+      <button onclick="getPoint()"
+        class="text-xl font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">Get Point</button>
       <button onclick="getData()"
         class="text-xl font-bold rounded-lg px-6 bg-red-600 text-white active:bg-red-700 block-btn">Get Data</button>
 

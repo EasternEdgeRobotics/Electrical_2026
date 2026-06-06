@@ -192,6 +192,30 @@ void WifiLoop() {
           client.stop();
           return;
         }
+        if (currentLine.startsWith("GET /point")) {
+          client.println("HTTP/1.1 200 OK");
+          client.println("Content-Type: text/plain");
+          client.println("Connection: close");
+          client.println();
+
+          sensor.read();
+
+          char line[64];
+          snprintf(
+            line,
+            sizeof(line),
+            "%s, %s, %.2f\n",
+            companyNumber,
+            GetCurrentTime(),
+            sensor.depth()
+          );
+
+          client.write(line, strlen(line));
+
+          client.flush();
+          client.stop();
+          return;
+        }
       }
     }
 
