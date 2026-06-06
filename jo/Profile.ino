@@ -81,11 +81,11 @@ void saveData() {
   dataIndex = 0;
 }
 
-void updateSensor(offset)
-{
+void updateSensor() {
   sensor.read();
-  offsetDepth=sensor.depth()+offset;
+  offsetDepth=sensor.depth()+sensorOffset;
 }
+
 void AddDataPacket() {
   unsigned long current = millis();
   if (current - lastMeasurementTime >= 1000) {
