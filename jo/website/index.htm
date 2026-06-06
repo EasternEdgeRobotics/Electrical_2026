@@ -162,11 +162,28 @@
           },
           axes: {
             y: { label: "Depth",}
+          },
+          underlayCallback: function(canvas, area, g) {
+            function drawBand (yLow, yHigh, color) {
+              const y1 = g.toDomYCoord(yLow);
+              const y2 = g.toDomYCoord(yHigh);
+
+              canvas.fillStyle = color;
+              canvas.fillRect(
+                area.x,
+                Math.min (y1,y2),
+                area.w,
+                Math.abs (y2 - y1)
+              );
+            }
+            // Pink band: 0.4 m ± 0.3 m
+            drawBand(0.1,0.7, "rgba(255,105,180,0.25)");
+            // Green Band: 2.5 m ± 0.3 m
+            drawBand(2.2,2.8,"rgba(0,255,0,0.25)");
           }
         }
       );
-
-    });
+    });  
 
 
     function getData() {
