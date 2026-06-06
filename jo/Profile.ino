@@ -76,8 +76,8 @@ void AddDataPacket() {
     dataIndex += snprintf(
       dataBuffer+dataIndex,
       dataBufferSize - dataIndex,
-      "%s, %s, %.2f, %.2f\n",
-      companyNumber, GetCurrentTime().c_str(), velocityForRead, depth
+      "%s, %s, %.2f\n",
+      companyNumber, GetCurrentTime().c_str(), depth
     );
     
     // Serial.print("depth: ");
