@@ -164,23 +164,42 @@
             y: { label: "Depth",}
           },
           underlayCallback: function(canvas, area, g) {
-            function drawBand (yLow, yHigh, color) {
-              const y1 = g.toDomYCoord(yLow);
-              const y2 = g.toDomYCoord(yHigh);
+  const numRows = g.numRows();
+  if (numRows < 2) return; // Need at least two points to draw a time block
 
-              canvas.fillStyle = color;
-              canvas.fillRect(
-                area.x,
-                Math.min (y1,y2),
-                area.w,
-                Math.abs (y2 - y1)
-              );
-            }
-            // Pink band: 0.4 m ± 0.3 m
-            drawBand(0.1,0.7, "rgba(255,105,180,0.25)");
-            // Green Band: 2.5 m ± 0.3 m
-            drawBand(2.2,2.8,"rgba(0,255,0,0.25)");
-          }
+  // 1. Define your target ranges and colors
+  const bands = [
+    { low: 2.17, high: 2.83, color: "rgba(255,105,180,0.35)" }, // Pink band
+    { low: 0.07, high: 0.73, color: "rgba(0,255,0,0.35)" }     // Green band
+  ];
+
+  // 2. Loop through every consecutive pair of data points
+  for (let i = 0; i < numRows - 1; i++) {
+    const val1 = g.getValue(i, 1);     // Depth at current point
+    const val2 = g.getValue(i + 1, 1); // Depth at next point
+
+    bands.forEach(band => {
+      // 3. Only draw if BOTH points are within the band's depth limits
+      if (val1 >= band.low && val1 <= band.high && val2 >= band.low && val2 <= band.high) {
+        
+        // Convert Time (X) and Depth (Y) to actual canvas pixel coordinates
+        const x1 = g.toDomXCoord(g.getValue(i, 0));     // Time 1 pixel
+        const x2 = g.toDomXCoord(g.getValue(i + 1, 0)); // Time 2 pixel
+        const y1 = g.toDomYCoord(band.low);
+        const y2 = g.toDomYCoord(band.high);
+
+        // 4. Draw the block ONLY between x1 and x2 (the time duration)
+        canvas.fillStyle = band.color;
+        canvas.fillRect(
+          x1, 
+          Math.min(y1, y2), 
+          x2 - x1, 
+          Math.abs(y2 - y1)
+        );
+      }
+    });
+  }
+}
         }
       );
     });  
