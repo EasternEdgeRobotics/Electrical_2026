@@ -157,6 +157,7 @@
         {
           labels: ["Time", "Depth"],
           drawPoints: true,
+          //Line color
           color: ["#fdd628"],
           series: {
             Depth: { axis: "y" }
@@ -165,42 +166,68 @@
             y: { label: "Depth",}
           },
           underlayCallback: function(canvas, area, g) {
-  const numRows = g.numRows();
-  if (numRows < 2) return; // Need at least two points to draw a time block
+            const numRows = g.numRows();
+            if (numRows < 2) return; // Need at least two points to draw a time block
 
-  // 1. Define your target ranges and colors
-  const bands = [
-    { low: 0.07, high: 0.73, color: "rgba(233,25,73,0.35)" },     // Red band
-    { low: 2.17, high: 2.83, color: "rgba(0,108,249,0.35)" }    // Blue band
-  ];
+            // Time stamps! 
+            function formatTime(dateObj) {
+              const d = new Date(dateObj);
+              const mins = String(d.getMinutes()).padStart(2,'0');
+              const secs = String(d.getSeconds()).padStart(2,'0');
+              return '${mins}:${secs}';
+            }
+            // Defines ranges and the square colors
+            const bands = [
+              { low: 0.07, high: 0.73, color: "rgba(233,25,73,0.35)" },     // Red band
+              { low: 2.17, high: 2.83, color: "rgba(0,108,249,0.35)" }    // Blue band
+            ];
 
-  // 2. Loop through every consecutive pair of data points
-  for (let i = 0; i < numRows - 1; i++) {
-    const val1 = g.getValue(i, 1);     // Depth at current point
-    const val2 = g.getValue(i + 1, 1); // Depth at next point
+            // Loops through every consecutive pair of data points
+            for (let i = 0; i < numRows - 1; i++) {
+              const val1 = g.getValue(i, 1);     // Depth at current point
+              const val2 = g.getValue(i + 1, 1); // Depth at next point
 
-    bands.forEach(band => {
-      // 3. Only draw if BOTH points are within the band's depth limits
-      if (val1 >= band.low && val1 <= band.high && val2 >= band.low && val2 <= band.high) {
-        
-        // Convert Time (X) and Depth (Y) to actual canvas pixel coordinates
-        const x1 = g.toDomXCoord(g.getValue(i, 0));     // Time 1 pixel
-        const x2 = g.toDomXCoord(g.getValue(i + 1, 0)); // Time 2 pixel
-        const y1 = g.toDomYCoord(band.low);
-        const y2 = g.toDomYCoord(band.high);
+              bands.forEach(band => {
+                // Only draws if BOTH points are within the band's depth limits
+                if (val1 >= band.low && val1 <= band.high && val2 >= band.low && val2 <= band.high) {
+                  const rawTime1 = g.getValue (i, 0);
+                  const rawTime2 = g.getValue(i+1,0);
 
-        // 4. Draw the block ONLY between x1 and x2 (the time duration)
-        canvas.fillStyle = band.color;
-        canvas.fillRect(
-          x1, 
-          Math.min(y1, y2), 
-          x2 - x1, 
-          Math.abs(y2 - y1)
-        );
-      }
-    });
-  }
-}
+                  const durationMs = new Data(rawTime2).getTime() - new Data(rawTime1).getTime();
+
+                  // Duration
+                  if (durationMs >= 30000) {
+                    const x1 = g.toDomXCoord(rawTime1);
+                    const x2 = g.toDomXCoord(rawTime2);
+                    const y1 = g.toDomYCoord(band.low);
+                    const y2 = g.toDomYCoord(band.high);
+
+                    const topY = Math.min(y1,y2);
+                    const height = Math.abs(y2 - y1);
+
+                    //Draw the filled background highlight square
+                    canvas.fillStyle = band.color;
+                    canvas.fillRect(x1, topY, x2 - x1, height);
+                    // 2. Setup clean white text with no background block interference
+                    canvas.fillStyle = "#ffffff"; 
+                    canvas.font = "11px monospace";       
+                    canvas.textBaseline = "bottom";
+
+                    const startTimeText = formatTime(rawTime1);
+                    const endTimeText = formatTime(rawTime2);
+
+                    // Start Time: Placed 6 pixels to the LEFT of the square
+                    canvas.textAlign = "right";
+                    canvas.fillText(startTimeText, x1 - 6, topY + height - 4); 
+
+                    // End Time: Placed 6 pixels to the RIGHT of the square
+                    canvas.textAlign = "left";
+                    canvas.fillText(endTimeText, x2 + 6, topY + height - 4);
+                  }
+                }
+              });
+            }
+          }
         }
       );
     });  
