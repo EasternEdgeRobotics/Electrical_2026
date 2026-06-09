@@ -221,58 +221,42 @@
                   }
 
                 } else {
-
                   if (runStart !== null) {
-
+                  
                     const startTime = g.getValue(runStart, 0);
-                    const endTime = g.getValue(i - 1, 0);
-
+                    const endTime = g.getValue(numRows - 1, 0);
+                  
                     const durationMs = endTime - startTime;
-
+                  
                     if (durationMs >= 30000) {
-
+                  
                       const x1 = g.toDomXCoord(startTime);
                       const x2 = g.toDomXCoord(endTime);
-
+                  
                       const y1 = g.toDomYCoord(band.low);
                       const y2 = g.toDomYCoord(band.high);
-
+                  
                       const topY = Math.min(y1, y2);
                       const height = Math.abs(y2 - y1);
-
+                  
+                      // Draw the rectangle
                       canvas.fillStyle = band.color;
                       canvas.fillRect(x1, topY, x2 - x1, height);
-                      console.log(
-                      "DRAWING",
-                      band.low,
-                      band.high,
-                      durationMs
-                    );
-
-                    console.log(
-                      "coords:",
-                      x1,
-                      x2,
-                      y1,
-                      y2
-                    );
-
-                      // Optional time labels
+                  
+                      // Draw the time labels
                       canvas.fillStyle = "#ffffff";
                       canvas.font = "11px monospace";
                       canvas.textBaseline = "bottom";
-
+                  
                       const startTimeText = formatTime(startTime);
                       const endTimeText = formatTime(endTime);
-
+                  
                       canvas.textAlign = "left";
-                      canvas.fillText(startTimeText, x1 - 40, topY + height -200);
-
+                      canvas.fillText(startTimeText, x1 + 5, topY + height - 5);
+                  
                       canvas.textAlign = "right";
-                      canvas.fillText(endTimeText, x2 - 2, topY + height -200);
+                      canvas.fillText(endTimeText, x2 - 2, topY + height - 5);
                     }
-
-                    runStart = null;
                   }
                 }
               }
