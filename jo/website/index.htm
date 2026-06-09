@@ -172,61 +172,136 @@
             // Time stamps! 
             function formatTime(dateObj) {
               const d = new Date(dateObj);
-              const mins = String(d.getMinutes()).padStart(2,'0');
-              const secs = String(d.getSeconds()).padStart(2,'0');
-              return '${mins}:${secs}';
+              const mins = String(d.getMinutes()).padStart(2, '0');
+              const secs = String(d.getSeconds()).padStart(2, '0');
+              return `${mins}:${secs}`;
             }
             // Defines ranges and the square colors
             const bands = [
-              { low: 0.07, high: 0.73, color: "rgba(233,25,73,0.35)" },     // Red band
-              { low: 2.17, high: 2.83, color: "rgba(0,108,249,0.35)" }    // Blue band
+              { low: 0.07, high: 0.73, color: "rgba(233,25,73,0.35)" },
+              { low: 2.17, high: 2.83, color: "rgba(0,108,249,0.35)" }
             ];
+            bands.forEach(band => {
 
-            // Loops through every consecutive pair of data points
-            for (let i = 0; i < numRows - 1; i++) {
-              const val1 = g.getValue(i, 1);     // Depth at current point
-              const val2 = g.getValue(i + 1, 1); // Depth at next point
+              let pointsInBand = 0;
 
-              bands.forEach(band => {
-                // Only draws if BOTH points are within the band's depth limits
-                if (val1 >= band.low && val1 <= band.high && val2 >= band.low && val2 <= band.high) {
-                  const rawTime1 = g.getValue (i, 0);
-                  const rawTime2 = g.getValue(i+1,0);
+              for (let i = 0; i < numRows; i++) {
 
-                  const durationMs = new Data(rawTime2).getTime() - new Data(rawTime1).getTime();
+                const depth = g.getValue(i, 1);
 
-                  // Duration
-                  if (durationMs >= 30000) {
-                    const x1 = g.toDomXCoord(rawTime1);
-                    const x2 = g.toDomXCoord(rawTime2);
-                    const y1 = g.toDomYCoord(band.low);
-                    const y2 = g.toDomYCoord(band.high);
+                if (depth >= band.low && depth <= band.high) {
+                  pointsInBand++;
+                }
+              }
 
-                    const topY = Math.min(y1,y2);
-                    const height = Math.abs(y2 - y1);
+              console.log(
+                "Band",
+                band.low,
+                band.high,
+                "contains",
+                pointsInBand,
+                "points"
+              );
+            });
+            bands.forEach(band => {
 
-                    //Draw the filled background highlight square
-                    canvas.fillStyle = band.color;
-                    canvas.fillRect(x1, topY, x2 - x1, height);
-                    // 2. Setup clean white text with no background block interference
-                    canvas.fillStyle = "#ffffff"; 
-                    canvas.font = "11px monospace";       
-                    canvas.textBaseline = "bottom";
+              let runStart = null;
 
-                    const startTimeText = formatTime(rawTime1);
-                    const endTimeText = formatTime(rawTime2);
+              for (let i = 0; i < numRows; i++) {
 
-                    // Start Time: Placed 6 pixels to the LEFT of the square
-                    canvas.textAlign = "right";
-                    canvas.fillText(startTimeText, x1 - 6, topY + height - 4); 
+                const depth = g.getValue(i, 1);
 
-                    // End Time: Placed 6 pixels to the RIGHT of the square
-                    canvas.textAlign = "left";
-                    canvas.fillText(endTimeText, x2 + 6, topY + height - 4);
+                const inBand =
+                  depth >= band.low &&
+                  depth <= band.high;
+
+                if (inBand) {
+
+                  if (runStart === null) {
+                    runStart = i;
+                  }
+
+                } else {
+
+                  if (runStart !== null) {
+
+                    const startTime = g.getValue(runStart, 0);
+                    const endTime = g.getValue(i - 1, 0);
+
+                    const durationMs = endTime - startTime;
+
+                    if (durationMs >= 30000) {
+
+                      const x1 = g.toDomXCoord(startTime);
+                      const x2 = g.toDomXCoord(endTime);
+
+                      const y1 = g.toDomYCoord(band.low);
+                      const y2 = g.toDomYCoord(band.high);
+
+                      const topY = Math.min(y1, y2);
+                      const height = Math.abs(y2 - y1);
+
+                      canvas.fillStyle = band.color;
+                      canvas.fillRect(x1, topY, x2 - x1, height);
+                      console.log(
+                      "DRAWING",
+                      band.low,
+                      band.high,
+                      durationMs
+                    );
+
+                    console.log(
+                      "coords:",
+                      x1,
+                      x2,
+                      y1,
+                      y2
+                    );
+
+                      // Optional time labels
+                      canvas.fillStyle = "#ffffff";
+                      canvas.font = "11px monospace";
+                      canvas.textBaseline = "bottom";
+
+                      const startTimeText = formatTime(startTime);
+                      const endTimeText = formatTime(endTime);
+
+                      canvas.textAlign = "left";
+                      canvas.fillText(startTimeText, x1 - 40, topY + height -200);
+
+                      canvas.textAlign = "right";
+                      canvas.fillText(endTimeText, x2 - 2, topY + height -200);
+                    }
+
+                    runStart = null;
                   }
                 }
-              });
-            }
+              }
+
+              // Handle run reaching end of data
+              if (runStart !== null) {
+
+                const startTime = g.getValue(runStart, 0);
+                const endTime = g.getValue(numRows - 1, 0);
+
+                const durationMs = endTime - startTime;
+
+                if (durationMs >= 30000) {
+
+                  const x1 = g.toDomXCoord(startTime);
+                  const x2 = g.toDomXCoord(endTime);
+
+                  const y1 = g.toDomYCoord(band.low);
+                  const y2 = g.toDomYCoord(band.high);
+
+                  const topY = Math.min(y1, y2);
+                  const height = Math.abs(y2 - y1);
+
+                  canvas.fillStyle = band.color;
+                  canvas.fillRect(x1, topY, x2 - x1, height);
+                }
+              }
+            });
           }
         }
       );
