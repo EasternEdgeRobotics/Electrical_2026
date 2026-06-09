@@ -204,9 +204,9 @@ void WifiLoop() {
           snprintf(
             line,
             sizeof(line),
-            "%s, %s, %.2f\n",
+            "%s, %lu, %.2f\n",
             companyNumber,
-            GetCurrentTime(),
+            (millis() - profileStartingTime),
             sensor.depth()
           );
 
