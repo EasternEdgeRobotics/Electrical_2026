@@ -57,7 +57,7 @@ void SplitJson(String profileMessage) {
 
   Serial.print("density: ");
   Serial.println(doc["density"].as<float>());
-  //sensor.setFluidDensity(doc["density"]);
+  sensor.setFluidDensity(doc["density"]);
 
   kP = doc["kP"];
   kD = doc["kD"];

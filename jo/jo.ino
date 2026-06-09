@@ -47,11 +47,9 @@ void setup() {
     delay(5000);
   }
   sensor.setModel(MS5837::MS5837_02BA);
-  sensor.setFluidDensity(997); //might have to change if we want to update desnsity
+  sensor.setFluidDensity(997); //might have to change if we want to update density kg/m^3 (freshwater, 1029 for seawater)
   sensor.read();
   
-  /*I belive this should be set upon getting the profilier for data, defaults to seawater */
-  //sensor.setFluidDensity(997); // kg/m^3 (freshwater, 1029 for seawater)
 
   sdSetup();
   WifiSetup();
