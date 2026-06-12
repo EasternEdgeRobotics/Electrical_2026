@@ -39,10 +39,7 @@ void SetupSyringe() {
     Move(false, 255);
   }
 
-  Move(true, 255);
-  delay(3000);
   Move(true, 0);
-  
 }
 
 const int speed = 130;
