@@ -1,0 +1,8 @@
+# 
+{"kP":"1","kD":"0","kI":"0","density":"997","profile":["led: 0, 0, 0"]}
+
+led: 0, 0, 0
+EX20, 00:05:02, 0.10, -0.12
+
+
+# profile complete

@@ -1,0 +1,8 @@
+# 
+{"kP":"0.08","kD":"0","kI":"0","density":"997","profile":["surface"]}
+
+surface
+EX20, 00:03:56, 0.00, -0.15
+
+
+# profile complete
