@@ -70,8 +70,8 @@
     function createJSONProfile() {
       profile = {};
       profile.kP = document.getElementById("kP").value;
-      profile.kD = document.getElementById("kD").value;
       profile.kI = document.getElementById("kI").value;
+      profile.kD = document.getElementById("kD").value;
       profile.density = document.getElementById("density").value;
 
       profile.profile = Array.from(document.querySelectorAll("#profile li")).map(li => li.textContent.trim());
@@ -341,11 +341,11 @@
         <label class="text-m " for="kP">kP: </label>
         <input type="number" class="form-input text-m" id="kP" step="0.01">
 
-        <label class="text-m" for="kD">kD: </label>
-        <input type="number" class="form-input text-m" id="kD" step="0.01">
-
         <label class="text-m" for="kI">kI: </label>
         <input type="number" class="form-input text-m" id="kI" step="0.01">
+
+        <label class="text-m" for="kD">kD: </label>
+        <input type="number" class="form-input text-m" id="kD" step="0.01">
 
         <label class="text-m" for="density">density<br>(kg/m^3): </label>
         <input type="number" class="form-input text-m" id="density" step="0.01" value="997">
