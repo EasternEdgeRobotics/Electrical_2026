@@ -1,0 +1,51 @@
+### Footprint positions - created on 2026-01-17T14:03:53-0330 ###
+### Printed by KiCad version 9.0.6
+## Unit = mm, Angle = deg.
+## Side : top
+# Ref     Val               Package                                          PosX       PosY       Rot  Side
+A1        RaspberryPi_Pico  RaspberryPi_Pico_Common_Unspecified           91.7400   -52.9300    0.0000  top
+C1        10u               CP_Elec_4x5.4                                 68.8500   -37.0000   90.0000  top
+C2        10u               CP_Elec_4x5.4                                 68.8500   -48.8000   90.0000  top
+C4        100n              C_0603_1608Metric                             74.9500   -38.1750   90.0000  top
+C5        47u               C_0805_2012Metric                             73.1500   -37.9500   90.0000  top
+C6        100n              C_0603_1608Metric                             78.5000   -36.7000    0.0000  top
+C8        47u               C_0805_2012Metric                             73.1500   -49.2500   90.0000  top
+C9        100n              C_0603_1608Metric                             77.4000   -50.4250   90.0000  top
+C10       100n              C_0603_1608Metric                             74.9500   -49.4500   90.0000  top
+C11       100u              CP_Elec_6.3x7.7                              124.3100   -59.0000    0.0000  top
+C12       100u              CP_Elec_6.3x7.7                              124.3500   -67.0000    0.0000  top
+C13       100u              CP_Elec_6.3x7.7                              124.2500   -75.3000    0.0000  top
+C14       100u              CP_Elec_6.3x7.7                              124.2500   -83.9000    0.0000  top
+D1        LED               LED_0603_1608Metric                          118.5000   -39.0000  180.0000  top
+D2        LED               LED_0603_1608Metric                          110.7125   -50.0000    0.0000  top
+D3        LED               LED_0603_1608Metric                           53.5000   -46.0375   90.0000  top
+J1        Conn_01x02        Molex-43650-0227_-MFG                        111.8000   -31.0250    0.0000  top
+J3        Conn_01x02        Molex-43650-0227_-MFG                         60.2250   -31.0500    0.0000  top
+J5        Conn_01x02        Molex-43650-0227_-MFG                         62.3750   -41.2500   90.0000  top
+J6        Conn_01x02        Molex-43650-0227_-MFG                         62.3850   -53.3000   90.0000  top
+J7        Conn_01x02        Molex_SL_171971-0002_1x02_P2.54mm_Vertical    65.1100   -61.8500    0.0000  top
+J8        Conn_01x02        Molex_SL_171971-0002_1x02_P2.54mm_Vertical    74.1600   -61.8500    0.0000  top
+J9        Conn_01x02        Molex_SL_171971-0002_1x02_P2.54mm_Vertical    65.1000   -70.0500    0.0000  top
+J10       Conn_01x02        Molex_SL_171971-0002_1x02_P2.54mm_Vertical    74.1000   -70.0000    0.0000  top
+J11       Conn_01x02        Molex_SL_171971-0002_1x02_P2.54mm_Vertical    65.0600   -78.1000    0.0000  top
+J12       Conn_01x02        Molex_SL_171971-0002_1x02_P2.54mm_Vertical    74.0500   -78.1000    0.0000  top
+J13       Conn_01x03        Molex_SL_171971-0003_1x03_P2.54mm_Vertical   107.7200   -83.6500    0.0000  top
+J14       Conn_01x03        Molex_SL_171971-0003_1x03_P2.54mm_Vertical   107.7200   -67.7500    0.0000  top
+J15       Conn_01x03        Molex_SL_171971-0003_1x03_P2.54mm_Vertical   107.7200   -75.6000    0.0000  top
+J16       Conn_01x03        Molex_SL_171971-0003_1x03_P2.54mm_Vertical   107.7200   -59.9400    0.0000  top
+J17       Conn_01x02        Molex-43650-0227_-MFG                         54.6850   -66.3625   90.0000  top
+J18       Conn_01x02        Molex-43650-0227_-MFG                         54.7000   -76.8875   90.0000  top
+Q1        Q_NMOS_GSD        SOT-23                                        59.7875   -67.8625  180.0000  top
+Q2        Q_NMOS_GSD        SOT-23                                        59.8875   -76.4500  180.0000  top
+R1        10k               R_0603_1608Metric                             76.5750   -45.3000  180.0000  top
+R2        10k               R_0603_1608Metric                             76.5750   -56.1500  180.0000  top
+R3        10k               R_0603_1608Metric                             79.0500   -40.1000  -90.0000  top
+R4        10k               R_0603_1608Metric                             79.0500   -44.6750   90.0000  top
+R5        10k               R_0603_1608Metric                             79.2000   -48.2750  -90.0000  top
+R6        10k               R_0603_1608Metric                             79.2000   -51.3000   90.0000  top
+R7        560               R_0603_1608Metric                            107.5750   -39.0000    0.0000  top
+R8        ~                 R_0603_1608Metric                            119.8250   -50.0000  180.0000  top
+R9        ~                 R_0603_1608Metric                             53.5000   -38.9525  -90.0000  top
+U4        DRV8231ADSG       WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm           76.4500   -42.2500  180.0000  top
+U6        DRV8231ADSG       WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm           76.4500   -54.1000  180.0000  top
+## End
